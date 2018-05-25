@@ -4,7 +4,7 @@ import com.qiqi.meishijia.core.Service;
 
 
 /**
- * Created by CodeGenerator on 2018/05/25.
+ * Created by 77 on 2018/05/25.
  */
 public interface UserService extends Service<User> {
 

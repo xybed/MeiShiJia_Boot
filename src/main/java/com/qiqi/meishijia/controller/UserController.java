@@ -1,18 +1,21 @@
 package com.qiqi.meishijia.controller;
-
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultGenerator;
 import com.qiqi.meishijia.model.User;
 import com.qiqi.meishijia.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by CodeGenerator on 2018/05/25.
+* Created by 77 on 2018/05/25.
 */
 @RestController
 @RequestMapping("/user")
@@ -38,7 +41,7 @@ public class UserController {
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/detail")
+    @GetMapping("/detail")
     public Result detail(@RequestParam Integer id) {
         User user = userService.findById(id);
         return ResultGenerator.genSuccessResult(user);
