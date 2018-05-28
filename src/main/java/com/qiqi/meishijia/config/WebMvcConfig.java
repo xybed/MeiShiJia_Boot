@@ -7,12 +7,15 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultCode;
 import com.qiqi.meishijia.core.ServiceException;
+import lib.utils.MD5Util;
+import lib.utils.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -25,13 +28,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Spring MVC 配置
@@ -41,6 +45,8 @@ import java.util.List;
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
+    private static final String TOKEN_KEY = "MeiShiJia";
+
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
 
@@ -48,6 +54,25 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        List<MediaType> supportedMediaTypes = new ArrayList<>();
+        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
+        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
+        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
+        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
+        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
+        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
+        supportedMediaTypes.add(MediaType.APPLICATION_XML);
+        supportedMediaTypes.add(MediaType.IMAGE_GIF);
+        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
+        supportedMediaTypes.add(MediaType.IMAGE_PNG);
+        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
+        supportedMediaTypes.add(MediaType.TEXT_HTML);
+        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
+        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
+        supportedMediaTypes.add(MediaType.TEXT_XML);
+        converter.setSupportedMediaTypes(supportedMediaTypes);
         FastJsonConfig config = new FastJsonConfig();
         config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
                 SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
@@ -103,7 +128,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-        if (!"dev".equals(env)) { //开发环境忽略签名认证
+        if ("dev".equals(env)) { //开发环境忽略签名认证
             registry.addInterceptor(new HandlerInterceptorAdapter() {
                 @Override
                 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -145,31 +170,42 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     }
 
     /**
-     * 一个简单的签名认证，规则：
-     * 1. 将请求参数按ascii码排序
-     * 2. 拼接为a=value&b=value...这样的字符串（不包含sign）
-     * 3. 混合密钥（secret）进行md5获得签名，与请求的签名进行比较
+     * 验证sign的有效性，保证请求是安全无恶意的
+     * @param request 请求体
+     * @return 安全则返回true，反之为false
      */
     private boolean validateSign(HttpServletRequest request) {
-        String requestSign = request.getParameter("sign");//获得请求签名，如sign=19e907700db7ad91318424a97c54ed57
-        if (StringUtils.isEmpty(requestSign)) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Map<String, String> paramsMap = new HashMap<>();
+        for(String key : parameterMap.keySet()){
+            paramsMap.put(key, parameterMap.get(key)[0]);
+            logger.info("键："+key+"---值："+parameterMap.get(key)[0]);
+        }
+        String sign = request.getHeader("sign");
+        if(StringUtil.isEmpty(sign))
             return false;
-        }
-        List<String> keys = new ArrayList<String>(request.getParameterMap().keySet());
-        keys.remove("sign");//排除sign参数
-        Collections.sort(keys);//排序
-
-        StringBuilder sb = new StringBuilder();
-        for (String key : keys) {
-            sb.append(key).append("=").append(request.getParameter(key)).append("&");//拼接字符串
-        }
-        String linkString = sb.toString();
-        linkString = StringUtils.substring(linkString, 0, linkString.length() - 1);//去除最后一个'&'
-
-        String secret = "Potato";//密钥，自己修改
-        String sign = DigestUtils.md5Hex(linkString + secret);//混合密钥md5
-
-        return StringUtils.equals(sign, requestSign);//比较
+//        if(StringUtil.isEmpty(queryString))
+//            return false;
+//        try {
+//            queryString = URLDecoder.decode(queryString, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        String[] strings =  queryString.split("&");
+//        Map<String, String> paramsMap = new HashMap<>();
+//        if(strings.length > 0){
+//            for(String str : strings){
+//                if(str.contains("=") && !str.startsWith("sign=")){
+//                    String[] paramStrs = str.split("=");
+//                    if(paramStrs.length > 1){
+//                        paramsMap.put(paramStrs[0], paramStrs[1]);
+//                    }else {
+//                        paramsMap.put(paramStrs[0], "");
+//                    }
+//                }
+//            }
+//        }
+        return sign.equals(MD5Util.createParamSign(paramsMap, TOKEN_KEY));
     }
 
     private String getIpAddress(HttpServletRequest request) {

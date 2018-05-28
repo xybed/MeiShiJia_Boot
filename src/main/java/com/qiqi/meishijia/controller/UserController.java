@@ -5,13 +5,10 @@ import com.qiqi.meishijia.model.User;
 import com.qiqi.meishijia.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,7 +16,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
     @Resource
     private UserService userService;
 
@@ -29,9 +26,10 @@ public class UserController {
         return ResultGenerator.genSuccessResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestParam Integer id) {
-        userService.deleteById(id);
+    @PostMapping("/login")
+    public Result delete(@RequestParam String username, @RequestParam String password) {
+        logger.info(username);
+        logger.info(password);
         return ResultGenerator.genSuccessResult();
     }
 
@@ -54,4 +52,5 @@ public class UserController {
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
+
 }
