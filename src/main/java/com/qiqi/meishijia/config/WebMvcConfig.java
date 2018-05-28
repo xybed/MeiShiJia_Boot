@@ -175,6 +175,27 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
      * @return 安全则返回true，反之为false
      */
     private boolean validateSign(HttpServletRequest request) {
+        if("POST".equals(request.getMethod())){
+            int len = request.getContentLength();
+            ServletInputStream is = null;
+            try {
+                is = request.getInputStream();
+                byte[] buffer = new byte[len];
+                is.read(buffer, 0, len);
+                String body = new String(buffer, "UTF-8");
+                logger.info("请求体："+body);
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            } finally {
+                if(is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
         Map<String, String[]> parameterMap = request.getParameterMap();
         Map<String, String> paramsMap = new HashMap<>();
         for(String key : parameterMap.keySet()){
