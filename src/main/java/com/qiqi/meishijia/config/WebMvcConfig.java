@@ -30,6 +30,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -174,58 +175,26 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
      * @param request 请求体
      * @return 安全则返回true，反之为false
      */
-    private boolean validateSign(HttpServletRequest request) {
+    private boolean validateSign(HttpServletRequest request) throws IOException{
+        Map<String, String> paramsMap = new HashMap<>();
         if("POST".equals(request.getMethod())){
             int len = request.getContentLength();
-            ServletInputStream is = null;
-            try {
-                is = request.getInputStream();
-                byte[] buffer = new byte[len];
-                is.read(buffer, 0, len);
-                String body = new String(buffer, "UTF-8");
-                logger.info("请求体："+body);
-            } catch (IOException e) {
-                logger.error(e.getMessage());
-            } finally {
-                if(is != null) {
-                    try {
-                        is.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            ServletInputStream is = request.getInputStream();
+            byte[] buffer = new byte[len];
+            is.read(buffer, 0, len);
+            String body = new String(buffer, "UTF-8");
+            paramsMap = (Map<String, String>) JSON.parse(body);
+            is.close();
         }
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        Map<String, String> paramsMap = new HashMap<>();
-        for(String key : parameterMap.keySet()){
-            paramsMap.put(key, parameterMap.get(key)[0]);
-            logger.info("键："+key+"---值："+parameterMap.get(key)[0]);
+        for(String key : request.getParameterMap().keySet()){
+            paramsMap.put(key, request.getParameterMap().get(key)[0]);
         }
+        paramsMap.put("ver", request.getHeader("ver"));
+        paramsMap.put("platform", request.getHeader("platform"));
+        paramsMap.put("token", request.getHeader("token"));
         String sign = request.getHeader("sign");
         if(StringUtil.isEmpty(sign))
             return false;
-//        if(StringUtil.isEmpty(queryString))
-//            return false;
-//        try {
-//            queryString = URLDecoder.decode(queryString, "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//        String[] strings =  queryString.split("&");
-//        Map<String, String> paramsMap = new HashMap<>();
-//        if(strings.length > 0){
-//            for(String str : strings){
-//                if(str.contains("=") && !str.startsWith("sign=")){
-//                    String[] paramStrs = str.split("=");
-//                    if(paramStrs.length > 1){
-//                        paramsMap.put(paramStrs[0], paramStrs[1]);
-//                    }else {
-//                        paramsMap.put(paramStrs[0], "");
-//                    }
-//                }
-//            }
-//        }
         return sign.equals(MD5Util.createParamSign(paramsMap, TOKEN_KEY));
     }
 
