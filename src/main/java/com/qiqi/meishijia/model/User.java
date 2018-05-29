@@ -1,6 +1,12 @@
 package com.qiqi.meishijia.model;
 
-import javax.persistence.*;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 public class User {
     /**
@@ -24,12 +30,15 @@ public class User {
      * 注册的验证码
      */
     @Column(name = "verify_code")
+    @JSONField(name = "verify_code")
     private String verifyCode;
 
     /**
      * 注册的时间
      */
     @Column(name = "register_date")
+    @JSONField(name = "register_date", format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String registerDate;
 
     private String avatar;
@@ -38,6 +47,7 @@ public class User {
      * 真实姓名
      */
     @Column(name = "real_name")
+    @JSONField(name = "real_name")
     private String realName;
 
     /**
@@ -49,6 +59,7 @@ public class User {
      * 用户绑定的手机号，或者为手机注册时的手机号
      */
     @Column(name = "mobile_phone")
+    @JSONField(name = "mobile_phone")
     private String mobilePhone;
 
     /**
@@ -87,6 +98,7 @@ public class User {
      * 消息主体id
      */
     @Column(name = "principal_id")
+    @JSONField(name = "principal_id")
     private Integer principalId;
 
     /**

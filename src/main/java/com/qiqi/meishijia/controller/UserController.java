@@ -3,6 +3,7 @@ import com.qiqi.meishijia.config.MyHttpServletRequestWrapper;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultGenerator;
 import com.qiqi.meishijia.model.User;
+import com.qiqi.meishijia.model.request.UserReq;
 import com.qiqi.meishijia.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,22 +27,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController extends BaseController{
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private UserService userService;
 
     @PostMapping("/add")
     public Result add(User user) {
-        userService.save(user);
-        return ResultGenerator.genSuccessResult();
+//        userService.save(user);
+        return ResultGenerator.genSuccessResult(user);
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody User user) {
-        logger.info(user.getUsername());
-        logger.info(user.getPassword());
-        return ResultGenerator.genSuccessResult();
+    public Result login(@RequestBody UserReq req) {
+        User user = userService.login(req.getUsername(), req.getPassword());
+        return ResultGenerator.genSuccessResult(user);
     }
 
     @PostMapping("/update")

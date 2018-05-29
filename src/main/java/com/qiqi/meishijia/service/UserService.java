@@ -7,5 +7,5 @@ import com.qiqi.meishijia.core.Service;
  * Created by 77 on 2018/05/25.
  */
 public interface UserService extends Service<User> {
-
+    User login(String username, String password);
 }

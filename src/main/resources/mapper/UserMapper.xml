@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qiqi.meishijia.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.qiqi.meishijia.model.User">
+  <resultMap id="baseResultMap" type="com.qiqi.meishijia.model.User">
     <!--
       WARNING - @mbg.generated
     -->
@@ -23,4 +23,8 @@
     <result column="signature" jdbcType="VARCHAR" property="signature" />
     <result column="principal_id" jdbcType="INTEGER" property="principalId" />
   </resultMap>
+
+  <select id="login" parameterType="java.lang.String" resultMap="baseResultMap">
+    SELECT * FROM `user` WHERE username=#{param1} AND `password`=#{param2}
+  </select>
 </mapper>
