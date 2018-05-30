@@ -101,6 +101,8 @@ public class User {
     @JSONField(name = "principal_id")
     private Integer principalId;
 
+    private String token;
+
     /**
      * 获取用户的唯一id
      *
@@ -397,5 +399,13 @@ public class User {
      */
     public void setPrincipalId(Integer principalId) {
         this.principalId = principalId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

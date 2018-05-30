@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultGenerator;
 import com.qiqi.meishijia.model.User;
-import com.qiqi.meishijia.model.request.UserReq;
 import com.qiqi.meishijia.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class UserController extends BaseController{
     private UserService userService;
 
     @PostMapping("/register")
-    public Result register(User user) {
+    public Result register(@RequestBody User user) {
         Integer result = userService.register(user.getUsername(), user.getPassword(), user.getVerifyCode());
         if(result == 1){
             return ResultGenerator.genSuccessResult("该用户注册过且密码相同，自动为您登录");
@@ -35,21 +34,15 @@ public class UserController extends BaseController{
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody UserReq req) {
-        User user = userService.login(req.getUsername(), req.getPassword());
+    public Result login(@RequestBody User user) {
+        user = userService.login(user.getUsername(), user.getPassword());
         return ResultGenerator.genSuccessResult(user);
     }
 
-    @PostMapping("/update")
-    public Result update(User user) {
-        userService.update(user);
+    @PostMapping("/logout")
+    public Result logout(@RequestHeader String token){
+
         return ResultGenerator.genSuccessResult();
-    }
-
-    @GetMapping("/detail")
-    public Result detail(@RequestParam Integer id) {
-        User user = userService.findById(id);
-        return ResultGenerator.genSuccessResult(user);
     }
 
     @GetMapping("/list")

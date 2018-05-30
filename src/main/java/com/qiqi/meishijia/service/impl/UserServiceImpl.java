@@ -3,9 +3,11 @@ package com.qiqi.meishijia.service.impl;
 import com.qiqi.meishijia.core.ServiceException;
 import com.qiqi.meishijia.dao.UserMapper;
 import com.qiqi.meishijia.model.User;
+import com.qiqi.meishijia.model.UserToken;
 import com.qiqi.meishijia.service.UserService;
 import com.qiqi.meishijia.core.AbstractService;
 import lib.utils.DateUtil;
+import lib.utils.MD5Util;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,6 +72,21 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         User user = userMapper.login(username, password);
         if(user == null)
             throw new ServiceException("用户名或密码不正确");
+
+        long time = System.currentTimeMillis();
+        String token = MD5Util.MD5(username + time);
+        long deadline = time + 7 * 24 * 60 * 60 * 1000;
+        UserToken userToken = new UserToken();
+        userToken.setUsername(username);
+        userToken.setToken(token);
+        userToken.setDeadline(deadline+"");
+        Integer result = userMapper.insertOrUpdateToken(userToken);
+        if(result != 1){
+            throw new ServiceException("登录失败，请稍候再试");
+        }
+
+        //TODO 添加头像绝对路径
+        user.setToken(token);
         return user;
     }
 }
