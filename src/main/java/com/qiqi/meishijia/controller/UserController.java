@@ -1,24 +1,15 @@
 package com.qiqi.meishijia.controller;
-import com.qiqi.meishijia.config.MyHttpServletRequestWrapper;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultGenerator;
 import com.qiqi.meishijia.model.User;
 import com.qiqi.meishijia.model.request.UserReq;
 import com.qiqi.meishijia.service.UserService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -31,10 +22,16 @@ public class UserController extends BaseController{
     @Resource
     private UserService userService;
 
-    @PostMapping("/add")
-    public Result add(User user) {
-//        userService.save(user);
-        return ResultGenerator.genSuccessResult(user);
+    @PostMapping("/register")
+    public Result register(User user) {
+        Integer result = userService.register(user.getUsername(), user.getPassword(), user.getVerifyCode());
+        if(result == 1){
+            return ResultGenerator.genSuccessResult("该用户注册过且密码相同，自动为您登录");
+        }else if(result == 2){
+            return ResultGenerator.genSuccessResult("注册成功");
+        }else {
+            return ResultGenerator.genFailResult("注册失败");
+        }
     }
 
     @PostMapping("/login")
@@ -63,35 +60,4 @@ public class UserController extends BaseController{
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 
-    public static String getBodyString(final ServletRequest request) {
-        StringBuilder sb = new StringBuilder();
-        InputStream inputStream = null;
-        BufferedReader reader = null;
-        try {
-            inputStream = request.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return sb.toString();
-    }
 }

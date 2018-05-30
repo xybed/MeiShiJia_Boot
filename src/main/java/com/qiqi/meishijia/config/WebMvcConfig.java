@@ -155,7 +155,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径
-        registry.addResourceHandler("/my/**").addResourceLocations("classpath:/my/");
+        registry.addResourceHandler("/avatar/**").addResourceLocations("classpath:/avatar/");
         super.addResourceHandlers(registry);
     }
 

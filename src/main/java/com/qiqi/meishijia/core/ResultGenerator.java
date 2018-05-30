@@ -4,7 +4,7 @@ package com.qiqi.meishijia.core;
  * 响应结果生成工具
  */
 public class ResultGenerator {
-    private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";
+    private static final String DEFAULT_SUCCESS_MESSAGE = "success";
 
     public static Result genSuccessResult() {
         return new Result()
@@ -17,6 +17,13 @@ public class ResultGenerator {
                 .setCode(ResultCode.SUCCESS)
                 .setMessage(DEFAULT_SUCCESS_MESSAGE)
                 .setData(data);
+    }
+
+    public static Result genSuccessResult(String message){
+        return new Result()
+                .setCode(ResultCode.SUCCESS)
+                .setMessage(message)
+                .setData(message);
     }
 
     public static Result genFailResult(String message) {

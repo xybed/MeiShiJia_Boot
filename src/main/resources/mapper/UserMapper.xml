@@ -23,8 +23,27 @@
     <result column="signature" jdbcType="VARCHAR" property="signature" />
     <result column="principal_id" jdbcType="INTEGER" property="principalId" />
   </resultMap>
+  
+  <select id="verifyRegister" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT COUNT(*) FROM user WHERE username = #{username}
+  </select>
 
-  <select id="login" parameterType="java.lang.String" resultMap="baseResultMap">
+  <select id="verifyPassword" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT COUNT(*) FROM user WHERE username=#{param1} AND password = #{param2}
+  </select>
+
+  <insert id="register" parameterType="com.qiqi.meishijia.model.User">
+    INSERT INTO
+      `user`(username, `password`, verify_code, register_date, avatar, real_name, nickname, mobile_phone, sex, birthday, email, province, city, address, signature)
+    VALUES
+      (#{username}, #{password}, #{verifyCode}, #{registerDate}, #{avatar}, #{realName}, #{nickname}, #{mobilePhone}, #{sex}, #{birthday}, #{email}, #{province}, #{city}, #{address}, #{signature})
+  </insert>
+
+  <update id="updatePid" parameterType="java.lang.String">
+    UPDATE `user` SET principal_id = id+1000 WHERE username=#{username}
+  </update>
+
+  <select id="login" resultMap="baseResultMap" parameterType="java.lang.String">
     SELECT * FROM `user` WHERE username=#{param1} AND `password`=#{param2}
   </select>
 </mapper>
