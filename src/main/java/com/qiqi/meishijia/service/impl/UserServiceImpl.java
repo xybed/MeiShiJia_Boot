@@ -82,11 +82,43 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         userToken.setDeadline(deadline+"");
         Integer result = userMapper.insertOrUpdateToken(userToken);
         if(result != 1){
-            throw new ServiceException("登录失败，请稍候再试");
+            throw new ServiceException("登录失败，请稍后再试");
         }
 
         //TODO 添加头像绝对路径
         user.setToken(token);
         return user;
     }
+
+    @Override
+    public void logout(String token) {
+        Integer result = userMapper.logout(token);
+        if(result != 1)
+            throw new ServiceException("登出失败，请稍后再试");
+    }
+
+    @Override
+    public void updatePassword(String username, String password) {
+        Integer result = userMapper.updatePassword(username, password);
+        if(result != 1)
+            throw new ServiceException("修改失败，请稍后再试");
+    }
+
+    @Override
+    public void updateUser(User user) {
+        Integer result = userMapper.updateUser(user);
+        if(result != 1)
+            throw new ServiceException("修改失败，请稍后再试");
+    }
+
+    @Override
+    public String queryAvatar(int id) {
+        return null;
+    }
+
+    @Override
+    public void updateAvatar(int id, String avatar) {
+
+    }
+
 }

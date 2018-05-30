@@ -55,33 +55,33 @@
     ON DUPLICATE KEY UPDATE token=#{token},deadline=#{deadline}
   </insert>
 
-  <!--<update id="logout" parameterType="java.lang.String">-->
-    <!--UPDATE user_token SET token='',deadline='' WHERE token=#{token}-->
-  <!--</update>-->
+  <update id="logout" parameterType="java.lang.String">
+    UPDATE user_token SET token='',deadline='' WHERE token=#{token}
+  </update>
 
-  <!--<update id="updatePassword" parameterType="java.lang.String">-->
-    <!--UPDATE `user` SET `password`=#{1} WHERE username=#{0}-->
-  <!--</update>-->
+  <update id="updatePassword" parameterType="java.lang.String">
+    UPDATE user SET password=#{param2} WHERE username=#{param1}
+  </update>
 
-  <!--<update id="updateUser" parameterType="com.qiqi.meishijia.model.User">-->
-    <!--UPDATE `user` SET-->
-      <!--nickname=#{nickname},-->
-      <!--real_name=#{realName},-->
-      <!--sex=#{sex},-->
-      <!--birthday=#{birthday},-->
-      <!--email=#{email},-->
-      <!--province=#{province},-->
-      <!--city=#{city},-->
-      <!--signature=#{signature}-->
-    <!--WHERE id=#{id}-->
-  <!--</update>-->
+  <update id="updateUser" parameterType="com.qiqi.meishijia.model.User">
+    UPDATE user SET
+      nickname=#{nickname},
+      real_name=#{realName},
+      sex=#{sex},
+      birthday=#{birthday},
+      email=#{email},
+      province=#{province},
+      city=#{city},
+      signature=#{signature}
+    WHERE id=#{id}
+  </update>
 
-  <!--<select id="queryAvatar" parameterType="java.lang.Integer" resultType="java.lang.String">-->
-    <!--SELECT avatar FROM `user` WHERE id=#{userId}-->
-  <!--</select>-->
+  <select id="queryAvatar" resultType="java.lang.String" parameterType="java.lang.Integer">
+    SELECT avatar FROM user WHERE id=#{id}
+  </select>
 
-  <!--<update id="updateAvatar" parameterType="com.qiqi.meishijia.model.User">-->
-    <!--UPDATE `user` SET avatar=#{avatar} WHERE id=#{id}-->
-  <!--</update>-->
+  <update id="updateAvatar" parameterType="com.qiqi.meishijia.model.User">
+    UPDATE user SET avatar=#{avatar} WHERE id=#{id}
+  </update>
 
 </mapper>

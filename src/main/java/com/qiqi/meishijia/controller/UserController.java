@@ -41,7 +41,24 @@ public class UserController extends BaseController{
 
     @PostMapping("/logout")
     public Result logout(@RequestHeader String token){
+        userService.logout(token);
+        return ResultGenerator.genSuccessResult("登出成功");
+    }
 
+    @PostMapping("/modifyPwd")
+    public Result modifyPassword(@RequestBody User user){
+        userService.updatePassword(user.getUsername(), user.getPassword());
+        return ResultGenerator.genSuccessResult("修改密码成功");
+    }
+
+    @PostMapping("/modifyUserInfo")
+    public Result modifyUserInfo(@RequestBody User user){
+        userService.updateUser(user);
+        return ResultGenerator.genSuccessResult("修改信息成功");
+    }
+
+    @PostMapping("/modifyAvatar")
+    public Result modifyAvatar(){
         return ResultGenerator.genSuccessResult();
     }
 

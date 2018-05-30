@@ -11,4 +11,9 @@ public interface UserMapper extends Mapper<User> {
     Integer updatePid(String username);
     User login(String username, String password);
     Integer insertOrUpdateToken(UserToken userToken);
+    Integer logout(String token);
+    Integer updatePassword(String username, String password);
+    Integer updateUser(User user);
+    String queryAvatar(int id);
+    Integer updateAvatar(User user);
 }
