@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "httpServletRequestReplacedFilter", urlPatterns = "/*")
+@WebFilter(filterName = "httpServletRequestReplacedFilter")
 public class HttpServletRequestReplacedFilter implements Filter {
 
     @Override

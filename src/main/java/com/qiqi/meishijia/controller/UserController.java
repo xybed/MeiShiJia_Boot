@@ -7,11 +7,13 @@ import com.qiqi.meishijia.core.ResultGenerator;
 import com.qiqi.meishijia.model.User;
 import com.qiqi.meishijia.service.UserService;
 import lib.utils.FileUtil;
+import lib.utils.MD5Util;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -61,19 +63,18 @@ public class UserController extends BaseController{
     }
 
     @PostMapping("/modifyAvatar")
-    public Result modifyAvatar(@RequestBody User user, @RequestPart(name = "img_file") MultipartFile file){
-        String dbAvatar = userService.queryAvatar(user.getId());
+    public Result modifyAvatar(@RequestPart(name = "img_file") MultipartFile file){
         logger.info(getApplicationPath());
-        if(!dbAvatar.endsWith("icon_default_avatar.png")){
-            FileUtil.deleteFile(new File(getApplicationPath() + dbAvatar));
-        }
-//        //存图片,名字根据id加密
-//        String avatar = MD5Util.MD5(user.getId() + System.currentTimeMillis() + "");
-//        try {
-//            FileUtil.saveImage(file.getBytes(), getApplicationPath() + "/avatar/", avatar + ".png");
-//        } catch (IOException e) {
-//            e.printStackTrace();
+//        if(!dbAvatar.endsWith("icon_default_avatar.png")){
+//            FileUtil.deleteFile(new File(getApplicationPath() + dbAvatar));
 //        }
+        //存图片,名字根据id加密
+        String avatar = MD5Util.MD5(System.currentTimeMillis() + "");
+        try {
+            FileUtil.saveImage(file.getBytes(), getApplicationPath() + "/avatar/", avatar + ".png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        userService.updateAvatar(user.getId(), avatar);
         return ResultGenerator.genSuccessResult();
     }
