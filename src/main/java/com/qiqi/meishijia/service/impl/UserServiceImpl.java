@@ -1,5 +1,6 @@
 package com.qiqi.meishijia.service.impl;
 
+import com.qiqi.meishijia.common.Constants;
 import com.qiqi.meishijia.core.ServiceException;
 import com.qiqi.meishijia.dao.UserMapper;
 import com.qiqi.meishijia.model.User;
@@ -86,6 +87,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         }
 
         //TODO 添加头像绝对路径
+        user.setAvatar(Constants.URL_PREFIX+user.getAvatar());
         user.setToken(token);
         return user;
     }
@@ -106,6 +108,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public void updateUser(User user) {
+        String avatar = user.getAvatar();
+        avatar = avatar.substring((Constants.URL_PREFIX).length(), avatar.length());
+        user.setAvatar(avatar);
         Integer result = userMapper.updateUser(user);
         if(result != 1)
             throw new ServiceException("修改失败，请稍后再试");

@@ -10,8 +10,8 @@ public class Result {
     private String message;
     private Object data;
 
-    public Result setCode(ResultCode resultCode) {
-        this.code = resultCode.code();
+    public Result setCode(int code) {
+        this.code = code;
         return this;
     }
 

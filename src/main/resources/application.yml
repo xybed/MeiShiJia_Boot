@@ -36,5 +36,9 @@ spring:
   redis:
     host: 127.0.0.1
     database: 0
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 logging:
   path: /log

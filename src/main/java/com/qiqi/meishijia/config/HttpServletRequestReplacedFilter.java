@@ -2,10 +2,14 @@ package com.qiqi.meishijia.config;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "httpServletRequestReplacedFilter")
+@WebFilter(filterName = "httpServletRequestReplacedFilter", urlPatterns = "/**",
+        initParams={
+                @WebInitParam(name="exclusions",value="/upload/image")// 忽略资源
+        })
 public class HttpServletRequestReplacedFilter implements Filter {
 
     @Override

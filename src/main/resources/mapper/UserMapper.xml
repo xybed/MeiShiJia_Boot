@@ -66,6 +66,7 @@
   <update id="updateUser" parameterType="com.qiqi.meishijia.model.User">
     UPDATE user SET
       nickname=#{nickname},
+      avatar=#{avatar},
       real_name=#{realName},
       sex=#{sex},
       birthday=#{birthday},

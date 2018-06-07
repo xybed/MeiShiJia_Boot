@@ -4,31 +4,23 @@ package com.qiqi.meishijia.core;
  * 响应结果生成工具
  */
 public class ResultGenerator {
-    private static final String DEFAULT_SUCCESS_MESSAGE = "success";
 
     public static Result genSuccessResult() {
         return new Result()
-                .setCode(ResultCode.SUCCESS)
-                .setMessage(DEFAULT_SUCCESS_MESSAGE);
+                .setCode(ResultEnum.SUCCESS.getCode())
+                .setMessage(ResultEnum.SUCCESS.getMsg());
     }
 
     public static Result genSuccessResult(Object data) {
         return new Result()
-                .setCode(ResultCode.SUCCESS)
-                .setMessage(DEFAULT_SUCCESS_MESSAGE)
+                .setCode(ResultEnum.SUCCESS.getCode())
+                .setMessage(ResultEnum.SUCCESS.getMsg())
                 .setData(data);
     }
 
-//    public static Result genSuccessResult(String message){
-//        return new Result()
-//                .setCode(ResultCode.SUCCESS)
-//                .setMessage(message)
-//                .setData(message);
-//    }
-
     public static Result genFailResult(String message) {
         return new Result()
-                .setCode(ResultCode.FAIL)
+                .setCode(ResultEnum.FAIL.getCode())
                 .setMessage(message);
     }
 }
