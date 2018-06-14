@@ -7,6 +7,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultEnum;
 import com.qiqi.meishijia.core.ServiceException;
+import com.qiqi.meishijia.interceptor.SignInterceptor;
 import lib.utils.MD5Util;
 import lib.utils.StringUtil;
 import org.slf4j.Logger;
@@ -41,7 +42,6 @@ import java.util.*;
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
-    private static final String TOKEN_KEY = "MeiShiJia";
 
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
@@ -125,24 +125,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if (!"dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new HandlerInterceptorAdapter() {
-                @Override
-                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                    //验证签名
-                    boolean pass = validateSign(request);
-                    if (pass) {
-                        return true;
-                    } else {
-                        logger.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}",
-                                request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
-
-                        Result result = new Result();
-                        result.setCode(ResultEnum.UNAUTHORIZED.getCode()).setMessage("签名认证失败");
-                        responseResult(response, result);
-                        return false;
-                    }
-                }
-            });
+            registry.addInterceptor(new SignInterceptor());
         }
     }
 
@@ -163,58 +146,5 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         } catch (IOException ex) {
             logger.error(ex.getMessage());
         }
-    }
-
-    /**
-     * 验证sign的有效性，保证请求是安全无恶意的
-     * @param request 请求体
-     * @return 安全则返回true，反之为false
-     */
-    private boolean validateSign(HttpServletRequest request) throws IOException{
-        Map<String, String> paramsMap = new HashMap<>();
-        if("POST".equals(request.getMethod())){
-            int len = request.getContentLength();
-            ServletInputStream is = request.getInputStream();
-            byte[] buffer = new byte[len];
-            is.read(buffer, 0, len);
-            String body = new String(buffer, "UTF-8");
-            paramsMap = (Map<String, String>) JSON.parse(body);
-            is.close();
-        }
-        for(String key : request.getParameterMap().keySet()){
-            paramsMap.put(key, request.getParameterMap().get(key)[0]);
-        }
-        paramsMap.put("ver", request.getHeader("ver"));
-        paramsMap.put("platform", request.getHeader("platform"));
-        paramsMap.put("token", request.getHeader("token"));
-        String sign = request.getHeader("sign");
-        if(StringUtil.isEmpty(sign))
-            return false;
-        return sign.equals(MD5Util.createParamSign(paramsMap, TOKEN_KEY));
-    }
-
-    private String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        // 如果是多级代理，那么取第一个ip为客户端ip
-        if (ip != null && ip.indexOf(",") != -1) {
-            ip = ip.substring(0, ip.indexOf(",")).trim();
-        }
-
-        return ip;
     }
 }
