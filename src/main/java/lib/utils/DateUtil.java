@@ -54,4 +54,14 @@ public class DateUtil {
             }
         }
     }
+
+    /**
+     * 日期转换，date转string
+     * @param date 日期的date形式
+     * @return 日期的string形式
+     */
+    public static String getTime(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(date);
+    }
 }

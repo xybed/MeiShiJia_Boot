@@ -1,10 +1,9 @@
-package com.qiqi.meishijia.dao;
+package com.qiqi.meishijia.mapper;
 
-import com.qiqi.meishijia.core.Mapper;
 import com.qiqi.meishijia.model.User;
 import com.qiqi.meishijia.model.UserToken;
 
-public interface UserMapper extends Mapper<User> {
+public interface UserMapper {
     Integer verifyRegister(String username);
     Integer verifyPassword(String username, String password);
     Integer register(User user);
