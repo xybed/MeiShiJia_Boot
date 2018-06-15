@@ -8,8 +8,12 @@ import com.qiqi.meishijia.model.User;
  */
 public interface UserService {
     Integer register(String username, String password, String verifyCode);
+
     User login(String username, String password);
+
     void logout(String token);
+
     void updatePassword(String username, String password);
+
     void updateUser(User user);
 }

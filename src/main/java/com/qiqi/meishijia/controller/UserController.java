@@ -1,7 +1,6 @@
 package com.qiqi.meishijia.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.qiqi.meishijia.annotation.NeedLogin;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultGenerator;
 import com.qiqi.meishijia.model.User;
@@ -9,7 +8,6 @@ import com.qiqi.meishijia.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
 * Created by 77 on 2018/05/25.
@@ -39,31 +37,27 @@ public class UserController extends BaseController{
         return ResultGenerator.genSuccessResult(user);
     }
 
+    @NeedLogin
     @PostMapping("/logout")
     public Result logout(@RequestHeader String token){
         userService.logout(token);
         return ResultGenerator.genSuccessResult("登出成功");
     }
 
+    @NeedLogin
     @PostMapping("/modifyPwd")
     public Result modifyPassword(@RequestBody User user){
         userService.updatePassword(user.getUsername(), user.getPassword());
         return ResultGenerator.genSuccessResult("修改密码成功");
     }
 
+    @NeedLogin
     @PostMapping("/modifyUserInfo")
     public Result modifyUserInfo(@RequestBody User user){
         userService.updateUser(user);
         return ResultGenerator.genSuccessResult("修改信息成功");
     }
 
-    @GetMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<User> list = userService.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
-    }
 
     @GetMapping("/test")
     public Result test(){

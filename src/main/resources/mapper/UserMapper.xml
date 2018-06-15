@@ -49,14 +49,14 @@
 
   <insert id="insertOrUpdateToken" parameterType="com.qiqi.meishijia.model.UserToken">
     INSERT INTO
-    user_token(username, token, deadline)
+    user_token(username, token)
     VALUES
-    (#{username}, #{token}, #{deadline})
-    ON DUPLICATE KEY UPDATE token=#{token},deadline=#{deadline}
+    (#{username}, #{token})
+    ON DUPLICATE KEY UPDATE token=#{token}
   </insert>
 
   <update id="logout" parameterType="java.lang.String">
-    UPDATE user_token SET token='',deadline='' WHERE token=#{token}
+    UPDATE user_token SET token='' WHERE token=#{token}
   </update>
 
   <update id="updatePassword" parameterType="java.lang.String">

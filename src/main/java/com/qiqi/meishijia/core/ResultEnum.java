@@ -8,7 +8,8 @@ public enum ResultEnum {
     FAIL(-1, "失败"),
     SIGN_FAIL(401, "认证失败"),//（签名错误）
     NOT_FOUND(404, "接口不存在"),
-    INTERNAL_SERVER_ERROR(500, "服务器内部错误");
+    INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
+    TOKEN_ERROR(-99, "登录过期");
 
     private int code;
     private String msg;

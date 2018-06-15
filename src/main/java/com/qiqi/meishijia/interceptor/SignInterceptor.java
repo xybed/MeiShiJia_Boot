@@ -32,7 +32,7 @@ public class SignInterceptor extends HandlerInterceptorAdapter {
                     request.getRequestURI(), getIpAddress(request), JSON.toJSONString(request.getParameterMap()));
 
             Result result = new Result();
-            result.setCode(ResultEnum.SIGN_FAIL.getCode()).setMessage("签名认证失败");
+            result.setCode(ResultEnum.SIGN_FAIL.getCode()).setMessage(ResultEnum.SIGN_FAIL.getMsg());
             responseResult(response, result);
             return false;
         }
