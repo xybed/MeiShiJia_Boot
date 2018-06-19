@@ -1,8 +1,12 @@
 package com.qiqi.meishijia.service.impl;
 
 import com.qiqi.meishijia.common.Constants;
+import com.qiqi.meishijia.common.Sex;
+import com.qiqi.meishijia.core.ResultEnum;
 import com.qiqi.meishijia.core.ServiceException;
+import com.qiqi.meishijia.mapper.UserCustomMapper;
 import com.qiqi.meishijia.mapper.UserMapper;
+import com.qiqi.meishijia.mapper.UserTokenCustomMapper;
 import com.qiqi.meishijia.model.User;
 import com.qiqi.meishijia.model.UserToken;
 import com.qiqi.meishijia.service.UserService;
@@ -18,11 +22,15 @@ import javax.annotation.Resource;
  * Created by 77 on 2018/05/25.
  */
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private UserCustomMapper userCustomMapper;
+    @Resource
+    private UserTokenCustomMapper userTokenCustomMapper;
 
+    @Transactional
     @Override
     public Integer register(String username, String password, String verifyCode) {
         /*
@@ -31,13 +39,13 @@ public class UserServiceImpl implements UserService {
         3.没有注册过就注册，设置默认信息
         4.设置消息主体id，3、4步骤要用到事务
          */
-        Integer isRegister = userMapper.verifyRegister(username);
+        Integer isRegister = userCustomMapper.verifyRegister(username);
         if(isRegister == 1){
-            Integer passwordIsCorrect = userMapper.verifyPassword(username, password);
+            Integer passwordIsCorrect = userCustomMapper.verifyPassword(username, password);
             if(passwordIsCorrect == 1){
                 return 1;
             }else {
-                throw new ServiceException("该用户已注册过");
+                throw new ServiceException(ResultEnum.REGISTERED);
             }
         }
 
@@ -46,40 +54,39 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setVerifyCode(verifyCode);
         user.setRegisterDate(DateUtil.getTime("yyyy-MM-dd HH:mm:ss"));
-        user.setAvatar("avatar/icon_default_avatar.png");
+        user.setAvatar(Constants.DEFAULT_AVATAR);
         //注册时，昵称用手机号代替
         user.setNickname(username);
         user.setMobilePhone(username);
         //性别为未知
-        user.setSex(0);
+        user.setSex(Sex.UNKNOW.ordinal());
 
         try {
             //注册用户
-            Integer affectedCount1 = userMapper.register(user);
-            //如果sql执行不成功，affectedCount1则会为0，这一句便会抛异常，事务回滚
-            int i = 1 / affectedCount1;
+            //如果sql执行不成功，这一句便会抛异常，事务回滚
+            userMapper.insertSelective(user);
             //设置pid
-            int affectedCount2 = userMapper.updatePid(username);
-            i = 1 / affectedCount2;
+            userCustomMapper.updatePid(username);
             return 2;
         }catch (Exception e){
-            throw new ServiceException("注册失败，请稍后再试");
+            throw new ServiceException(ResultEnum.REGISTER_FAIL);
         }
     }
 
     @Override
     public User login(String username, String password) {
-        User user = userMapper.login(username, password);
+        User user = userCustomMapper.login(username, password);
         if(user == null)
-            throw new ServiceException("用户名或密码不正确");
+            throw new ServiceException(ResultEnum.LOGIN_ERROR);
 
         String token = JWTUtil.createNewToken(username);
         UserToken userToken = new UserToken();
         userToken.setUsername(username);
         userToken.setToken(token);
-        Integer result = userMapper.insertOrUpdateToken(userToken);
-        if(result != 1){
-            throw new ServiceException("登录失败，请稍后再试");
+        Integer result = userTokenCustomMapper.insertOrUpdateToken(userToken);
+        //插入影响行为1，更新影响行为2
+        if(result != 1 && result != 2){
+            throw new ServiceException(ResultEnum.LOGIN_FAIL);
         }
 
         user.setAvatar(Constants.URL_PREFIX+user.getAvatar());
@@ -89,16 +96,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(String token) {
-        Integer result = userMapper.logout(token);
-        if(result != 1)
-            throw new ServiceException("登出失败，请稍后再试");
+        userTokenCustomMapper.logout(token);
     }
 
     @Override
     public void updatePassword(String username, String password) {
-        Integer result = userMapper.updatePassword(username, password);
+        Integer result = userCustomMapper.updatePassword(username, password);
         if(result != 1)
-            throw new ServiceException("修改失败，请稍后再试");
+            throw new ServiceException(ResultEnum.MODIFY_FAIL);
     }
 
     @Override
@@ -106,9 +111,9 @@ public class UserServiceImpl implements UserService {
         String avatar = user.getAvatar();
         avatar = avatar.substring((Constants.URL_PREFIX).length(), avatar.length());
         user.setAvatar(avatar);
-        Integer result = userMapper.updateUser(user);
+        Integer result = userMapper.updateByPrimaryKeySelective(user);
         if(result != 1)
-            throw new ServiceException("修改失败，请稍后再试");
+            throw new ServiceException(ResultEnum.MODIFY_FAIL);
     }
 
 }

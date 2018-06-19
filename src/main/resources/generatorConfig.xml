@@ -18,7 +18,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.qiqi.meishijia.mapper"
                              targetProject="src/main/java">
         </javaClientGenerator>
-        <table tableName="user_token" domainObjectName="UserToken"
+        <table tableName="user" domainObjectName="User1"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="false"/>

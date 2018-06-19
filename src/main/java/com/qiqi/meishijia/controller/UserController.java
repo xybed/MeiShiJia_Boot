@@ -37,7 +37,6 @@ public class UserController extends BaseController{
         return ResultGenerator.genSuccessResult(user);
     }
 
-    @NeedLogin
     @PostMapping("/logout")
     public Result logout(@RequestHeader String token){
         userService.logout(token);

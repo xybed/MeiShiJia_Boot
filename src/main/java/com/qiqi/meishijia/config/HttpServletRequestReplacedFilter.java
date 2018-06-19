@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "httpServletRequestReplacedFilter", urlPatterns = "/**",
+@WebFilter(filterName = "httpServletRequestReplacedFilter", urlPatterns = "/*",
         initParams={
                 @WebInitParam(name="exclusions",value="/upload/image")// 忽略资源
         })

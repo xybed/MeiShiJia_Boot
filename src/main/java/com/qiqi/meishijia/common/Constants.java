@@ -5,4 +5,5 @@ public class Constants {
     public static final String FILE_BUCKET = "avatar/";
     public static final String IMG_SUFFIX = ".png";
     public static final String SLASH = "/";
+    public static final String DEFAULT_AVATAR = FILE_BUCKET + "icon_default_avatar.png";
 }
