@@ -126,9 +126,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if ("dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/avatar/**");
+            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/avatar/*", "/error");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/avatar/**");
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/avatar/*");
     }
 
     //配置静态访问资源
