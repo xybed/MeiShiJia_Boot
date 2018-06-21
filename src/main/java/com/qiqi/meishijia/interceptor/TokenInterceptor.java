@@ -24,34 +24,38 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod method = (HandlerMethod) handler;
-        NeedLogin needLogin = method.getMethodAnnotation(NeedLogin.class);
-        if(needLogin != null){
-            String token = request.getHeader("token");
-            if(token != null){
-                Claims claims = JWTUtil.getClaims(token);
-                String username = claims.getSubject();
-                Date expiration = claims.getExpiration();
-                long currentTime = System.currentTimeMillis();
-                //时间过期
-                if(expiration.getTime() < currentTime){
-                    responseResult(response);
-                    return false;
-                }
-                WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
-                UserTokenService userTokenService = applicationContext.getBean("userTokenService", UserTokenService.class);
-                String tokenDB = userTokenService.queryToken(username);
-                if(!token.equals(tokenDB)){
-                    responseResult(response);
-                    return false;
+        try {
+            HandlerMethod method = (HandlerMethod) handler;
+            NeedLogin needLogin = method.getMethodAnnotation(NeedLogin.class);
+            if(needLogin != null){
+                String token = request.getHeader("token");
+                if(token != null){
+                    Claims claims = JWTUtil.getClaims(token);
+                    String username = claims.getSubject();
+                    Date expiration = claims.getExpiration();
+                    long currentTime = System.currentTimeMillis();
+                    //时间过期
+                    if(expiration.getTime() < currentTime){
+                        responseResult(response);
+                        return false;
+                    }
+                    WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+                    UserTokenService userTokenService = applicationContext.getBean("userTokenService", UserTokenService.class);
+                    String tokenDB = userTokenService.queryToken(username);
+                    if(!token.equals(tokenDB)){
+                        responseResult(response);
+                        return false;
+                    }else {
+                        return true;
+                    }
                 }else {
-                    return true;
+                    //token为空
+                    responseResult(response);
+                    return false;
                 }
-            }else {
-                //token为空
-                responseResult(response);
-                return false;
             }
+        }catch (ClassCastException e){
+            logger.info("ClassCastException:" + request.getRequestURL().toString());
         }
         return super.preHandle(request, response, handler);
     }

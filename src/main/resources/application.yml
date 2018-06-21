@@ -42,3 +42,11 @@ spring:
       max-request-size: 10MB
 logging:
   path: /log
+server:
+  ssl:
+    key-store: server.keystore
+    key-store-password: 77jiajia
+    key-store-type: JKS
+    key-alias: meishijia
+    key-password: meishijia
+  port: 8443

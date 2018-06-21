@@ -126,16 +126,17 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if ("dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/avatar/*", "/error");
+            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/avatar/*", "/view/*", "/error");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/avatar/*");
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/avatar/*", "/view/*");
     }
 
     //配置静态访问资源
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径
-        registry.addResourceHandler("/avatar/**").addResourceLocations("classpath:/avatar/");
+        registry.addResourceHandler("/avatar/**", "/view/**")
+                .addResourceLocations("classpath:/avatar/", "classpath:/view/");
         super.addResourceHandlers(registry);
     }
 
