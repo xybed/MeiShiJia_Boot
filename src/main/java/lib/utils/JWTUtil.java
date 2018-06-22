@@ -1,8 +1,6 @@
 package lib.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import java.util.Date;
 
@@ -25,7 +23,7 @@ public class JWTUtil {
                 .compact();
     }
 
-    public static Claims getClaims(String token){
+    public static Claims getClaims(String token) throws ExpiredJwtException,SignatureException {
         return Jwts
                 .parser()
                 .setSigningKey(TOKEN_KEY)

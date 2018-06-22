@@ -6,6 +6,8 @@ import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultEnum;
 import com.qiqi.meishijia.service.UserTokenService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import lib.utils.JWTUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +58,9 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             }
         }catch (ClassCastException e){
             logger.info("ClassCastException:" + request.getRequestURL().toString());
+        }catch (ExpiredJwtException|SignatureException e){
+            responseResult(response);
+            return false;
         }
         return super.preHandle(request, response, handler);
     }
