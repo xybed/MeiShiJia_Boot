@@ -49,4 +49,8 @@ server:
     key-store-type: JKS
     key-alias: meishijia
     key-password: meishijia
+#    trust-store: server.keystore
+#    trust-store-password: 77jiajia
+#    enabled: true
+#    client-auth: need
   port: 8443
