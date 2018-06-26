@@ -18,7 +18,8 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.qiqi.meishijia.mapper"
                              targetProject="src/main/java">
         </javaClientGenerator>
-        <table tableName="user" domainObjectName="User1"
+        <!--每次生成代码，需要修改处-->
+        <table tableName="football_ranking" domainObjectName="FootballRanking"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="false"/>

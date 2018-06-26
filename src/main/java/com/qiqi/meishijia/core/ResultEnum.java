@@ -6,6 +6,7 @@ package com.qiqi.meishijia.core;
 public enum ResultEnum {
     SUCCESS(0, "成功"),
     FAIL(-1, "失败"),
+    PARAM_ERROR(-2, "参数错误"),
     SIGN_FAIL(401, "认证失败"),//（签名错误）
     NOT_FOUND(404, "接口不存在"),
     INTERNAL_SERVER_ERROR(500, "服务器内部错误"),

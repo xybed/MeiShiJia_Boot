@@ -33,7 +33,7 @@
   </select>
 
   <select id="verifyPassword" resultType="java.lang.Integer" parameterType="java.lang.String">
-    SELECT COUNT(username) FROM user WHERE username=#{param1} AND password = #{param2}
+    SELECT COUNT(username) FROM user WHERE username=#{username} AND password = #{password}
   </select>
 
   <update id="updatePid" parameterType="java.lang.String">
@@ -43,11 +43,11 @@
   <select id="login" resultMap="baseResultMap" parameterType="java.lang.String">
     SELECT
     <include refid="Base_Column_List" />
-    FROM `user` WHERE username=#{param1} AND `password`=#{param2}
+    FROM `user` WHERE username=#{username} AND `password`=#{password}
   </select>
 
   <update id="updatePassword" parameterType="java.lang.String">
-    UPDATE user SET password=#{param2} WHERE username=#{param1}
+    UPDATE user SET password=#{password} WHERE username=#{username}
   </update>
 
   <select id="queryAvatar" resultType="java.lang.String" parameterType="java.lang.Integer">

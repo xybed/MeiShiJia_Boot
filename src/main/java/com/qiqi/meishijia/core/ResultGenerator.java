@@ -23,4 +23,10 @@ public class ResultGenerator {
                 .setCode(ResultEnum.FAIL.getCode())
                 .setMessage(message);
     }
+
+    public static Result genFailResult(ResultEnum resultEnum){
+        return new Result()
+                .setCode(resultEnum.getCode())
+                .setMessage(resultEnum.getMsg());
+    }
 }

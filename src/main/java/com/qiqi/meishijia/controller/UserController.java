@@ -57,10 +57,4 @@ public class UserController extends BaseController{
         return ResultGenerator.genSuccessResult("修改信息成功");
     }
 
-
-    @GetMapping("/test")
-    public Result test(){
-        logger.info(getApplicationPath());
-        return ResultGenerator.genSuccessResult(getApplicationPath());
-    }
 }

@@ -29,6 +29,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
+    wall:
+      config:
+        multiStatementAllow: true
   profiles:
     active: dev
   mvc:
