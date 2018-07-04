@@ -1,9 +1,11 @@
 package com.qiqi.meishijia;
 
+import com.qiqi.meishijia.test.MQSender;
 import com.qiqi.meishijia.test.TaskExecutorConfig;
 import com.qiqi.meishijia.test.AsyncTaskService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -11,9 +13,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MeishijiaApplicationTests {
+    @Autowired
+    private MQSender sender;
 
     @Test
     public void contextLoads() {
+//        sender.send();
+        sender.sendMessage();
+        sender.sendMessages();
     }
 
     public void testAsyncTask(){
