@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @ServletComponentScan //spring能够扫描到我们自己编写的servlet和filter
 @EnableCaching //开启缓存
 //@EnableScheduling //开启对计划任务的支持
-@MapperScan("com.qiqi.meishijia.mapper")
 public class MeishijiaApplication {
 
     public static void main(String[] args) {

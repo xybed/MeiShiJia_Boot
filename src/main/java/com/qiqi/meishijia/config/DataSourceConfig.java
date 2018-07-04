@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,18 +22,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@MapperScan(basePackages = MasterDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "masterSqlSessionFactory")// 扫描 Mapper 接口并容器管理
-public class MasterDataSourceConfig {
+@MapperScan(basePackages = DataSourceConfig.MAPPER_PACKAGE, sqlSessionFactoryRef = "sqlSessionFactory")// 扫描 Mapper 接口并容器管理
+public class DataSourceConfig {
 
-    static final String PACKAGE = "com.qiqi.meishijia.mapper";
-    static final String MAPPER_LOCATION = "classpath:mapper/*.xml";
-    static final String CONFIG_LOCATION = "mybatis-config.xml";
+    static final String MAPPER_PACKAGE = "com.qiqi.meishijia.mapper";
+    private static final String MAPPER_LOCATION = "classpath:mapper/*.xml";
+    private static final String MODEL_PACKAGE = "com.qiqi.meishijia.model";
     @Autowired
     WallFilter wallFilter;
 
     @ConfigurationProperties("spring.datasource")
     @Primary
-    @Bean(name = "masterDataSource")
+    @Bean(name = "dataSource")
     public DruidDataSource druidDataSource() {
         DruidDataSource dataSource =  new DruidDataSource();
         List<Filter> filters = new ArrayList<>();
@@ -42,22 +41,22 @@ public class MasterDataSourceConfig {
         dataSource.setProxyFilters(filters);
         return dataSource;
     }
-    @Bean(name = "masterTransactionManager")
+    @Bean(name = "transactionManager")
     @Primary
-    public PlatformTransactionManager masterTransactionManager() {
+    public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(druidDataSource());
     }
 
-    @Bean(name = "masterSqlSessionFactory")
+    @Bean(name = "sqlSessionFactory")
     @Primary
-    public SqlSessionFactory masterSqlSessionFactory()
+    public SqlSessionFactory sqlSessionFactory()
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(druidDataSource());
         sessionFactory.setVfs(SpringBootVFS.class);
-        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources(MasterDataSourceConfig.MAPPER_LOCATION));
-        sessionFactory.setConfigLocation(new ClassPathResource(CONFIG_LOCATION));
+        //添加xml目录
+        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(DataSourceConfig.MAPPER_LOCATION));
+        sessionFactory.setTypeAliasesPackage(MODEL_PACKAGE);
         return sessionFactory.getObject();
     }
     @Bean(name = "wallConfig")
