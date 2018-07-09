@@ -17,6 +17,10 @@ public enum ResultEnum {
     LOGIN_ERROR(1003, "用户名或密码不正确"),
     LOGIN_FAIL(1004, "登录失败，请稍后再试"),
     MODIFY_FAIL(1005, "修改失败，请稍后再试"),
+    //文件相关
+    IMAGE_FILE_NULL(2001, "图片文件为空"),
+    IMAGE_SAVE_ERROR(2002, "保存图片失败"),
+    APPLICATION_PATH_ERROR(2003, "项目路径获取失败"),
     ;
 
     private int code;

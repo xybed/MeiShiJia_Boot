@@ -19,7 +19,7 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
         <!--每次生成代码，需要修改处-->
-        <table tableName="football_ranking" domainObjectName="FootballRanking"
+        <table tableName="football_player" domainObjectName="AA"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="false"/>

@@ -9,8 +9,6 @@ import com.qiqi.meishijia.core.ResultEnum;
 import com.qiqi.meishijia.core.ServiceException;
 import com.qiqi.meishijia.interceptor.SignInterceptor;
 import com.qiqi.meishijia.interceptor.TokenInterceptor;
-import lib.utils.MD5Util;
-import lib.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,10 +23,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -126,17 +122,17 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if ("dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/avatar/*", "/view/*", "/error", "/favicon.ico");
+            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/*", "/view/*", "/error", "/favicon.ico");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/avatar/*", "/view/*", "/favicon.ico");
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/*", "/view/*", "/favicon.ico");
     }
 
     //配置静态访问资源
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径
-        registry.addResourceHandler("/avatar/**", "/view/**", "/favicon.ico")
-                .addResourceLocations("classpath:/avatar/", "classpath:/view/", "classpath:/favicon.ico");
+        registry.addResourceHandler("/images/**", "/view/**", "/favicon.ico")
+                .addResourceLocations("classpath:/images/", "classpath:/view/", "classpath:/favicon.ico");
         super.addResourceHandlers(registry);
     }
 
