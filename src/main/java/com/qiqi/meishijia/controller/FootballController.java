@@ -23,4 +23,12 @@ public class FootballController {
         }
         return ResultGenerator.genSuccessResult(footballService.getRanking(type));
     }
+
+    @GetMapping("/team")
+    public Result getTeam(@RequestParam(name = "team_id") Integer teamId){
+        if(StringUtils.isEmpty(teamId)){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        return ResultGenerator.genSuccessResult(footballService.getTeam(teamId));
+    }
 }
