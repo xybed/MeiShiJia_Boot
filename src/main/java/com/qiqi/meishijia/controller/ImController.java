@@ -4,12 +4,10 @@ import com.qiqi.meishijia.annotation.NeedLogin;
 import com.qiqi.meishijia.core.Result;
 import com.qiqi.meishijia.core.ResultEnum;
 import com.qiqi.meishijia.core.ResultGenerator;
+import com.qiqi.meishijia.model.RelationChain;
 import com.qiqi.meishijia.service.ImService;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -37,5 +35,17 @@ public class ImController {
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }
         return ResultGenerator.genSuccessResult(imService.getContactsDetail(userId, friendId));
+    }
+
+    @NeedLogin
+    @PostMapping("/modifyRemark")
+    public Result modifyRemark(@RequestBody RelationChain relationChain){
+        if(StringUtils.isEmpty(relationChain.getUserId()) ||
+                StringUtils.isEmpty(relationChain.getFriendId()) ||
+                StringUtils.isEmpty(relationChain.getRemark())){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        imService.modifyRemark(relationChain);
+        return ResultGenerator.genSuccessResult("修改成功");
     }
 }

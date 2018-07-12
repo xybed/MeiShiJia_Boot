@@ -1,5 +1,6 @@
 package com.qiqi.meishijia.service;
 
+import com.qiqi.meishijia.model.RelationChain;
 import com.qiqi.meishijia.pojo.Contacts;
 import com.qiqi.meishijia.pojo.ContactsDetail;
 
@@ -9,4 +10,6 @@ public interface ImService {
     List<Contacts> getContacts(Integer userId);
 
     ContactsDetail getContactsDetail(Integer userId, Integer friendId);
+
+    void modifyRemark(RelationChain relationChain);
 }

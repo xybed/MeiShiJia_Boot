@@ -15,4 +15,6 @@ public interface RelationChainMapper {
     List<Contacts> selectRelationChainByUserId(Integer userId);
 
     ContactsDetail selectFriendInfoByUserId(@Param("userId") Integer userId, @Param("friendId") Integer friendId);
+
+    int updateRemark(RelationChain record);
 }

@@ -2,6 +2,7 @@ package com.qiqi.meishijia.service.impl;
 
 import com.qiqi.meishijia.common.Constants;
 import com.qiqi.meishijia.mapper.RelationChainMapper;
+import com.qiqi.meishijia.model.RelationChain;
 import com.qiqi.meishijia.pojo.Contacts;
 import com.qiqi.meishijia.pojo.ContactsDetail;
 import com.qiqi.meishijia.service.ImService;
@@ -30,5 +31,10 @@ public class ImServiceImpl implements ImService {
         ContactsDetail contactsDetail = relationChainMapper.selectFriendInfoByUserId(userId, friendId);
         contactsDetail.setAvatar(Constants.URL_PREFIX + contactsDetail.getAvatar());
         return contactsDetail;
+    }
+
+    @Override
+    public void modifyRemark(RelationChain relationChain) {
+        relationChainMapper.updateRemark(relationChain);
     }
 }

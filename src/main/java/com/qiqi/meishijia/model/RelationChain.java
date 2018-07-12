@@ -1,12 +1,17 @@
 package com.qiqi.meishijia.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class RelationChain {
+    @JSONField(name = "user_id")
     private Integer userId;
 
+    @JSONField(name = "friend_id")
     private Integer friendId;
 
     private String remark;
 
+    @JSONField(name = "sort_letter")
     private String sortLetter;
 
     public Integer getUserId() {
