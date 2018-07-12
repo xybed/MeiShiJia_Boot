@@ -28,4 +28,14 @@ public class ImController {
         }
         return ResultGenerator.genSuccessResult(imService.getContacts(userId));
     }
+
+    @NeedLogin
+    @GetMapping("/contactsDetail")
+    public Result getContactsDetail(@RequestParam("user_id") Integer userId, @RequestParam("friend_id") Integer friendId){
+        if(StringUtils.isEmpty(userId) ||
+                StringUtils.isEmpty(friendId)){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        return ResultGenerator.genSuccessResult(imService.getContactsDetail(userId, friendId));
+    }
 }

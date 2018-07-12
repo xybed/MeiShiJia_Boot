@@ -14,6 +14,17 @@
     <result column="sort_letter" jdbcType="CHAR" property="sortLetter" />
     <result column="principal_id" jdbcType="INTEGER" property="principalId" />
   </resultMap>
+  <resultMap id="ContactsDetailMap" type="com.qiqi.meishijia.pojo.ContactsDetail">
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="principal_id" jdbcType="INTEGER" property="principalId" />
+  </resultMap>
   <insert id="insert" parameterType="com.qiqi.meishijia.model.RelationChain">
     insert into relation_chain (user_id, friend_id, remark, 
       sort_letter)
@@ -57,5 +68,12 @@
     FROM relation_chain rc
     LEFT JOIN user u on rc.friend_id = u.id
     WHERE rc.user_id=#{userId}
+  </select>
+
+  <select id="selectFriendInfoByUserId" parameterType="java.lang.Integer" resultMap="ContactsDetailMap">
+    SELECT avatar,remark,sex,username,nickname,province,city,signature,principal_id
+    FROM relation_chain rc
+    LEFT JOIN user u on rc.friend_id = u.id
+    WHERE rc.friend_id=#{friendId} AND rc.user_id=#{userId}
   </select>
 </mapper>
