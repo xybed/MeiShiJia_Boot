@@ -7,6 +7,7 @@ import com.qiqi.meishijia.model.FootballPlayer;
 import com.qiqi.meishijia.pojo.FootballPlayerCustom;
 import com.qiqi.meishijia.pojo.FootballRankingCustom;
 import com.qiqi.meishijia.service.FootballService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,7 +24,11 @@ public class FootballServiceImpl implements FootballService {
     @Override
 //    @Cacheable(cacheNames = "football.service.getRanking")
     public List<FootballRankingCustom> getRanking(Integer leagueId) {
-        return footballRankingCustomMapper.queryRankingByLeagueId(leagueId);
+        List<FootballRankingCustom> rankingList = footballRankingCustomMapper.queryRankingByLeagueId(leagueId);
+        for(FootballRankingCustom ranking : rankingList){
+            ranking.setLogo(Constants.URL_PREFIX + ranking.getLogo());
+        }
+        return rankingList;
     }
 
     @Override

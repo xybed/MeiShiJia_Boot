@@ -31,7 +31,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void getPlayerData() {
-        Document document = getDocumentByHtml(getHtml("http://soccer.stats.qq.com/team.htm?t1=179&from=xijia"));
+        Document document = getDocumentByHtml(getHtml("http://soccer.stats.qq.com/team.htm?t1=953&from=xijia"));
 
         Element layout = document.select("div.team-main").first();
         Element fr = layout.select("div.p-sidebar").first();
@@ -85,7 +85,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         Document document = getDocumentByHtml(getHtml(url));
 
         FootballPlayer player = new FootballPlayer();
-        player.setTeamId(4);
+        player.setTeamId(10);
 
         Element mod1 = document.select("div.info-panel").first()
                 .select("div[node-type=basicInfo]").first()
@@ -103,7 +103,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         System.out.println("储存路径："+wayPath+wayUriPath);
         //下载图片
         FileUtil.downloadImage(downloadUrl, wayPath + wayUriPath);
-        player.setAvatar("/images/player/"+wayUriPath);
+        player.setAvatar("images/player/"+wayUriPath);
         System.out.println("球员头像："+player.getAvatar());
 
         Element en = mod1.select("div.fl").first()

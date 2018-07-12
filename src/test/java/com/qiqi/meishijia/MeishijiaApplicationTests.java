@@ -1,5 +1,6 @@
 package com.qiqi.meishijia;
 
+import com.qiqi.meishijia.service.CrawlerService;
 import com.qiqi.meishijia.test.MQSender;
 import com.qiqi.meishijia.test.TaskExecutorConfig;
 import com.qiqi.meishijia.test.AsyncTaskService;
@@ -10,17 +11,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MeishijiaApplicationTests {
     @Autowired
     private MQSender sender;
 
+    @Resource
+    private CrawlerService crawlerService;
+
     @Test
     public void contextLoads() {
 //        sender.send();
-        sender.sendMessage();
-        sender.sendMessages();
+//        sender.sendMessage();
+//        sender.sendMessages();
+        crawlerService.getPlayerData();
     }
 
     public void testAsyncTask(){
