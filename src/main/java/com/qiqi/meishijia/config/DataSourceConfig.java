@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -28,6 +29,7 @@ public class DataSourceConfig {
     static final String MAPPER_PACKAGE = "com.qiqi.meishijia.mapper";
     private static final String MAPPER_LOCATION = "classpath:mapper/*.xml";
     private static final String MODEL_PACKAGE = "com.qiqi.meishijia.model";
+    private static final String CONFIG_LOCATION = "mybatis-config.xml";
     @Autowired
     WallFilter wallFilter;
 
@@ -55,8 +57,9 @@ public class DataSourceConfig {
         sessionFactory.setDataSource(druidDataSource());
         sessionFactory.setVfs(SpringBootVFS.class);
         //添加xml目录
-        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(DataSourceConfig.MAPPER_LOCATION));
+        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
         sessionFactory.setTypeAliasesPackage(MODEL_PACKAGE);
+//        sessionFactory.setConfigLocation(new ClassPathResource(CONFIG_LOCATION));
         return sessionFactory.getObject();
     }
     @Bean(name = "wallConfig")

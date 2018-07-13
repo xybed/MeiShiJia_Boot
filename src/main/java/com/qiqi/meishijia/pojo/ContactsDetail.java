@@ -11,6 +11,7 @@ public class ContactsDetail {
     private String avatar;
     private String remark;
     private Integer sex;
+    private Sex sexType;
     private String username;
     private String nickname;
     private String province;
@@ -41,6 +42,14 @@ public class ContactsDetail {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public Sex getSexType() {
+        return sexType;
+    }
+
+    public void setSexType(Sex sexType) {
+        this.sexType = sexType;
     }
 
     public String getUsername() {
