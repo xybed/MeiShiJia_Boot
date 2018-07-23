@@ -44,36 +44,36 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     private String env;//当前激活的配置文件
 
     //使用阿里 FastJson 作为JSON MessageConverter
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        List<MediaType> supportedMediaTypes = new ArrayList<>();
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
-        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
-        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
-        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_XML);
-        supportedMediaTypes.add(MediaType.IMAGE_GIF);
-        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
-        supportedMediaTypes.add(MediaType.IMAGE_PNG);
-        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
-        supportedMediaTypes.add(MediaType.TEXT_HTML);
-        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
-        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
-        supportedMediaTypes.add(MediaType.TEXT_XML);
-        converter.setSupportedMediaTypes(supportedMediaTypes);
-        FastJsonConfig config = new FastJsonConfig();
-        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
-                SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
-                SerializerFeature.WriteNullNumberAsZero);//Number null -> 0
-        converter.setFastJsonConfig(config);
-        converter.setDefaultCharset(Charset.forName("UTF-8"));
-        converters.add(converter);
-    }
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+//        List<MediaType> supportedMediaTypes = new ArrayList<>();
+//        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+//        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+//        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
+//        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
+//        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
+//        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
+//        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
+//        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
+//        supportedMediaTypes.add(MediaType.APPLICATION_XML);
+//        supportedMediaTypes.add(MediaType.IMAGE_GIF);
+//        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
+//        supportedMediaTypes.add(MediaType.IMAGE_PNG);
+//        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
+//        supportedMediaTypes.add(MediaType.TEXT_HTML);
+//        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
+//        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
+//        supportedMediaTypes.add(MediaType.TEXT_XML);
+//        converter.setSupportedMediaTypes(supportedMediaTypes);
+//        FastJsonConfig config = new FastJsonConfig();
+//        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
+//                SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
+//                SerializerFeature.WriteNullNumberAsZero);//Number null -> 0
+//        converter.setFastJsonConfig(config);
+//        converter.setDefaultCharset(Charset.forName("UTF-8"));
+//        converters.add(converter);
+//    }
 
 
     //统一异常处理
@@ -122,9 +122,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if ("dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/*", "/view/**", "/error", "/favicon.ico");
+            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/*", "/view/**", "/favicon.ico");
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**");
     }
 
     //配置静态访问资源

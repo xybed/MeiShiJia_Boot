@@ -12,9 +12,12 @@ import java.io.IOException;
         })
 public class HttpServletRequestReplacedFilter implements Filter {
 
-    @Override
-    public void destroy() {
+    private String[] excludeUrls;
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        String exclusions = filterConfig.getInitParameter("exclusions");
+        excludeUrls = exclusions.split(",");
     }
 
     @Override
@@ -22,7 +25,11 @@ public class HttpServletRequestReplacedFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         ServletRequest requestWrapper = null;
         if(request instanceof HttpServletRequest) {
-            requestWrapper = new MyHttpServletRequestWrapper((HttpServletRequest) request);
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            String path = httpServletRequest.getRequestURI();
+            if(!path.equals(excludeUrls[0])){
+                requestWrapper = new MyHttpServletRequestWrapper(httpServletRequest);
+            }
         }
         if(requestWrapper == null) {
             chain.doFilter(request, response);
@@ -32,7 +39,7 @@ public class HttpServletRequestReplacedFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig arg0) throws ServletException {
+    public void destroy() {
 
     }
 }
