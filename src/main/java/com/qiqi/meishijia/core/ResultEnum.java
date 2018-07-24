@@ -21,6 +21,9 @@ public enum ResultEnum {
     IMAGE_FILE_NULL(2001, "图片文件为空"),
     IMAGE_SAVE_ERROR(2002, "保存图片失败"),
     APPLICATION_PATH_ERROR(2003, "项目路径获取失败"),
+    //订单相关
+    ALIPAY_ORDER_ERROR(3001, "支付宝下单异常"),
+    ALIPAY_REFUND_ERROR(3002, "支付宝退款异常"),
     ;
 
     private int code;

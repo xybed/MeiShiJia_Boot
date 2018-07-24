@@ -83,7 +83,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
             public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
                 Result result = new Result();
                 if (e instanceof ServiceException) {//业务失败的异常，如“账号或密码错误”
-                    result.setCode(ResultEnum.FAIL.getCode()).setMessage(e.getMessage());
+                    result.setCode(((ServiceException) e).getCode()).setMessage(e.getMessage());
                     logger.info(e.getMessage());
                 } else if (e instanceof NoHandlerFoundException) {
                     result.setCode(ResultEnum.NOT_FOUND.getCode()).setMessage("接口 [" + request.getRequestURI() + "] 不存在");
@@ -122,9 +122,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if ("dev".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**");
+            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**", "/pay/**");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**");
+        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**", "/pay/**");
     }
 
     //配置静态访问资源

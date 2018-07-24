@@ -8,7 +8,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "httpServletRequestReplacedFilter", urlPatterns = "/*",
         initParams={
-                @WebInitParam(name="exclusions",value="/upload/image")// 忽略资源
+                @WebInitParam(name="exclusions",value="/upload")// 忽略资源
         })
 public class HttpServletRequestReplacedFilter implements Filter {
 
@@ -23,11 +23,18 @@ public class HttpServletRequestReplacedFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
+        boolean isFilter = true;
         ServletRequest requestWrapper = null;
         if(request instanceof HttpServletRequest) {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             String path = httpServletRequest.getRequestURI();
-            if(!path.equals(excludeUrls[0])){
+            for(String excludeUrl : excludeUrls){
+                if(path.startsWith(excludeUrl)){
+                    isFilter = false;
+                    break;
+                }
+            }
+            if(isFilter){
                 requestWrapper = new MyHttpServletRequestWrapper(httpServletRequest);
             }
         }

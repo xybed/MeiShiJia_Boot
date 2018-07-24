@@ -11,6 +11,7 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(String message){
         super(message);
+        this.code = ResultEnum.FAIL.getCode();
     }
 
     public ServiceException(ResultEnum resultEnum) {
