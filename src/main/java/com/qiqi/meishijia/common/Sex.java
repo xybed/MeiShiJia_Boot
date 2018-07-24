@@ -1,8 +1,5 @@
 package com.qiqi.meishijia.common;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Sex {
 
     UNKNOW(0, "未知"),
@@ -31,13 +28,5 @@ public enum Sex {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "code=" + code +
-                ", text='" + text + '\'' +
-                '}';
     }
 }

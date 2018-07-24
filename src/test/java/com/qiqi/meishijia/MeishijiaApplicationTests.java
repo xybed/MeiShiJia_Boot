@@ -1,5 +1,9 @@
 package com.qiqi.meishijia;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.qiqi.meishijia.common.Sex;
 import com.qiqi.meishijia.service.CrawlerService;
 import com.qiqi.meishijia.test.AsyncTaskService;
 import com.qiqi.meishijia.test.MQSender;
@@ -7,7 +11,6 @@ import com.qiqi.meishijia.test.TaskExecutorConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -33,6 +36,9 @@ public class MeishijiaApplicationTests {
 //        sender.sendMessage();
 //        sender.sendMessages();
 //        crawlerService.getPlayerData();
+        SerializeConfig serializeConfig = new SerializeConfig();
+        serializeConfig.configEnumAsJavaBean(Sex.class);
+        System.out.println(JSON.toJSONString(Sex.MALE, serializeConfig));
     }
 
     @Test
@@ -52,35 +58,4 @@ public class MeishijiaApplicationTests {
         context.close();
     }
 
-    public String getLocalHostLANAddress() {
-        try {
-            InetAddress candidateAddress = null;
-            // 遍历所有的网络接口
-            for (Enumeration ifaces = NetworkInterface.getNetworkInterfaces(); ifaces.hasMoreElements(); ) {
-                NetworkInterface iface = (NetworkInterface) ifaces.nextElement();
-                // 在所有的接口下再遍历IP
-                for (Enumeration inetAddrs = iface.getInetAddresses(); inetAddrs.hasMoreElements(); ) {
-                    InetAddress inetAddr = (InetAddress) inetAddrs.nextElement();
-                    if (!inetAddr.isLoopbackAddress()) {// 排除loopback类型地址
-                        if (inetAddr.isSiteLocalAddress()) {
-                            // 如果是site-local地址，就是它了
-                            return inetAddr.getHostAddress();
-                        } else if (candidateAddress == null) {
-                            // site-local类型的地址未被发现，先记录候选地址
-                            candidateAddress = inetAddr;
-                        }
-                    }
-                }
-            }
-            if (candidateAddress != null) {
-                return candidateAddress.getHostAddress();
-            }
-            // 如果没有发现 non-loopback地址.只能用最次选的方案
-            InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
-            return jdkSuppliedAddress.getHostAddress();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 }

@@ -11,6 +11,7 @@ public class ContactsDetail {
     private String avatar;
     private String remark;
     private Integer sex;
+    @JSONField(name = "sex_type")
     private Sex sexType;
     private String username;
     private String nickname;
