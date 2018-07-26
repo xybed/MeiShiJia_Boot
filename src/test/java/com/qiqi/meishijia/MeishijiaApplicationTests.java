@@ -36,9 +36,6 @@ public class MeishijiaApplicationTests {
 //        sender.sendMessage();
 //        sender.sendMessages();
 //        crawlerService.getPlayerData();
-        SerializeConfig serializeConfig = new SerializeConfig();
-        serializeConfig.configEnumAsJavaBean(Sex.class);
-        System.out.println(JSON.toJSONString(Sex.MALE, serializeConfig));
     }
 
     @Test

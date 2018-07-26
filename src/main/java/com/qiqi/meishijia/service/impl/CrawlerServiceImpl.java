@@ -5,7 +5,9 @@ import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.qiqi.meishijia.mapper.FootballPlayerMapper;
+import com.qiqi.meishijia.mapper.PCategoryCustomMapper;
 import com.qiqi.meishijia.model.FootballPlayer;
+import com.qiqi.meishijia.model.PCategory;
 import com.qiqi.meishijia.service.CommonService;
 import com.qiqi.meishijia.service.CrawlerService;
 import lib.utils.FileUtil;
@@ -17,9 +19,12 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CrawlerServiceImpl implements CrawlerService {
@@ -28,6 +33,8 @@ public class CrawlerServiceImpl implements CrawlerService {
     private CommonService commonService;
     @Resource
     private FootballPlayerMapper footballPlayerMapper;
+    @Resource
+    private PCategoryCustomMapper pCategoryCustomMapper;
 
     @Override
     public void getPlayerData() {
@@ -73,7 +80,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             webClient.getOptions().setThrowExceptionOnScriptError(false);
             //模拟浏览器打开一个目标网址
             HtmlPage rootPage = webClient.getPage(url);
-            Thread.sleep(800);//主要是这个线程的等待 因为js加载也是需要时间的
+            Thread.sleep(3000);//主要是这个线程的等待 因为js加载也是需要时间的
             html = rootPage.asXml();
         } catch (IOException | InterruptedException e) {
 //            e.printStackTrace();
