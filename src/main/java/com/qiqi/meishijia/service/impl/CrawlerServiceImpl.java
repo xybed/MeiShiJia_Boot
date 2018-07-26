@@ -33,8 +33,6 @@ public class CrawlerServiceImpl implements CrawlerService {
     private CommonService commonService;
     @Resource
     private FootballPlayerMapper footballPlayerMapper;
-    @Resource
-    private PCategoryCustomMapper pCategoryCustomMapper;
 
     @Override
     public void getPlayerData() {
@@ -51,6 +49,75 @@ public class CrawlerServiceImpl implements CrawlerService {
                 String urlDetail = li.select("a").first().attr("href");
                 getPlayerDetail(urlDetail);
             }
+        }
+    }
+
+    @Override
+    public void getProductData() {
+        Document document = getDocument("https://list.jd.com/list.html?cat=737,794,798&ev=4155_78904&sort=sort_rank_asc&trans=1&JL=3_%E7%94%B5%E8%A7%86%E7%B1%BB%E5%9E%8B_%E6%9B%B2%E9%9D%A2%E7%94%B5%E8%A7%86#J_crumbsBar");
+
+        Element jSearchWrap = document.getElementById("J_searchWrap");
+        Element container = jSearchWrap.select("div.container").first();
+        Element gMain = container.select("div.g-main2").first();
+        Element mList = gMain.select("div.m-list").first();
+        Element mlWrap = mList.select("div.ml-wrap").first();
+        Element pList = mlWrap.getElementById("plist");
+        Element ul = pList.select("ul").first();
+        Elements lis = ul.select("li");
+        for(Element li : lis){
+            Element item = li.select("div.j-sku-item").first();
+            Element pPrice = item.select("div.p-price").first();
+            Element i = pPrice.select("strong.js_ys").first()
+                    .select("i").first();
+            System.out.println(i.text());
+//            Element pImg = item.select("div.p-img").first();
+//            Element a = pImg.select("a").first();
+//            String href = a.attr("href");
+//            getPlayerDetail("https:"+href);
+        }
+    }
+
+    @Override
+    public void getProductDetail(String url){
+        //判断数据库中是否爬过此数据
+
+
+        Document document = getDocumentByHtml(getHtml(url));
+
+        Element crumbWrap = document.select("div.crumb-wrap").first();
+        Element w = crumbWrap.select("div.w").first();
+        Element crumb = w.select("div.crumb").first();
+        //品牌
+        Element item = crumb.select("div.item").get(6);
+        Element a = item.select("a").first();
+        System.out.println(a.text());
+        //商品名称
+        Element ellipsis = crumb.select("div.ellipsis").first();
+        System.out.println(ellipsis.text());
+
+
+        Element productIntro = document.select("div.product-intro").first();
+        Element itemInfoWrap = productIntro.select("div.itemInfo-wrap").first();
+        //商品描述
+        Element skuName = itemInfoWrap.select("div.sku-name").first();
+        System.out.println(skuName.text());
+        //备注
+        Element news = itemInfoWrap.select("div.news").first().getElementById("p-ad");
+        System.out.println(news.text());
+        //价格
+        Element span = itemInfoWrap.select("div.summary-first").first()
+                .select("span.price").first();
+        System.out.println(span.text());
+
+
+        Element previewWrap = productIntro.select("div.preview-wrap").first();
+        Element specList = previewWrap.select("div.spec-list").first();
+        Element ul = specList.select("ul").first();
+        //商品图片
+        Elements lis = ul.select("li");
+        for(Element li : lis){
+            Element img = li.select("img").first();
+            System.out.println(img.attr("src"));
         }
     }
 
