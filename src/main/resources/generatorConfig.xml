@@ -19,7 +19,7 @@
                              targetProject="src/main/java">
         </javaClientGenerator>
         <!--每次生成代码，需要修改处-->
-        <table tableName="product" domainObjectName="Product"
+        <table tableName="product_image" domainObjectName="ProductImage"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="false"/>

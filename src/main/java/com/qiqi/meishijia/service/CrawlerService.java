@@ -5,5 +5,5 @@ public interface CrawlerService {
 
     void getProductData();
 
-    void getProductDetail(String url);
+    void getProductDetail(String url, String price, String remark);
 }

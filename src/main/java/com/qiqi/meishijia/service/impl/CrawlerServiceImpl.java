@@ -4,10 +4,13 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.qiqi.meishijia.mapper.FootballPlayerMapper;
-import com.qiqi.meishijia.mapper.PCategoryCustomMapper;
+import com.qiqi.meishijia.common.Constants;
+import com.qiqi.meishijia.common.ProductStatus;
+import com.qiqi.meishijia.mapper.*;
 import com.qiqi.meishijia.model.FootballPlayer;
-import com.qiqi.meishijia.model.PCategory;
+import com.qiqi.meishijia.model.Product;
+import com.qiqi.meishijia.model.ProductCategory;
+import com.qiqi.meishijia.model.ProductImage;
 import com.qiqi.meishijia.service.CommonService;
 import com.qiqi.meishijia.service.CrawlerService;
 import lib.utils.FileUtil;
@@ -17,6 +20,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -24,7 +28,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CrawlerServiceImpl implements CrawlerService {
@@ -33,6 +39,12 @@ public class CrawlerServiceImpl implements CrawlerService {
     private CommonService commonService;
     @Resource
     private FootballPlayerMapper footballPlayerMapper;
+    @Resource
+    private ProductCustomMapper productCustomMapper;
+    @Resource
+    private ProductCategoryMapper productCategoryMapper;
+    @Resource
+    private ProductImageCustomMapper productImageCustomMapper;
 
     @Override
     public void getPlayerData() {
@@ -54,33 +66,46 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void getProductData() {
-        Document document = getDocument("https://list.jd.com/list.html?cat=737,794,798&ev=4155_78904&sort=sort_rank_asc&trans=1&JL=3_%E7%94%B5%E8%A7%86%E7%B1%BB%E5%9E%8B_%E6%9B%B2%E9%9D%A2%E7%94%B5%E8%A7%86#J_crumbsBar");
+        Document document = getDocumentFromLocal();
+        if(document == null)
+            return;
 
-        Element jSearchWrap = document.getElementById("J_searchWrap");
-        Element container = jSearchWrap.select("div.container").first();
-        Element gMain = container.select("div.g-main2").first();
-        Element mList = gMain.select("div.m-list").first();
-        Element mlWrap = mList.select("div.ml-wrap").first();
-        Element pList = mlWrap.getElementById("plist");
-        Element ul = pList.select("ul").first();
+        Element ul = document.select("ul").first();
         Elements lis = ul.select("li");
         for(Element li : lis){
             Element item = li.select("div.j-sku-item").first();
+            //价格
             Element pPrice = item.select("div.p-price").first();
             Element i = pPrice.select("strong.js_ys").first()
                     .select("i").first();
-            System.out.println(i.text());
-//            Element pImg = item.select("div.p-img").first();
-//            Element a = pImg.select("a").first();
-//            String href = a.attr("href");
-//            getPlayerDetail("https:"+href);
+            //链接
+            Element pImg = item.select("div.p-img").first();
+            Element a = pImg.select("a").first();
+            String href = a.attr("href");
+            //备注
+            Element pName = item.select("div.p-name").first();
+            Element promoWords = pName.select("i").first();
+
+            getProductDetail("https:"+href, i.text(), promoWords.text());
         }
     }
 
+    @Transactional
     @Override
-    public void getProductDetail(String url){
+    public void getProductDetail(String url, String price, String remark){
+        int categoryId = 102;
+        String pathSuffix = "jydq/";
+        String dirSuffix = "jydq";
         //判断数据库中是否爬过此数据
-
+        Product product = productCustomMapper.queryByUrl(url);
+        if(product != null){
+            //插入新一条商品和分类数据
+            ProductCategory productCategory = new ProductCategory();
+            productCategory.setProductId(product.getId());
+            productCategory.setCategoryId(categoryId);
+            productCategoryMapper.insertSelective(productCategory);
+            return;
+        }
 
         Document document = getDocumentByHtml(getHtml(url));
 
@@ -90,35 +115,68 @@ public class CrawlerServiceImpl implements CrawlerService {
         //品牌
         Element item = crumb.select("div.item").get(6);
         Element a = item.select("a").first();
-        System.out.println(a.text());
         //商品名称
         Element ellipsis = crumb.select("div.ellipsis").first();
-        System.out.println(ellipsis.text());
-
 
         Element productIntro = document.select("div.product-intro").first();
         Element itemInfoWrap = productIntro.select("div.itemInfo-wrap").first();
         //商品描述
         Element skuName = itemInfoWrap.select("div.sku-name").first();
-        System.out.println(skuName.text());
-        //备注
-        Element news = itemInfoWrap.select("div.news").first().getElementById("p-ad");
-        System.out.println(news.text());
-        //价格
-        Element span = itemInfoWrap.select("div.summary-first").first()
-                .select("span.price").first();
-        System.out.println(span.text());
-
 
         Element previewWrap = productIntro.select("div.preview-wrap").first();
         Element specList = previewWrap.select("div.spec-list").first();
         Element ul = specList.select("ul").first();
         //商品图片
+        String dir = commonService.getApplicationPath() + "\\images\\product\\" + dirSuffix;
+        FileUtil.mkdir(dir);
+        List<String> imageList = new ArrayList<>();
         Elements lis = ul.select("li");
         for(Element li : lis){
             Element img = li.select("img").first();
-            System.out.println(img.attr("src"));
+            String src = img.attr("src");
+            src = src.replace("/jfs/", "/s450x450_jfs/");
+            src = "https:"+src;
+            String path = Constants.IMAGE_BUCKET_PRODUCT + pathSuffix + src.substring(src.lastIndexOf("/")+1, src.length());
+            //下载图片
+            FileUtil.downloadImage(src, commonService.getApplicationPath() + "\\" + path);
+            imageList.add(path);
         }
+
+        //插入商品
+        product = new Product();
+        product.setUrl(url);
+        product.setBackUserId(1);
+        product.setName(ellipsis.text());
+        product.setDescription(skuName.text());
+        if(imageList.size() > 0){
+            product.setImage(imageList.get(0));
+        }
+        product.setPrice(new BigDecimal(price));
+        product.setOriginalPrice(new BigDecimal(price));
+        product.setDiscountPrice(new BigDecimal(price));
+        product.setStock(new Random().nextInt(1000));
+        product.setBrand(a.text());
+        product.setStatus(ProductStatus.SHELF.getCode());
+        product.setGmtCreate(new Date());
+        product.setRemark(remark);
+        productCustomMapper.insertSelective(product);
+
+        //插入商品和分类
+        ProductCategory productCategory = new ProductCategory();
+        productCategory.setProductId(product.getId());
+        productCategory.setCategoryId(categoryId);
+        productCategoryMapper.insertSelective(productCategory);
+
+        //插入商品和图片
+        List<ProductImage> productImageList = new ArrayList<>();
+        for(String image : imageList){
+            ProductImage productImage = new ProductImage();
+            productImage.setProductId(product.getId());
+            productImage.setImage(image);
+            productImageList.add(productImage);
+        }
+        if(productImageList.size() > 0)
+            productImageCustomMapper.batchInsert(productImageList);
     }
 
     private Document getDocument(String url){
@@ -153,6 +211,18 @@ public class CrawlerServiceImpl implements CrawlerService {
 //            e.printStackTrace();
         }
         return html;
+    }
+
+    private Document getDocumentFromLocal(){
+        File file = new File(commonService.getApplicationPath() + "/view/test.html");
+        Document document;
+        try {
+            document = Jsoup.parse(file, "utf-8");
+            return document;
+        } catch (IOException e) {
+//            e.printStackTrace();
+        }
+        return null;
     }
 
     private void getPlayerDetail(String url){
