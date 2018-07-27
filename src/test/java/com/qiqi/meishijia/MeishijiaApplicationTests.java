@@ -36,9 +36,7 @@ public class MeishijiaApplicationTests {
 //        sender.sendMessage();
 //        sender.sendMessages();
 //        crawlerService.getPlayerData();
-//        crawlerService.getProductData();
-        crawlerService.getProductDetail("https://item.jd.com/3433317.html", "3099.00",
-                "【727全民不上街，电视宅购节！下方领券减100，2999成交！】超薄机身设计，2G+16G大内存，人工智能，客厅里的IMAX！更多优惠详情点击");
+        crawlerService.getProductData();
     }
 
     @Test
