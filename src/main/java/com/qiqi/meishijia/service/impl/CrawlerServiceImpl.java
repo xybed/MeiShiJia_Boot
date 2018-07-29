@@ -46,6 +46,8 @@ public class CrawlerServiceImpl implements CrawlerService {
     @Resource
     private ProductImageCustomMapper productImageCustomMapper;
 
+    private int categoryId;
+
     @Override
     public void getPlayerData() {
         Document document = getDocumentByHtml(getHtml("http://soccer.stats.qq.com/team.htm?t1=953&from=xijia"));
@@ -65,13 +67,14 @@ public class CrawlerServiceImpl implements CrawlerService {
     }
 
     @Override
-    public void getProductData() {
-        Document document = getDocumentFromLocal();
+    public void getProductData(String html, int categoryId) {
+        this.categoryId = categoryId;
+        Document document = getDocumentFromLocal(html);
         if(document == null)
             return;
 
         Element ul = document.select("ul").first();
-        Elements lis = ul.select("li");
+        Elements lis = ul.select("li.gl-item");
         for(Element li : lis){
             Element item = li.select("div.j-sku-item").first();
             //价格
@@ -93,9 +96,8 @@ public class CrawlerServiceImpl implements CrawlerService {
     @Transactional
     @Override
     public void getProductDetail(String url, String price, String remark){
-        int categoryId = 105;
-        String pathSuffix = "jydq/dianshi/";
-        String dirSuffix = "jydq\\dianshi";
+        String pathSuffix = "nanz/nanz/";
+        String dirSuffix = "nanz\\nanz";
         //判断数据库中是否爬过此数据
         Product product = productCustomMapper.queryByUrl(url);
         if(product != null){
@@ -109,14 +111,24 @@ public class CrawlerServiceImpl implements CrawlerService {
 
         Document document = getDocumentByHtml(getHtml(url));
 
-        Element crumbWrap = document.select("div.crumb-wrap").first();
-        Element w = crumbWrap.select("div.w").first();
-        Element crumb = w.select("div.crumb").first();
-        //品牌
-        Element item = crumb.select("div.item").get(6);
-        Element a = item.select("a").first();
-        //商品名称
-        Element ellipsis = crumb.select("div.ellipsis").first();
+        String brand;
+        String productName;
+        try{
+            Element crumbWrap = document.select("div.crumb-wrap").first();
+            Element w = crumbWrap.select("div.w").first();
+            Element crumb = w.select("div.crumb").first();
+            //品牌
+            Element item = crumb.select("div.item").get(6);
+            Element a = item.select("a").first();
+            brand = a.text();
+            //商品名称
+            Element ellipsis = crumb.select("div.ellipsis").first();
+            productName = ellipsis.text();
+        }catch (NullPointerException e){
+            System.out.println(url);
+            brand = "无品牌";
+            productName = "无商品名称";
+        }
 
         Element productIntro = document.select("div.product-intro").first();
         Element itemInfoWrap = productIntro.select("div.itemInfo-wrap").first();
@@ -134,7 +146,14 @@ public class CrawlerServiceImpl implements CrawlerService {
         for(Element li : lis){
             Element img = li.select("img").first();
             String src = img.attr("src");
-            src = src.replace("/jfs/", "/s450x450_jfs/");
+            if(src.contains("/s54x54_jfs/")){
+                src = src.replace("/s54x54_jfs/", "/s450x450_jfs/");
+            }else if(src.contains("/s50x64_jfs/")){
+                src = src.replace("/s50x64_jfs/", "/s450x450_jfs/");
+                src = src.replace("!cc_50x64.jpg", "");
+            }else {
+                src = src.replace("/jfs/", "/s450x450_jfs/");
+            }
             src = "https:"+src;
             String path = Constants.IMAGE_BUCKET_PRODUCT + pathSuffix + src.substring(src.lastIndexOf("/")+1, src.length());
             //下载图片
@@ -146,7 +165,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         product = new Product();
         product.setUrl(url);
         product.setBackUserId(1);
-        product.setName(ellipsis.text());
+        product.setName(productName);
         product.setDescription(skuName.text());
         if(imageList.size() > 0){
             product.setImage(imageList.get(0));
@@ -155,7 +174,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         product.setOriginalPrice(new BigDecimal(price));
         product.setDiscountPrice(new BigDecimal(price));
         product.setStock(new Random().nextInt(1000));
-        product.setBrand(a.text());
+        product.setBrand(brand);
         product.setStatus(ProductStatus.SHELF.getCode());
         product.setGmtCreate(new Date());
         product.setRemark(remark);
@@ -213,8 +232,8 @@ public class CrawlerServiceImpl implements CrawlerService {
         return html;
     }
 
-    private Document getDocumentFromLocal(){
-        File file = new File(commonService.getApplicationPath() + "/view/test.html");
+    private Document getDocumentFromLocal(String html){
+        File file = new File(commonService.getApplicationPath() + html);
         Document document;
         try {
             document = Jsoup.parse(file, "utf-8");

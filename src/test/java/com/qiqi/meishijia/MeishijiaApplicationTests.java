@@ -36,7 +36,9 @@ public class MeishijiaApplicationTests {
 //        sender.sendMessage();
 //        sender.sendMessages();
 //        crawlerService.getPlayerData();
-        crawlerService.getProductData();
+        crawlerService.getProductData("/view/test.html", 443);
+        crawlerService.getProductData("/view/test1.html", 444);
+        crawlerService.getProductData("/view/test2.html", 445);
     }
 
     @Test
