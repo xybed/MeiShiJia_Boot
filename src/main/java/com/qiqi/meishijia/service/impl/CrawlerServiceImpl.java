@@ -79,12 +79,18 @@ public class CrawlerServiceImpl implements CrawlerService {
             Element item = li.select("div.j-sku-item").first();
             //价格
             Element pPrice = item.select("div.p-price").first();
-            Element i = pPrice.select("strong.js_ys").first()
+            Element i = pPrice.select("strong.J_price").first()
                     .select("i").first();
             //链接
             Element pImg = item.select("div.p-img").first();
             Element a = pImg.select("a").first();
             String href = a.attr("href");
+            if(!href.startsWith("//item.jd.com")){
+                Element pCommit = item.select("div.p-commit").first();
+                Element aCommit = pCommit.select("a").first();
+                href = aCommit.attr("href");
+                href = href.substring(0, href.indexOf("#"));
+            }
             //备注
             Element pName = item.select("div.p-name").first();
             Element promoWords = pName.select("i").first();
