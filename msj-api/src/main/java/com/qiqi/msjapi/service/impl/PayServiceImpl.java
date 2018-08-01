@@ -8,6 +8,7 @@ import com.jpay.alipay.AliPayApi;
 import com.jpay.ext.kit.PaymentKit;
 import com.jpay.weixin.api.WxPayApi;
 import com.jpay.weixin.api.WxPayApiConfigKit;
+import com.qiqi.commonlib.lib.utils.ClassPathUtil;
 import com.qiqi.commonlib.lib.utils.IPUtil;
 import com.qiqi.msjapi.common.Constants;
 import com.qiqi.msjapi.core.ResultEnum;
@@ -16,14 +17,12 @@ import com.qiqi.msjapi.pojo.AlipayNotify;
 import com.qiqi.msjapi.pojo.AlipayPreCreateBase;
 import com.qiqi.msjapi.pojo.AlipayRefundBase;
 import com.qiqi.msjapi.pojo.WxpayResponse;
-import com.qiqi.msjapi.service.CommonService;
 import com.qiqi.msjapi.service.PayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,9 +30,6 @@ import java.util.Map;
 public class PayServiceImpl implements PayService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @Resource
-    private CommonService commonService;
 
     @Value("${alipay.notifyUrl}")
     private String alipayNotifyUrl;
@@ -156,7 +152,7 @@ public class PayServiceImpl implements PayService {
         params.put("total_fee", "1");
         params.put("refund_fee", "1");
         params.put("sign", PaymentKit.createSign(params, partnerKey));
-        String xmlResult = WxPayApi.orderRefund(false, params , commonService.getApplicationPath() + certPath, mchId);
+        String xmlResult = WxPayApi.orderRefund(false, params , ClassPathUtil.getApplicationPath() + certPath, mchId);
         Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
         WxpayResponse response = JSON.parseObject(JSON.toJSONString(result), WxpayResponse.class);
         if(Constants.WXPAY_SUCCESS.equals(response.getReturnCode())){
