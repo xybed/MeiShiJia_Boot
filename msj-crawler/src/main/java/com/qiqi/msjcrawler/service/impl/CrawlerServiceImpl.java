@@ -62,7 +62,8 @@ public class CrawlerServiceImpl implements CrawlerService {
             Elements lis = div.select("ul.player-list").first().select("li");
             for(Element li : lis){
                 String urlDetail = li.select("a").first().attr("href");
-                getPlayerDetail(urlDetail);
+//                getPlayerDetail(urlDetail);
+                System.out.println(urlDetail);
             }
         }
     }
