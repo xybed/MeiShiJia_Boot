@@ -15,19 +15,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <dependencies>
-
-    </dependencies>
-
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
