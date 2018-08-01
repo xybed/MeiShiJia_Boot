@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiqi.msjmapper.mapper.FootballPlayerMapper">
+  <resultMap id="BaseResultMap" type="com.qiqi.msjmapper.entity.FootballPlayer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="eng_name" jdbcType="VARCHAR" property="engName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="birthday" jdbcType="CHAR" property="birthday" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="play_position" jdbcType="VARCHAR" property="playPosition" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, team_id, name, eng_name, number, avatar, birthday, nationality, play_position, 
+    height, weight
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from football_player
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from football_player
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qiqi.msjmapper.entity.FootballPlayer">
+    insert into football_player (id, team_id, name, 
+      eng_name, number, avatar, 
+      birthday, nationality, play_position, 
+      height, weight)
+    values (#{id,jdbcType=INTEGER}, #{teamId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{engName,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=CHAR}, #{nationality,jdbcType=VARCHAR}, #{playPosition,jdbcType=VARCHAR}, 
+      #{height,jdbcType=DOUBLE}, #{weight,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qiqi.msjmapper.entity.FootballPlayer">
+    insert into football_player
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="engName != null">
+        eng_name,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="nationality != null">
+        nationality,
+      </if>
+      <if test="playPosition != null">
+        play_position,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teamId != null">
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="engName != null">
+        #{engName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=CHAR},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="playPosition != null">
+        #{playPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiqi.msjmapper.entity.FootballPlayer">
+    update football_player
+    <set>
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="engName != null">
+        eng_name = #{engName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=CHAR},
+      </if>
+      <if test="nationality != null">
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="playPosition != null">
+        play_position = #{playPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiqi.msjmapper.entity.FootballPlayer">
+    update football_player
+    set team_id = #{teamId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      eng_name = #{engName,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=CHAR},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      play_position = #{playPosition,jdbcType=VARCHAR},
+      height = #{height,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiqi.msjmapper.mapper.FootballPlayerCustomMapper">
+  <resultMap id="BaseResultMap" type="com.qiqi.msjmapper.entity.FootballPlayer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="eng_name" jdbcType="VARCHAR" property="engName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="birthday" jdbcType="CHAR" property="birthday" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="play_position" jdbcType="VARCHAR" property="playPosition" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+  </resultMap>
+  <resultMap id="TeamDetailMap" type="com.qiqi.msjmapper.pojo.FootballPlayerCustom">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, team_id, name, eng_name, number, avatar, birthday, nationality, play_position, 
+    height, weight
+  </sql>
+  <select id="selectByTeamId" parameterType="java.lang.Integer" resultMap="TeamDetailMap">
+    SELECT id,name,number,avatar
+    FROM football_player
+    WHERE team_id=#{teamId}
+  </select>
+</mapper>

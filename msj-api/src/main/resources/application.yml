@@ -1,0 +1,85 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/meishijia?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    driverClassName: com.mysql.jdbc.Driver
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    #useGlobalDataSourceStat: true
+    wall:
+      config:
+        multiStatementAllow: true
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+  redis:
+    host: 127.0.0.1
+    database: 0
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+server:
+  ssl:
+    key-store: msj-api/server.keystore
+    key-store-password: 77jiajia
+    key-store-type: JKS
+    key-alias: meishijia
+    key-password: meishijia
+#    trust-store: server.keystore
+#    trust-store-password: 77jiajia
+#    enabled: true
+#    client-auth: need
+  port: 8443
+
+---
+spring:
+  profiles: dev
+alipay:
+  serviceUrl: https://openapi.alipaydev.com/gateway.do
+  appId: 2016091900544240
+  privateKey: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDGd6SS15sHGG1iY3xrK9rGCiEAajMet+hZW9lmUsc2rxey2cOaMkbWlRy3ahfXp0vzqmpZUntuZjHI6JVmGxJ6T4lb8ZNCURIUy32U37Cx7F6VMj6rjjoXjxylPiO5GY3uXYJA9zKgGsnBkKJUE45WSTFEmjmcl3owe5bEDfEpSGi0RRU5ggtbv/E0M/djLTN+Ean5VBbOy1P6FBiVOT3xDxRlBZtL8YXfWo+ie32XZkqZhPDpntBOmk/IXSRIhDlfraAhRnMjlxGfqVql3XAmCGXCaQXutlM+9vMJ0ZxycYIedT45F5jZmFW9TeCRLpyyqmzUe/fmjAv8GM8lHw+FAgMBAAECggEBALX9gCwnCUG4ZJWUJMMhs7tmDl0TBU1l1uoaD4CE56h9Zn3askLzV4Htuid2YeaewkbuPhcqS4UwsPZKULUQniEKTirBmwd0z9/BuaaKeLyuwwyMxmsKQLrZwKrGEHvrsvqhRI/OHd4ysk+NEU2HoT3+X+9IfQva23EZ42ZkYoA3CFGNDzCqtged5dbJ4XqNPUqq7P/eW61Skd6FYYHblV43auJbCV0T7pM1gulq/TYSBewE4EAOPRWiWiE01hN+TgqWu4n+0onIKDyL+n9lRTsMJdCyfuOjOFfOHAtUzX8+30sPotlY1aUHHfzaUihroqXnqAjUN4qTQ5Ldm9EkkAECgYEA5iMY+6UH4nGYLD3VMCjhIWMp+O+UfJKFpBFrtcZpvqzKmvgHDfXwXlVd/zbvDnp97lD8flywIh5evcKQI97fKMzQbw8srdjcHP9LwnEtVyoRf+FWlXWAxqcvJqkMwdBSfrmu85PIAHrbTmCM2A/dBdbOaCxjTHxxSK/t/fFE2NUCgYEA3MVtHn887P6EivC23u19Lc/CpjkjRJRoUI06Pj6Z9m6+TSZbmwBGFI+O31nnmcZrPXwDn8lCHhYy6lb7HQDeLJ3inkGP+IKBfXeFb87chENR0QlRWcA4bc6NPAxRbPNP9ObkW6WaGIP3W9xguxEBHbx2ik/Hsl8nPl0znXnqs/ECgYEArmtPVfmf3imF0ZITb2qsJefIOdkqSrep/c0OOzhjkJXZAFaW0ifhwz0j/ned+vUvWF2c4BBTlag62csJ/4W80GlaV7HChQfk2z1KJ9YrLPK/TJJ2UtQ5g1XWUJCzEHlY7J7CT+1jGaoDaIWYeXCcbP5+dUmfAKsYGKTt1Rb0vPkCgYEArz5v7cNmY2FtaLTHFJJDyXeftT6pxihf3YEdeIdMw5cIrEkEcjd3aZ7C9HxzIVeljLrCTbX+K8/HPskor88ejSAO4Tx9wfAmRaf4XdZAqSSe72WME8hHgrJw3feRMwC4uVgGcNE1TryCP4LhrdxDnI0bM5M8m1R43EIzVI+QRKECgYB9liZga9ztHGcWSuQNXY+/u3YPRwu0bJQWhgdL+p28RedwEvjTpWhVQOpTNA/tO8Lq1db00IaAmxufdh2PgBMSyhufgJL3evyd5jn3jcct47gZ7SR4duQrkhe9e/Wbv7GH7F31uK5Yhzj/uWMub7h5KsgH5+JWU57Fn+GKvJgkhA==
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvK08+hodagBOcW7x8CHz/+s8+VWRBzEOnIsKYrNsGYG2t+myPXlvMe3KsiVhXpIwGKhSzF6bN7lwJWmfnYe/+Dmq3xnSy+9vSvJxS95BjvGFzoTddQGfblEMkzUV1Ik3JsHcGb3xuG3EaxwKbp72Mo+oxQ3ChkXIeglTd0RVyc8Dv8SDXmAmVBl7Bj2XXSrKyJeNGhbHsmOhUQArmh8p3hJ3+2nTKAiW+XfcSHAUadgLAHIJsy9vMi8SR4sQeOKPiq6AFyLiN2GZgaWfrYF29YUZcFQnYHU+fwatqSs4brxLZpuSqFJPs+qK505hqVP7C77HXSrO9+dfQQf1JX8+lQIDAQAB
+  charset: UTF-8
+  signType: RSA2
+  notifyUrl: http://bodata.tpddns.cn:8090/pay/alipay/notify
+wxpay:
+  appId: wx35896cd2de8efb05
+  appSecret: bc8b24980abed44ae6a67813e0985ae3
+  mchId: 1484706042
+  partnerKey: bodata1234567890zyzc0987654321xx
+  certPath: \apiclient_cert.p12
+  notifyUrl: http://bodata.tpddns.cn:8090/wxpay/alipay/notify
+
+---
+spring:
+  profiles: prod
