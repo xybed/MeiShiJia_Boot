@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.config;
+package com.qiqi.msjmapper.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 
