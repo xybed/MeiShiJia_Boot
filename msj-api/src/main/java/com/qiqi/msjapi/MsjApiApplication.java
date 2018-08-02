@@ -10,9 +10,11 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ServletComponentScan //spring能够扫描到我们自己编写的servlet和filter
+@ComponentScan("com.qiqi")
+@ServletComponentScan("com.qiqi")//spring能够扫描到我们自己编写的servlet和filter
 @EnableCaching //开启缓存
 //@EnableScheduling //开启对计划任务的支持
 public class MsjApiApplication {
