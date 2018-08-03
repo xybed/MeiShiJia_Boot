@@ -24,7 +24,7 @@
             <tr>
                 <td style="width:60px;"><label for="userName">帐号：</label></td>
                 <td>
-                    <input id="userName" name="userName" class="mini-textbox" requiredErrorText="帐号不能为空"
+                    <input id="username" name="username" class="mini-textbox" requiredErrorText="帐号不能为空"
                            required="true" style="width:150px;"/>
                 </td>
             </tr>
@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <td style="width:60px;">验证码：</td>
-                <td><input id="authCode" name="authCode" class="mini-textbox" requiredErrorText="验证码不能为空"
+                <td><input id="verifyCode" name="verifyCode" class="mini-textbox" requiredErrorText="验证码不能为空"
                            required="true" vtype="int;maxLength:4" style="width:80px;" onenter="onLoginClick"/>
                     <span style="margin-left:8px;margin-bottom: 0px;">
                         <img id="img_code" title="看不清，点击换一张" style="cursor:pointer;margin-bottom: -10px; "
@@ -62,7 +62,7 @@
 
 <script type="text/javascript">
     mini.parse();
-    mini.get("userName").focus();
+    mini.get("username").focus();
     var loginWindow = mini.get("loginWindow");
     loginWindow.show();
     /*window.onload = function(){
@@ -81,7 +81,7 @@
             data: {json: json},
             type: "post",
             success: function (data) {
-                if(data.code==1){
+                if(data.code==0){
                     loginWindow.hide();
                     mini.loading("登录成功，马上转到系统...", "登录成功");
                     setTimeout(function () {
@@ -94,7 +94,7 @@
                         width: 250,
                         title: "提示",
                         iconCls: "mini-messagebox-warning",
-                        message: data.msg,
+                        message: data.message,
                         timeout: 3000,
                         x: "right",
                         y: "bottom"
