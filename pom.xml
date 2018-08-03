@@ -124,12 +124,6 @@
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
-        <!--热部署依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
 </project>
