@@ -62,8 +62,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             Elements lis = div.select("ul.player-list").first().select("li");
             for(Element li : lis){
                 String urlDetail = li.select("a").first().attr("href");
-//                getPlayerDetail(urlDetail);
-                System.out.println(urlDetail);
+                getPlayerDetail(urlDetail);
             }
         }
     }
@@ -97,15 +96,19 @@ public class CrawlerServiceImpl implements CrawlerService {
             Element pName = item.select("div.p-name").first();
             Element promoWords = pName.select("i").first();
 
-            getProductDetail("https:"+href, i.text(), promoWords.text());
+            if("暂无报价".equals(i.text())){
+                getProductDetail("https:"+href, "0", promoWords.text());
+            }else {
+                getProductDetail("https:"+href, i.text(), promoWords.text());
+            }
         }
     }
 
     @Transactional
     @Override
     public void getProductDetail(String url, String price, String remark){
-        String pathSuffix = "nanz/nanz/";
-        String dirSuffix = "nanz\\nanz";
+        String pathSuffix = "nvz/nvz/";
+        String dirSuffix = "nvz\\nvz";
         //判断数据库中是否爬过此数据
         Product product = productCustomMapper.queryByUrl(url);
         if(product != null){
