@@ -25,6 +25,10 @@
             <groupId>com.qiqi</groupId>
             <artifactId>msj-mapper</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!--shiro权限管理-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
