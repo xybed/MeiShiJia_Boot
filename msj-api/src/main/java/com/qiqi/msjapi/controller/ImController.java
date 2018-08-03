@@ -1,9 +1,9 @@
 package com.qiqi.msjapi.controller;
 
 import com.qiqi.msjapi.annotation.NeedLogin;
-import com.qiqi.msjapi.core.Result;
-import com.qiqi.msjapi.core.ResultEnum;
-import com.qiqi.msjapi.core.ResultGenerator;
+import com.qiqi.commonlib.common.Result;
+import com.qiqi.commonlib.common.ResultEnum;
+import com.qiqi.commonlib.common.ResultGenerator;
 import com.qiqi.msjmapper.entity.RelationChain;
 import com.qiqi.msjapi.service.ImService;
 import org.springframework.util.StringUtils;

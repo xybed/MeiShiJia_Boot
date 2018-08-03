@@ -1,7 +1,7 @@
 package com.qiqi.msjapi.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.qiqi.msjapi.core.Result;
+import com.qiqi.commonlib.common.Result;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;

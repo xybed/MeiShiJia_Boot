@@ -1,7 +1,7 @@
 package com.qiqi.msjapi.controller;
 
-import com.qiqi.msjapi.core.Result;
-import com.qiqi.msjapi.core.ResultGenerator;
+import com.qiqi.commonlib.common.Result;
+import com.qiqi.commonlib.common.ResultGenerator;
 import com.qiqi.msjapi.service.ProductService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

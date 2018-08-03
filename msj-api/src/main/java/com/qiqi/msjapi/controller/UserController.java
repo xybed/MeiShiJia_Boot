@@ -1,8 +1,8 @@
 package com.qiqi.msjapi.controller;
 
 import com.qiqi.msjapi.annotation.NeedLogin;
-import com.qiqi.msjapi.core.Result;
-import com.qiqi.msjapi.core.ResultGenerator;
+import com.qiqi.commonlib.common.Result;
+import com.qiqi.commonlib.common.ResultGenerator;
 import com.qiqi.msjmapper.entity.User;
 import com.qiqi.msjapi.service.UserService;
 import org.springframework.web.bind.annotation.*;

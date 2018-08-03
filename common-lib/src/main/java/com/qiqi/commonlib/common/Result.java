@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.core;
+package com.qiqi.commonlib.common;
 
 import com.alibaba.fastjson.JSON;
 
