@@ -9,3 +9,7 @@ spring:
       mode: HTML5
       encoding: UTF-8
       content-type: text/html
+  devtools:
+      restart:
+        enabled: false
+        exclude: static/**,templates/**
