@@ -35,11 +35,6 @@
             <artifactId>pagehelper</artifactId>
             <version>4.2.1</version>
         </dependency>
-        <!--面向切面aop-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
         <!--jwt服务认证-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
