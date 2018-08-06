@@ -5,13 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="locked" jdbcType="INTEGER" property="locked" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, real_name, avatar, locked, gmt_create
+    id, username, password, salt, real_name, avatar, locked, gmt_create
   </sql>
   <select id="queryByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT

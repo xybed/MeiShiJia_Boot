@@ -5,13 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="locked" jdbcType="INTEGER" property="locked" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, real_name, avatar, locked, gmt_create
+    id, username, password, salt, real_name, avatar, locked, gmt_create
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,11 +26,11 @@
   </delete>
   <insert id="insert" parameterType="com.qiqi.msjmapper.entity.BackUser">
     insert into back_user (id, username, password, 
-      real_name, avatar, locked, 
-      gmt_create)
+      salt, real_name, avatar, 
+      locked, gmt_create)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{realName,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{locked,jdbcType=INTEGER}, 
-      #{gmtCreate,jdbcType=TIMESTAMP})
+      #{salt,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{locked,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.qiqi.msjmapper.entity.BackUser">
     insert into back_user
@@ -42,6 +43,9 @@
       </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="salt != null">
+        salt,
       </if>
       <if test="realName != null">
         real_name,
@@ -66,6 +70,9 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="realName != null">
         #{realName,jdbcType=VARCHAR},
       </if>
@@ -89,6 +96,9 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="realName != null">
         real_name = #{realName,jdbcType=VARCHAR},
       </if>
@@ -108,6 +118,7 @@
     update back_user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
       real_name = #{realName,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
       locked = #{locked,jdbcType=INTEGER},
