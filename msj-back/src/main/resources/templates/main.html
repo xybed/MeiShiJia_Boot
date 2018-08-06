@@ -39,7 +39,7 @@
         <div class="navbar-brand">msj</div>
         <div class="navbar-brand navbar-brand-compact">T</div>
     </div>
-    <ul class="nav navbar-nav navbar-right"><!--<div th:text="${session.user.userName}"></div>-->
+    <ul class="nav navbar-nav navbar-right"><!--<div th:text="${session.user.username}"></div>-->
         <li><a th:onclick="'javascript:changePassword()'"><i class="fa fa-pencil-square-o"></i> 修改密码</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle userinfo">
@@ -150,11 +150,11 @@
     function userInfo(){
         userWindow.show();
         /*<![CDATA[*/
-        var username = /*[[${session.user.userName}]]*/;
+        var username = /*[[${session.user.username}]]*/;
         var realName = /*[[${session.user.realName}]]*/;
         var locked = /*[[${session.user.locked}]]*/;
         var gmtCreate = /*[[${session.user.gmtCreate}]]*/;
-        mini.get("userName").setValue(username);
+        mini.get("username").setValue(username);
         mini.get("realName").setValue(realName);
         if(locked==0){
             mini.get("locked").setValue("正常");

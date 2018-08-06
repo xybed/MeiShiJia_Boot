@@ -27,8 +27,13 @@ public class LoginController {
     private GenericManageableCaptchaService captchaService;
 
     @GetMapping("/login")
-    public String login(){
+    public String loginPage(){
         return "login";
+    }
+
+    @GetMapping("/main")
+    public String mainPage() {
+        return "main";
     }
 
     @PostMapping(value = "/authentication")

@@ -9,6 +9,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         }else if(user.getLocked().intValue() == LockedStatus.LOCKED.getCode().intValue()){
             throw new AccountException("账号已被锁定,请联系管理员！");
         }
-        logger.info("成功进入");
-        AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, user.getPassword(), getName());
+        AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute("user", user);
         return authenticationInfo;
