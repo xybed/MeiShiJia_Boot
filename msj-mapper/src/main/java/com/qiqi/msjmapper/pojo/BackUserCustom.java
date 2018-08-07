@@ -1,4 +1,4 @@
-package com.qiqi.msjback.pojo;
+package com.qiqi.msjmapper.pojo;
 
 import com.qiqi.msjmapper.entity.BackUser;
 
