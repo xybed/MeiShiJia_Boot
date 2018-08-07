@@ -29,12 +29,6 @@
             <groupId>com.qiqi</groupId>
             <artifactId>msj-mapper</artifactId>
         </dependency>
-        <!--分页依赖-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>4.2.1</version>
-        </dependency>
         <!--jwt服务认证-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
