@@ -6,7 +6,7 @@ import com.octo.captcha.service.multitype.GenericManageableCaptchaService;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ResultGenerator;
-import com.qiqi.msjback.pojo.BackUserCustom;
+import com.qiqi.msjmapper.pojo.BackUserCustom;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;

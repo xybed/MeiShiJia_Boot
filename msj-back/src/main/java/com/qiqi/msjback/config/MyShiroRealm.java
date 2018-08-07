@@ -1,5 +1,6 @@
 package com.qiqi.msjback.config;
 
+import com.qiqi.msjback.common.Constants;
 import com.qiqi.msjmapper.entity.BackUser;
 import com.qiqi.msjmapper.enums.LockedStatus;
 import com.qiqi.msjmapper.mapper.BackUserCustomMapper;
@@ -35,7 +36,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
         Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("user", user);
+        session.setAttribute(Constants.SESSION_USER, user);
         return authenticationInfo;
     }
 

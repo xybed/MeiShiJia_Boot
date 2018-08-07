@@ -5,31 +5,33 @@
     <title>主页</title>
     <script th:src="@{/miniui/scripts/boot.js}" type="text/javascript"></script>
     <link th:href="@{/miniui/res/third-party/scrollbar/jquery.mCustomScrollbar.css}" rel="stylesheet" type="text/css"/>
-    <script th:src="@{/miniui/res/third-party/scrollbar/jquery.mCustomScrollbar.concat.min.js}" type="text/javascript"></script>
-    <link th:href="@{/css/menu.css}" rel="stylesheet" type="text/css" />
+    <script th:src="@{/miniui/res/third-party/scrollbar/jquery.mCustomScrollbar.concat.min.js}"
+            type="text/javascript"></script>
+    <link th:href="@{/css/menu.css}" rel="stylesheet" type="text/css"/>
     <script th:src="@{js/menu.js}" type="text/javascript"></script>
     <script th:src="@{js/menutip.js}" type="text/javascript"></script>
-    <link th:href="@{/css/tabs.css}" rel="stylesheet" type="text/css" />
-    <link th:href="@{/css/frame.css}" rel="stylesheet" type="text/css" />
-    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/tabs.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/frame.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/index.css}" rel="stylesheet" type="text/css"/>
     <style type="text/css">
-    .asLabel .mini-textbox-border,
-    .asLabel .mini-textbox-input,
-    .asLabel .mini-buttonedit-border,
-    .asLabel .mini-buttonedit-input,
-    .asLabel .mini-textboxlist-border
-    {
-        border:0;background:none;cursor:default;
-    }
-    .asLabel .mini-buttonedit-button,
-    .asLabel .mini-textboxlist-close
-    {
-        display:none;
-    }
-    .asLabel .mini-textboxlist-item
-    {
-        padding-right:8px;
-    }
+        .asLabel .mini-textbox-border,
+        .asLabel .mini-textbox-input,
+        .asLabel .mini-buttonedit-border,
+        .asLabel .mini-buttonedit-input,
+        .asLabel .mini-textboxlist-border {
+            border: 0;
+            background: none;
+            cursor: default;
+        }
+
+        .asLabel .mini-buttonedit-button,
+        .asLabel .mini-textboxlist-close {
+            display: none;
+        }
+
+        .asLabel .mini-textboxlist-item {
+            padding-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -43,10 +45,10 @@
         <li><a th:onclick="'javascript:changePassword()'"><i class="fa fa-pencil-square-o"></i> 修改密码</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle userinfo">
-                <img class="user-img" th:src="@{/images/user.jpg}" />个人资料<i class="fa fa-angle-down"></i>
+                <img class="user-img" th:src="@{/images/user.jpg}"/>个人资料<i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu pull-right">
-                <li ><a th:onclick="'javascript:userInfo()'"><i class="fa fa-eye "></i> 用户信息</a></li>
+                <li><a th:onclick="'javascript:userInfo()'"><i class="fa fa-eye "></i> 用户信息</a></li>
                 <li><a onclick="javascript:window.location.href='/logout'"><i class="fa fa-user"></i> 退出登录</a></li>
             </ul>
         </li>
@@ -56,13 +58,13 @@
 <div class="container">
 
     <div class="sidebar">
-        <div class="sidebar-toggle"><i class = "fa fa-fw fa-dedent" ></i></div>
+        <div class="sidebar-toggle"><i class="fa fa-fw fa-dedent"></i></div>
         <div id="mainMenu"></div>
     </div>
 
     <div class="main">
         <div id="mainTabs" class="mini-tabs main-tabs" activeIndex="0" style="height:100%;" plain="false"
-             buttons="#tabsButtons" arrowPosition="side" >
+             buttons="#tabsButtons" arrowPosition="side">
             <div name="index" iconCls="fa fa-globe" title="主页">
                 <h1>欢迎进入后台管理系统</h1>
             </div>
@@ -86,18 +88,18 @@
                 <td style="width: 80px;">原密码：</td>
                 <td style="width: 150px;"><input id="password" name="password"
                                                  vtype="minLength:5" class="mini-password" required="true"
-                                                 style="width: 150px;" /></td>
+                                                 style="width: 150px;"/></td>
             </tr>
             <tr>
                 <td>新密码：</td>
                 <td><input id="userNewPw" name="userNewPw" vtype="minLength:5"
-                           class="mini-password" required="true" style="width: 150px;" /></td>
+                           class="mini-password" required="true" style="width: 150px;"/></td>
             </tr>
             <tr>
                 <td>确认密码：</td>
                 <td><input id="userNewPwConfirm" name="userNewPwConfirm"
                            vtype="minLength:5" class="mini-password" required="true"
-                           style="width: 150px;" /></td>
+                           style="width: 150px;"/></td>
             </tr>
             <tr>
                 <td style="text-align: center; padding: 10px;" colspan="2">
@@ -136,7 +138,7 @@
             <tr>
                 <td style="width: 80px;">创建时间：</td>
                 <td style="width: 150px;">
-                        <input id="gmtCreate" class="mini-datepicker" format="yyyy-MM-dd HH:mm:ss" readOnly="true"/>
+                    <input id="gmtCreate" class="mini-datepicker" format="yyyy-MM-dd HH:mm:ss" readOnly="true"/>
                 </td>
             </tr>
         </table>
@@ -147,7 +149,8 @@
     mini.parse();
     var chpwWindow = mini.get("chpwWindow");
     var userWindow = mini.get("userWindow");
-    function userInfo(){
+
+    function userInfo() {
         userWindow.show();
         /*<![CDATA[*/
         var username = /*[[${session.user.username}]]*/;
@@ -156,9 +159,9 @@
         var gmtCreate = /*[[${session.user.gmtCreate}]]*/;
         mini.get("username").setValue(username);
         mini.get("realName").setValue(realName);
-        if(locked==0){
+        if (locked == 0) {
             mini.get("locked").setValue("正常");
-        }else{
+        } else {
             mini.get("locked").setValue("锁定");
         }
         mini.get("gmtCreate").setValue(gmtCreate);
@@ -172,13 +175,16 @@
         }
         /*]]>*/
     }
+
     function changePassword() {
         chpwWindow.show();
         mini.get("password").focus();
     }
+
     function cancelRow() {
         chpwWindow.hide();
     }
+
     function updatePw() {
         //判断两次密码是否一致
         var userNewPw = mini.get("#userNewPw").value;
@@ -195,22 +201,22 @@
 
         var json = mini.encode(o);//这里有一个坑：[o]得到的是一个数组对象，o得到的是一个对象
         $.ajax({
-            url : "/changePassword",
+            url: "/changePassword",
             type: "post",
-            data : {
-                json : json
+            data: {
+                json: json
             },
-            success : function(data) {
+            success: function (data) {
                 chpwWindow.hide();
-                if(data.code==1){
+                if (data.code == 1) {
                     mini.showTips({
-                        content : "<b>成功</b> <br/>密码修改成功",
-                        state : "success",
-                        x : "center",
-                        y : "center",
-                        timeout : 3000
+                        content: "<b>成功</b> <br/>密码修改成功",
+                        state: "success",
+                        x: "center",
+                        y: "center",
+                        timeout: 3000
                     });
-                }else{
+                } else {
                     mini.showMessageBox({
                         showModal: false,
                         width: 250,
@@ -225,11 +231,12 @@
             }
         });
     }
+
     function activeTab(item) {
         var tabs = mini.get("mainTabs");
         var tab = tabs.getTab(item.id);
         if (!tab) {
-            tab = { name: item.id, title: item.text, url: item.url, iconCls: item.iconCls, showCloseButton: true };
+            tab = {name: item.id, title: item.text, url: item.url, iconCls: item.iconCls, showCloseButton: true};
             tab = tabs.addTab(tab);
         }
         tabs.activeTab(tab);
@@ -246,20 +253,20 @@
             }
         });
 
-        $(".sidebar").mCustomScrollbar({ autoHideScrollbar: true });
+        $(".sidebar").mCustomScrollbar({autoHideScrollbar: true});
 
         new MenuTip(menu);
 
         $.ajax({
-            type : "post",
-            dataType : "json",
-            sync : true,
+            type: "post",
+            dataType: "json",
+            sync: true,
             url: "/menu/getLeftMenu",
             success: function (text) {
-                var data = mini.decode(text);
+                var data = mini.decode(text.data);
                 menu.loadData(data);
             }
-        })
+        });
 
         //toggle
         $("#toggle, .sidebar-toggle").click(function () {
