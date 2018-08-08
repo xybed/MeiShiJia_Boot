@@ -1,12 +1,17 @@
 package com.qiqi.msjback.config;
 
 import com.qiqi.msjback.common.Constants;
+import com.qiqi.msjmapper.entity.BackPermission;
+import com.qiqi.msjmapper.entity.BackRole;
 import com.qiqi.msjmapper.entity.BackUser;
 import com.qiqi.msjmapper.enums.LockedStatus;
+import com.qiqi.msjmapper.mapper.BackPermissionCustomMapper;
+import com.qiqi.msjmapper.mapper.BackRoleCustomMapper;
 import com.qiqi.msjmapper.mapper.BackUserCustomMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -15,12 +20,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class MyShiroRealm extends AuthorizingRealm {
+public class ShiroRealm extends AuthorizingRealm {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private BackUserCustomMapper backUserCustomMapper;
+    @Resource
+    private BackRoleCustomMapper backRoleCustomMapper;
+    @Resource
+    private BackPermissionCustomMapper backPermissionCustomMapper;
 
     /**
      * 主要是用来进行身份认证的，也就是说验证用户输入的账号和密码是否正确
@@ -59,7 +71,20 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        String username = (String) principals.getPrimaryPrincipal();
 
-        return null;
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+        //获取用户角色集
+        List<BackRole> roleList = backRoleCustomMapper.queryByUsername(username);
+        Set<String> roleSet = roleList.stream().map(BackRole::getName).collect(Collectors.toSet());
+        simpleAuthorizationInfo.addRoles(roleSet);
+
+        //获取用户权限集
+        List<BackPermission> permissionList = backPermissionCustomMapper.queryByUsername(username);
+        Set<String> permissionSet = permissionList.stream().map(BackPermission::getName).collect(Collectors.toSet());
+        simpleAuthorizationInfo.addStringPermissions(permissionSet);
+
+        return simpleAuthorizationInfo;
     }
 }

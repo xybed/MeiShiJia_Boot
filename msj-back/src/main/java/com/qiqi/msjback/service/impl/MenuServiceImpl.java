@@ -24,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
         BackUser backUser = sessionService.getUser();
         List<BackMenuCustom> backMenuCustomList = backMenuCustomMapper.queryMenuByFid(0, backUser.getId(), MenuType.MENU.getCode());
         for(BackMenuCustom backMenuCustom : backMenuCustomList){
-            List<BackMenuCustom> children = backMenuCustomMapper.queryMenuByFid(backMenuCustom.getId(), 1, MenuType.MENU.getCode());
+            List<BackMenuCustom> children = backMenuCustomMapper.queryMenuByFid(backMenuCustom.getId(), backUser.getId(), MenuType.MENU.getCode());
             backMenuCustom.setChildren(children);
         }
         return backMenuCustomList;
