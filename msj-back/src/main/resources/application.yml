@@ -13,3 +13,6 @@ spring:
       restart:
         enabled: false
         exclude: static/**,templates/**
+  jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8

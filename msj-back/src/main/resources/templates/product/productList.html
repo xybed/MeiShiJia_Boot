@@ -24,7 +24,7 @@
             <tr>
                 <td>商品名称：</td>
                 <td>
-                    <input name="orderNumber" emptyText="请输入商品名称" class="mini-textbox" onenter="search"/>
+                    <input name="name" emptyText="请输入商品名称" class="mini-textbox" onenter="search"/>
                 </td>
                 <td align="center">
                     <a class="mini-button" iconCls="icon-search" onClick="search()">搜索</a>&nbsp;
@@ -45,10 +45,10 @@
         <div field="brand" width="100" headerAlign="center" align="center">品牌</div>
         <div field="stock" width="50" headerAlign="center" align="center">库存</div>
         <div field="productStatus.text" width="50" headerAlign="center" align="center">状态</div>
-        <!--<div field="gmtCreate" width="100" align="center" headerAlign="center" dateFormat="yyyy-MM-dd HH:mm:ss"-->
-             <!--allowSort="true">创建时间</div>-->
-        <!--<div field="gmtModified" width="100" align="center" headerAlign="center" dateFormat="yyyy-MM-dd HH:mm:ss"-->
-             <!--allowSort="true">修改时间</div>-->
+        <div field="gmtCreate" width="100" align="center" headerAlign="center" dateFormat="yyyy-MM-dd HH:mm:ss"
+             allowSort="true">创建时间</div>
+        <div field="gmtModified" width="100" align="center" headerAlign="center" dateFormat="yyyy-MM-dd HH:mm:ss"
+             allowSort="true">修改时间</div>
         <div name="action" width="80" headerAlign="center" align="center"
              renderer="onActionRenderer" cellStyle="padding:0;">操作</div>
     </div>

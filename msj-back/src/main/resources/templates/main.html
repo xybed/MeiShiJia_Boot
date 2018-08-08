@@ -264,6 +264,14 @@
             url: "/menu/getLeftMenu",
             success: function (text) {
                 var data = mini.decode(text.data);
+                data.forEach(function(val,index){
+                   val.text=val.name;
+                   val.iconCls=val.icon;
+                   val.children.forEach(function(val1,index1){
+                       val1.text=val1.name;
+                       val1.iconCls=val1.icon;
+                   });
+                });
                 menu.loadData(data);
             }
         });

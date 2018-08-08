@@ -1,6 +1,5 @@
 package com.qiqi.msjback.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.qiqi.msjback.service.ProductService;
 import com.qiqi.msjmapper.entity.Product;
@@ -23,11 +22,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Map queryProduct(Product product, Pagination grid) {
         Map<String, Object> map = new HashMap<>();
-//        PageHelper.startPage(grid.getPageIndex()+1, grid.getPageSize());
+        PageHelper.startPage(grid.getPageIndex()+1, grid.getPageSize());
         List<Product> productList = productCustomMapper.queryProduct(product);
-//        PageBean<Product> pageBean = new PageBean<>(productList);
-        map.put("data", productList);
-        map.put("total", 10);
+        PageBean<Product> pageBean = new PageBean<>(productList);
+        map.put("data", pageBean.getList());
+        map.put("total", pageBean.getTotal());
         return map;
     }
 }
