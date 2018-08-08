@@ -143,6 +143,5 @@
     <where>
       <include refid="product_where"/>
     </where>
-    LIMIT 0,10
   </select>
 </mapper>
