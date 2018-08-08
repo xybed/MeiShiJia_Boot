@@ -5,11 +5,11 @@ public class BackMenu {
 
     private Integer fid;
 
-    private String text;
+    private String name;
 
     private String url;
 
-    private String iconCls;
+    private String icon;
 
     private Integer type;
 
@@ -31,12 +31,12 @@ public class BackMenu {
         this.fid = fid;
     }
 
-    public String getText() {
-        return text;
+    public String getName() {
+        return name;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUrl() {
@@ -47,12 +47,12 @@ public class BackMenu {
         this.url = url;
     }
 
-    public String getIconCls() {
-        return iconCls;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setIconCls(String iconCls) {
-        this.iconCls = iconCls;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Integer getType() {

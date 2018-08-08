@@ -4,28 +4,28 @@
   <resultMap id="BaseResultMap" type="com.qiqi.msjmapper.entity.BackMenu">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="fid" jdbcType="INTEGER" property="fid" />
-    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="order" jdbcType="INTEGER" property="order" />
   </resultMap>
   <resultMap id="BackMenuCustomMap" type="com.qiqi.msjmapper.pojo.BackMenuCustom">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="fid" jdbcType="INTEGER" property="fid" />
-    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="order" jdbcType="INTEGER" property="order" />
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, fid, text, url, icon_cls, type, order
+    id, fid, name, url, icon, type, order
   </sql>
 
   <select id="queryMenuByFid" resultMap="BackMenuCustomMap">
-    SELECT bm.id,bm.fid,bm.text,bm.url,bm.icon_cls
+    SELECT bm.id,bm.fid,bm.name,bm.url,bm.icon
     FROM back_menu bm
     LEFT JOIN back_menu_role bmr ON bm.id=bmr.menu_id
     LEFT JOIN back_role br ON bmr.role_id=br.id
