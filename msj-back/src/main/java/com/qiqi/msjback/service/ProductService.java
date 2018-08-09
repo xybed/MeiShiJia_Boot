@@ -7,4 +7,6 @@ import java.util.Map;
 
 public interface ProductService {
     Map queryProduct(Product product, Pagination grid);
+
+    Product editQuery(Integer id);
 }

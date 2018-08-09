@@ -37,6 +37,11 @@ public class LoginController {
         return "main";
     }
 
+    @RequestMapping("/403")
+    public String forbidden(){
+        return "403";
+    }
+
     @PostMapping(value = "/authentication")
     @ResponseBody
     public Result authentication(String json, HttpServletRequest request){

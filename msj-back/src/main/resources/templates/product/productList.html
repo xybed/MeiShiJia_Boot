@@ -68,6 +68,45 @@
     function clean() {
         form.reset();
     }
+    function onActionRenderer(e) {
+        var record = e.record;
+        var uid = record._uid;
+        var rowIndex = e.rowIndex;
+        var s = '<a class="Edit_Button" href="javascript:edit(\'' + uid + '\')">编辑</a>';
+        return s;
+    }
+    function edit() {
+        var row = grid.getSelected();
+        if (row) {
+            mini.open({
+                url: "/product/addEditPage",
+                title: "商品编辑", width: 600, height: 400,
+                onload: function () {
+                    var iframe = this.getIFrameEl();
+                    var data = { action: "edit", id: row.id };
+                    iframe.contentWindow.SetData(data);
+
+                },
+                ondestroy: function (action) {
+                    //var iframe = this.getIFrameEl();
+                    if (action == "save") {
+                        grid.reload();
+                        mini.showTips({
+                            content: "<b>成功</b> <br/>添加成功",
+                            state: "success",
+                            x: "center",
+                            y: "center",
+                            timeout: 3000
+                        });
+                    }
+                }
+            });
+
+        } else {
+            alert("请选中一条记录");
+        }
+
+    }
 </script>
 </body>
 </html>
