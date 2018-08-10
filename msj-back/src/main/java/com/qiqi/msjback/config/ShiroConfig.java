@@ -44,12 +44,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/user/**", "roles[admin]");
         filterChainDefinitionMap.put("/product/queryProduct", "perms[queryProduct]");
         filterChainDefinitionMap.put("/product/addProduct", "perms[addProduct]");
-        filterChainDefinitionMap.put("/product/updateProduct", "perms[updateProduct]");
+        filterChainDefinitionMap.put("/product/addEditPage", "perms[updateProduct]");
         filterChainDefinitionMap.put("/product/deleteProduct", "perms[deleteProduct]");
         filterChainDefinitionMap.put("/order/queryOrder", "perms[queryOrder]");
         filterChainDefinitionMap.put("/order/updateOrder", "perms[updateOrder]");
-        //TODO 之后看怎么处理
-        filterChainDefinitionMap.put("/product/addEditPage", "perms[updateProduct]");
         //<!-- 一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
