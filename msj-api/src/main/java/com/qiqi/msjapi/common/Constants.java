@@ -6,4 +6,8 @@ public class Constants {
     public static final String ALIPAY_SUCCESS = "10000";
     public static final String ALIPAY_TIMEOUT_EXPRESS = "5m";
     public static final String WXPAY_SUCCESS = "SUCCESS";
+
+    //默认的页码和页数
+    public static final int PAGE_INDEX = 1;
+    public static final int PAGE_SIZE = 10;
 }

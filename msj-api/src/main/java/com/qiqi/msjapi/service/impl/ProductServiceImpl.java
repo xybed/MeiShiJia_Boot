@@ -1,9 +1,14 @@
 package com.qiqi.msjapi.service.impl;
 
-import com.qiqi.msjmapper.enums.PCategoryLevel;
-import com.qiqi.msjmapper.mapper.PCategoryCustomMapper;
-import com.qiqi.msjmapper.entity.PCategory;
+import com.github.pagehelper.PageHelper;
+import com.qiqi.commonlib.common.Constants;
 import com.qiqi.msjapi.service.ProductService;
+import com.qiqi.msjmapper.entity.PCategory;
+import com.qiqi.msjmapper.entity.Product;
+import com.qiqi.msjmapper.enums.PCategoryLevel;
+import com.qiqi.msjmapper.enums.ProductStatus;
+import com.qiqi.msjmapper.mapper.PCategoryCustomMapper;
+import com.qiqi.msjmapper.mapper.ProductCustomMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,6 +19,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Resource
     private PCategoryCustomMapper pCategoryCustomMapper;
+    @Resource
+    private ProductCustomMapper productCustomMapper;
 
     @Override
     public List<PCategory> getPCategory(Integer fid) {
@@ -22,5 +29,15 @@ public class ProductServiceImpl implements ProductService {
         }else {
             return pCategoryCustomMapper.queryByFid(fid);
         }
+    }
+
+    @Override
+    public List<Product> getProductList(Integer categoryId, Integer pageIndex, Integer pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Product> productList = productCustomMapper.queryProductByCategoryId(categoryId, ProductStatus.SHELF.getCode());
+        for(Product product : productList){
+            product.setImage(Constants.URL_PREFIX + product.getImage());
+        }
+        return productList;
     }
 }
