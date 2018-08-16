@@ -168,4 +168,26 @@
     FROM product
     WHERE id=#{id}
   </select>
+  <select id="queryProductByCategoryId" resultMap="BaseResultMap">
+    SELECT p.id,p.image,p.name,p.description,p.price,p.discount_price,p.original_price
+    FROM product p
+    LEFT JOIN product_category prc ON p.id=prc.product_id
+    LEFT JOIN p_category pc ON prc.category_id=pc.id
+    LEFT JOIN p_category pca ON pc.fid=pca.id
+    WHERE pc.id=#{categoryId} AND p.status=#{status}
+    UNION ALL
+    SELECT p.id,p.image,p.name,p.description,p.price,p.discount_price,p.original_price
+    FROM product p
+    LEFT JOIN product_category prc ON p.id=prc.product_id
+    LEFT JOIN p_category pc ON prc.category_id=pc.id
+    LEFT JOIN p_category pca ON pc.fid=pca.id
+    WHERE pc.fid=#{categoryId} AND p.status=#{status}
+    UNION ALL
+    SELECT p.id,p.image,p.name,p.description,p.price,p.discount_price,p.original_price
+    FROM product p
+    LEFT JOIN product_category prc ON p.id=prc.product_id
+    LEFT JOIN p_category pc ON prc.category_id=pc.id
+    LEFT JOIN p_category pca ON pc.fid=pca.id
+    WHERE pca.fid=#{categoryId} AND p.status=#{status}
+  </select>
 </mapper>
