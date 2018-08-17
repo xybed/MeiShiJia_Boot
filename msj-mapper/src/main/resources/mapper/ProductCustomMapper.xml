@@ -36,6 +36,20 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+  <resultMap id="ProductDetailMap" type="com.qiqi.msjmapper.pojo.ProductDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection property="images" ofType="java.lang.String">
+      <result column="image"/>
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
     id, url, back_user_id, name, description, image, price, original_price, discount_price, 
     stock, brand, status, gmt_create, gmt_modified, remark
@@ -189,5 +203,11 @@
     LEFT JOIN p_category pc ON prc.category_id=pc.id
     LEFT JOIN p_category pca ON pc.fid=pca.id
     WHERE pca.fid=#{categoryId} AND p.status=#{status}
+  </select>
+  <select id="queryProductDetail" resultMap="ProductDetailMap">
+    SELECT p.id,name,description,pi.image,price,original_price,discount_price,stock,brand,remark
+    FROM product p
+    LEFT JOIN product_image pi ON p.id=pi.product_id
+    WHERE p.id=#{id}
   </select>
 </mapper>

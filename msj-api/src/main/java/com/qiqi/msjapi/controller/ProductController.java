@@ -36,4 +36,12 @@ public class ProductController {
             pageSize = Constants.PAGE_SIZE;
         return ResultGenerator.genSuccessResult(productService.getProductList(categoryId, pageIndex, pageSize));
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Result getProductDetail(@PathVariable Integer id){
+        if(StringUtils.isEmpty(id)){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        return ResultGenerator.genSuccessResult(productService.getProductDetail(id));
+    }
 }

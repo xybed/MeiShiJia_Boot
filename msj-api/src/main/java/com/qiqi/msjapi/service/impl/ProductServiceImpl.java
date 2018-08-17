@@ -9,9 +9,11 @@ import com.qiqi.msjmapper.enums.PCategoryLevel;
 import com.qiqi.msjmapper.enums.ProductStatus;
 import com.qiqi.msjmapper.mapper.PCategoryCustomMapper;
 import com.qiqi.msjmapper.mapper.ProductCustomMapper;
+import com.qiqi.msjmapper.pojo.ProductDetail;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,5 +41,17 @@ public class ProductServiceImpl implements ProductService {
             product.setImage(Constants.URL_PREFIX + product.getImage());
         }
         return productList;
+    }
+
+    @Override
+    public ProductDetail getProductDetail(Integer id) {
+        ProductDetail productDetail = productCustomMapper.queryProductDetail(id);
+        List<String> images = new ArrayList<>();
+        for(String image : productDetail.getImages()){
+            image = Constants.URL_PREFIX + image;
+            images.add(image);
+        }
+        productDetail.setImages(images);
+        return productDetail;
     }
 }
