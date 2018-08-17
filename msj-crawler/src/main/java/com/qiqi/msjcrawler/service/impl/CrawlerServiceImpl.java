@@ -107,8 +107,8 @@ public class CrawlerServiceImpl implements CrawlerService {
     @Transactional
     @Override
     public void getProductDetail(String url, String price, String remark){
-        String pathSuffix = "nvz/nvz/";
-        String dirSuffix = "nvz\\nvz";
+        String pathSuffix = "ghqj/nxhl/";
+        String dirSuffix = "ghqj\\nxhl";
         //判断数据库中是否爬过此数据
         Product product = productCustomMapper.queryByUrl(url);
         if(product != null){
@@ -162,7 +162,9 @@ public class CrawlerServiceImpl implements CrawlerService {
             }else if(src.contains("/s50x64_jfs/")){
                 src = src.replace("/s50x64_jfs/", "/s450x450_jfs/");
                 src = src.replace("!cc_50x64.jpg", "");
-            }else {
+            }else if(src.contains("/s75x75_jfs/")){
+                src = src.replace("/s75x75_jfs/", "/s450x450_jfs/");
+            }else{
                 src = src.replace("/jfs/", "/s450x450_jfs/");
             }
             src = "https:"+src;
@@ -229,13 +231,14 @@ public class CrawlerServiceImpl implements CrawlerService {
         String html = "";
         try {
             WebClient webClient = new WebClient(BrowserVersion.CHROME);
+            webClient.setJavaScriptTimeout(2000);
             webClient.getOptions().setJavaScriptEnabled(true);
             webClient.getOptions().setCssEnabled(false);
             webClient.setAjaxController(new NicelyResynchronizingAjaxController());
             webClient.getOptions().setThrowExceptionOnScriptError(false);
             //模拟浏览器打开一个目标网址
             HtmlPage rootPage = webClient.getPage(url);
-            Thread.sleep(3000);//主要是这个线程的等待 因为js加载也是需要时间的
+            Thread.sleep(2000);//主要是这个线程的等待 因为js加载也是需要时间的
             html = rootPage.asXml();
         } catch (IOException | InterruptedException e) {
 //            e.printStackTrace();
