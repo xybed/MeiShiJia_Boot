@@ -135,6 +135,11 @@
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
+        <!--solr-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-solr</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
