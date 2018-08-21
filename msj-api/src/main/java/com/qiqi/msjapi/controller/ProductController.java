@@ -36,6 +36,19 @@ public class ProductController {
             pageSize = Constants.PAGE_SIZE;
         return ResultGenerator.genSuccessResult(productService.getProductList(categoryId, pageIndex, pageSize));
     }
+    
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public Result searchProductList(@RequestParam("keyword") String keyword,
+                    @RequestParam("page_index") Integer pageIndex, @RequestParam("page_size") Integer pageSize){
+        if(StringUtils.isEmpty(keyword)){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        if(pageIndex == null)
+            pageIndex = Constants.PAGE_INDEX;
+        if(pageSize == null)
+            pageSize = Constants.PAGE_SIZE;
+        return ResultGenerator.genSuccessResult(productService.searchProductList(keyword, pageIndex, pageSize));
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Result getProductDetail(@PathVariable Integer id){

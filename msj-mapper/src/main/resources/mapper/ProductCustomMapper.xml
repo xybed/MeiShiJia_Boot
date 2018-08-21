@@ -204,6 +204,11 @@
     LEFT JOIN p_category pca ON pc.fid=pca.id
     WHERE pca.fid=#{categoryId} AND p.status=#{status}
   </select>
+  <select id="searchProduct" resultMap="BaseResultMap">
+    SELECT p.id,p.image,p.name,p.description,p.price,p.discount_price,p.original_price
+    FROM product p
+    WHERE status=#{status} AND (name like concat('%',#{keyword},'%') or brand like concat('%',#{keyword},'%'))
+  </select>
   <select id="queryProductDetail" resultMap="ProductDetailMap">
     SELECT p.id,name,description,pi.image,price,original_price,discount_price,stock,brand,remark
     FROM product p

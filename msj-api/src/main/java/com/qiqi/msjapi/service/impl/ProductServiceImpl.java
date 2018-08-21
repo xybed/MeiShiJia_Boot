@@ -44,6 +44,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> searchProductList(String keyword, Integer pageIndex, Integer pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        List<Product> productList = productCustomMapper.searchProduct(keyword, ProductStatus.SHELF.getCode());
+        for(Product product : productList){
+            product.setImage(Constants.URL_PREFIX + product.getImage());
+        }
+        return productList;
+    }
+
+    @Override
     public ProductDetail getProductDetail(Integer id) {
         ProductDetail productDetail = productCustomMapper.queryProductDetail(id);
         List<String> images = new ArrayList<>();

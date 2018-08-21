@@ -17,6 +17,8 @@ public interface ProductCustomMapper {
     Product queryProductById(Integer id);
 
     List<Product> queryProductByCategoryId(@Param("categoryId") Integer categoryId, @Param("status") Integer status);
+    
+    List<Product> searchProduct(@Param("keyword") String keyword, @Param("status") Integer status);
 
     ProductDetail queryProductDetail(@Param("id") Integer id);
 }

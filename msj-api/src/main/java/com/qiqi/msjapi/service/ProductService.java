@@ -10,6 +10,8 @@ public interface ProductService {
     List<PCategory> getPCategory(Integer fid);
 
     List<Product> getProductList(Integer categoryId, Integer pageIndex, Integer pageSize);
+    
+    List<Product> searchProductList(String keyword, Integer pageIndex, Integer pageSize);
 
     ProductDetail getProductDetail(Integer id);
 }
