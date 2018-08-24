@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: hystrix-dashboard-turbine
+server:
+  port: 8001
+turbine:
+  #配置Eureka中的serviceId列表，表明监控哪些服务
+  appConfig:
+  #指定聚合哪些集群，多个使用”,”分割，默认为default
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
