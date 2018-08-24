@@ -1,7 +1,6 @@
 package com.qiqi.msjcrawler;
 
 import com.qiqi.msjcrawler.service.CrawlerService;
-import com.qiqi.msjcrawler.service.impl.CrawlerServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +17,12 @@ public class MsjCrawlerApplicationTests {
 
     @Test
     public void contextLoads() {
-        crawlerService.getPlayerData();
-//        crawlerService.getProductData("/view/test.html", 462);
-//        crawlerService.getProductData("/view/test1.html", 457);
-//        crawlerService.getProductData("/view/test2.html", 458);
-//        crawlerService.getProductData("/view/test3.html", 459);
-//        crawlerService.getProductData("/view/test4.html", 460);
+//        crawlerService.getPlayerData();
+//        crawlerService.getProductData("/view/test1.html", 526);
+        crawlerService.getProductData("/view/test2.html", 527);
+//        crawlerService.getProductData("/view/test3.html", 523);
+//        crawlerService.getProductData("/view/test4.html", 524);
+//        crawlerService.getProductData("/view/test5.html", 525);
     }
 
 }
