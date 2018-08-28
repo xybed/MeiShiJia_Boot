@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: cloud-zuul
+server:
+  port: 9003
+zuul:
+  routes:
+    producer:
+      path: /producer/**
+      serviceId: eureka-producer
+    consumer:
+      path: /consumer/**
+      serviceId: eureka-consumer
+eureka:
+  client:
+    serviceUrl:
+          defaultZone: http://localhost:8000/eureka/
