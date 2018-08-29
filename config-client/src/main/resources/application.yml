@@ -3,6 +3,17 @@ server:
 spring:
   application:
     name: config-client
+  # 开启消息跟踪
+  cloud:
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+# 刷新时，关闭安全验证
 management:
   security:
     enabled: false
