@@ -107,8 +107,8 @@ public class CrawlerServiceImpl implements CrawlerService {
     @Transactional
     @Override
     public void getProductDetail(String url, String price, String remark){
-        String pathSuffix = "tongz/tongx/";
-        String dirSuffix = "tongz\\tongx";
+        String pathSuffix = "jsqq/jsqq/";
+        String dirSuffix = "jsqq\\jsqq";
         //判断数据库中是否爬过此数据
         Product product = productCustomMapper.queryByUrl(url);
         if(product != null){
