@@ -6,7 +6,7 @@
     <!--聚合工程的父工程-->
     <groupId>com.qiqi</groupId>
     <artifactId>meishijia</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <!--基本信息-->
@@ -33,6 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <msj.version>1.0</msj.version>
     </properties>
 
     <dependencyManagement>
@@ -40,27 +41,27 @@
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>common-lib</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${msj.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-api</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${msj.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-back</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${msj.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-crawler</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${msj.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-mapper</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${msj.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

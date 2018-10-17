@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>msj-back</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>msj-back</name>
@@ -13,7 +13,7 @@
     <parent>
         <groupId>com.qiqi</groupId>
         <artifactId>meishijia</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
