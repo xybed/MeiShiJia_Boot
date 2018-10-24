@@ -1,10 +1,13 @@
 package com.qiqi.msjmapper.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class ReceivingAddress {
     private Integer id;
 
+    @JSONField(name = "user_id")
     private Integer userId;
 
     private String name;
