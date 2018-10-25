@@ -1,6 +1,12 @@
 spring:
   application:
     name: cloud-zuul
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: cloud-zuul
 server:
   port: 9003
 zuul:
@@ -18,7 +24,3 @@ ribbon:
   MaxAutoRetries: 2
   #切换相同Server的次数
   MaxAutoRetriesNextServer: 0
-eureka:
-  client:
-    serviceUrl:
-          defaultZone: http://localhost:8000/eureka/

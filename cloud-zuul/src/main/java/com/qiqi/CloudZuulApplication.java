@@ -14,8 +14,8 @@ public class CloudZuulApplication {
         SpringApplication.run(CloudZuulApplication.class, args);
     }
 
-    @Bean
-    public TokenFilter tokenFilter() {
-        return new TokenFilter();
-    }
+//    @Bean
+//    public TokenFilter tokenFilter() {
+//        return new TokenFilter();
+//    }
 }
