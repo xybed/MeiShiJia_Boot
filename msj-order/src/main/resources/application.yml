@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: msj-order
+  profiles:
+    active: dev,mapper
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: msj-order
+server:
+  port: 9104
+
+---
+spring:
+  profiles: dev
+
+---
+spring:
+  profiles: prod

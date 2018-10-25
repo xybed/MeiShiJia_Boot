@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.service;
+package com.qiqi.msjorder.service;
 
 import com.qiqi.msjmapper.dto.ReceivingAddressDto;
 import com.qiqi.msjmapper.entity.ReceivingAddress;

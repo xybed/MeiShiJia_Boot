@@ -1,11 +1,10 @@
-package com.qiqi.msjapi.controller;
+package com.qiqi.msjorder.controller;
 
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ResultGenerator;
-import com.qiqi.msjapi.annotation.NeedLogin;
-import com.qiqi.msjapi.service.OrderService;
 import com.qiqi.msjmapper.entity.ReceivingAddress;
+import com.qiqi.msjorder.service.OrderService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ public class OrderController {
     @Resource
     private OrderService orderService;
 
-    @NeedLogin
     @RequestMapping(value = "/addresses", method = RequestMethod.GET)
     public Result getReceivingAddress(@RequestParam("user_id") Integer userId){
         if(StringUtils.isEmpty(userId)){
@@ -26,7 +24,6 @@ public class OrderController {
         return ResultGenerator.genSuccessResult(orderService.getReceivingAddress(userId));
     }
 
-    @NeedLogin
     @RequestMapping(value = "/address", method = RequestMethod.POST)
     public Result addReceivingAddress(@RequestBody ReceivingAddress receivingAddress){
         if(StringUtils.isEmpty(receivingAddress.getName()) ||
@@ -40,7 +37,6 @@ public class OrderController {
         return ResultGenerator.genSuccessResult("添加成功");
     }
 
-    @NeedLogin
     @RequestMapping(value = "/address", method = RequestMethod.PUT)
     public Result updateReceivingAddress(@RequestBody ReceivingAddress receivingAddress){
         if(StringUtils.isEmpty(receivingAddress.getId())){
@@ -50,7 +46,6 @@ public class OrderController {
         return ResultGenerator.genSuccessResult("更新成功");
     }
 
-    @NeedLogin
     @RequestMapping(value = "/addresses/{id}", method = RequestMethod.DELETE)
     public Result deleteReceivingAddress(@PathVariable Integer id){
         if(StringUtils.isEmpty(id)){
