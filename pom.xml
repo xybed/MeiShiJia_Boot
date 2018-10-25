@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.2.RELEASE</version>
+        <version>2.0.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -27,6 +27,8 @@
         <module>msj-back</module>
         <module>msj-crawler</module>
         <module>msj-mapper</module>
+        <module>msj-order</module>
+        <module>cloud-zuul</module>
     </modules>
 
     <properties>
@@ -34,10 +36,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <msj.version>1.0</msj.version>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--公共类模块-->
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>common-lib</artifactId>
@@ -48,20 +52,50 @@
                 <artifactId>msj-api</artifactId>
                 <version>${msj.version}</version>
             </dependency>
+            <!--后台管理模块-->
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-back</artifactId>
                 <version>${msj.version}</version>
             </dependency>
+            <!--爬虫-->
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-crawler</artifactId>
                 <version>${msj.version}</version>
             </dependency>
+            <!--MyBatis-->
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-mapper</artifactId>
                 <version>${msj.version}</version>
+            </dependency>
+            <!--订单服务-->
+            <dependency>
+                <groupId>com.qiqi</groupId>
+                <artifactId>msj-order</artifactId>
+                <version>${msj.version}</version>
+            </dependency>
+            <!--网关路由-->
+            <dependency>
+                <groupId>com.qiqi</groupId>
+                <artifactId>cloud-zuul</artifactId>
+                <version>${msj.version}</version>
+            </dependency>
+
+            <!--分页依赖-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -87,33 +121,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-        <!--mybatis 依赖-->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!--阿里 Druid 依赖-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.19</version>
-        </dependency>
         <!--阿里 FastJson依赖-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.44</version>
-        </dependency>
-        <!--分页依赖-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.5</version>
         </dependency>
         <!--log4j-->
         <dependency>
@@ -135,11 +147,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>23.0</version>
-        </dependency>
-        <!--solr-->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-solr</artifactId>
         </dependency>
     </dependencies>
 
