@@ -15,6 +15,14 @@ spring:
     port: 5672
     username: guest
     password: guest
+  application:
+    name: msj-api
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: msj-api
 #  data:
 #    solr:
 #      host: http://127.0.0.1:8983/solr

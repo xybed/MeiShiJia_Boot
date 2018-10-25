@@ -29,6 +29,10 @@
             <groupId>com.qiqi</groupId>
             <artifactId>msj-mapper</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
         <!--jwt服务认证-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -50,6 +54,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!--solr-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-solr</artifactId>
         </dependency>
         <!--支付宝-->
         <dependency>
@@ -74,6 +83,20 @@
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay</artifactId>
             <version>1.1.6</version>
+        </dependency>
+        <!--consul健康检查依赖于此包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--Spring Cloud Consul 的支持-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
         </dependency>
     </dependencies>
 
