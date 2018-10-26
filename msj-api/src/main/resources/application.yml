@@ -27,12 +27,13 @@ spring:
 #    solr:
 #      host: http://127.0.0.1:8983/solr
 server:
-  ssl:
-    key-store: msj-api/server.keystore
-    key-store-password: 77jiajia
-    key-store-type: JKS
-    key-alias: meishijia
-    key-password: meishijia
+#  ssl:
+#    key-store: msj-api/server.keystore
+#    key-store-password: 77jiajia
+#    key-store-type: JKS
+#    key-alias: meishijia
+#    key-password: meishijia
+
 #    trust-store: server.keystore
 #    trust-store-password: 77jiajia
 #    enabled: true
