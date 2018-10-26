@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.interceptor;
+package com.qiqi.commonlib.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.qiqi.commonlib.lib.utils.MD5Util;

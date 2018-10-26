@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.config;
+package com.qiqi.commonlib.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializeConfig;
@@ -8,9 +8,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ServiceException;
-import com.qiqi.msjapi.interceptor.SignInterceptor;
-import com.qiqi.msjapi.interceptor.TokenInterceptor;
-import com.qiqi.msjmapper.enums.Sex;
+import com.qiqi.commonlib.interceptor.SignInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,7 +68,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         converter.setSupportedMediaTypes(supportedMediaTypes);
         FastJsonConfig config = new FastJsonConfig();
         SerializeConfig serializeConfig = new SerializeConfig();
-        serializeConfig.configEnumAsJavaBean(Sex.class);
+//        serializeConfig.configEnumAsJavaBean(Sex.class);
         config.setSerializeConfig(serializeConfig);
         config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
                 SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
@@ -126,10 +124,10 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-        if (!"dev,mapper".equals(env)) { //开发环境忽略签名认证
+        if ("dev,mapper".equals(env)) { //开发环境忽略签名认证
             registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**", "/pay/**");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**", "/pay/**");
+//        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**", "/pay/**");
     }
 
     //配置静态访问资源
