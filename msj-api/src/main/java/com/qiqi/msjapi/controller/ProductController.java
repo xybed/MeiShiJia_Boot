@@ -26,7 +26,8 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Result getProductList(@RequestParam("category_id") Integer categoryId,
-                     @RequestParam("page_index") Integer pageIndex, @RequestParam("page_size") Integer pageSize){
+                     @RequestParam(name = "page_index", required = false) Integer pageIndex,
+                     @RequestParam(name = "page_size", required = false) Integer pageSize){
         if(StringUtils.isEmpty(categoryId)){
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }

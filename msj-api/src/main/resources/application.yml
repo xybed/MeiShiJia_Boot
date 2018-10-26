@@ -38,7 +38,7 @@ server:
 #    trust-store-password: 77jiajia
 #    enabled: true
 #    client-auth: need
-  port: 8443
+  port: 9101
 
 ---
 spring:
