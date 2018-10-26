@@ -11,6 +11,10 @@ spring:
         service-name: msj-order
 server:
   port: 9104
+feign:
+  hystrix:
+    #使断路器起作用
+    enabled: true
 
 ---
 spring:

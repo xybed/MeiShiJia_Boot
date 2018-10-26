@@ -3,7 +3,7 @@ package com.qiqi.msjorder.remote;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient("msj-api")
+@FeignClient(name = "msj-api", fallback = HelloRemoteHystrix.class)
 public interface HelloRemote {
 
     @RequestMapping("/hello")
