@@ -2,7 +2,7 @@ package com.qiqi.msjapi.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.qiqi.msjapi.utils.JWTUtil;
-import com.qiqi.msjapi.annotation.NeedLogin;
+import com.qiqi.commonlib.annotation.NeedLogin;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.msjapi.service.UserTokenService;

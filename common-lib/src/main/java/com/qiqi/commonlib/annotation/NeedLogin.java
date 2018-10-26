@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.annotation;
+package com.qiqi.commonlib.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

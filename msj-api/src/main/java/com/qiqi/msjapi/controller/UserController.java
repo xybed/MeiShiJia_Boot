@@ -1,6 +1,6 @@
 package com.qiqi.msjapi.controller;
 
-import com.qiqi.msjapi.annotation.NeedLogin;
+import com.qiqi.commonlib.annotation.NeedLogin;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultGenerator;
 import com.qiqi.msjmapper.entity.User;
