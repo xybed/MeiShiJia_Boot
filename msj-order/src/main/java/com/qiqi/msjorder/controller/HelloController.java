@@ -1,11 +1,14 @@
 package com.qiqi.msjorder.controller;
 
+import com.qiqi.msjorder.remote.HelloRemote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
 
 @RestController
 public class HelloController {
@@ -15,6 +18,9 @@ public class HelloController {
 
     @Autowired
     private DiscoveryClient discoveryClient;
+
+    @Resource
+    private HelloRemote helloRemote;
 
     /**
      * 获取所有服务
@@ -36,5 +42,10 @@ public class HelloController {
     public String call(){
         String result = new RestTemplate().getForObject(loadBalancerClient.choose("msj-api").getUri().toString()+"/hello", String.class);
         return result;
+    }
+
+    @RequestMapping("/feign")
+    public String feign(){
+        return helloRemote.hello();
     }
 }
