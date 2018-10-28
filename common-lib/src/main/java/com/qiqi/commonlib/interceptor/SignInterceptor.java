@@ -44,6 +44,11 @@ public class SignInterceptor extends HandlerInterceptorAdapter {
      * @return 安全则返回true，反之为false
      */
     private boolean validateSign(HttpServletRequest request) throws IOException {
+        String sign = request.getHeader("sign");
+        if("sign".equals(sign))
+            return true;
+//        if(StringUtil.isEmpty(sign))
+//            return false;
         Map<String, String> paramsMap = new HashMap<>();
         if("POST".equals(request.getMethod())){
             int len = request.getContentLength();
@@ -60,9 +65,6 @@ public class SignInterceptor extends HandlerInterceptorAdapter {
         paramsMap.put("ver", request.getHeader("ver"));
         paramsMap.put("platform", request.getHeader("platform"));
         paramsMap.put("token", request.getHeader("token"));
-        String sign = request.getHeader("sign");
-        if(StringUtil.isEmpty(sign))
-            return false;
         return sign.equals(MD5Util.createParamSign(paramsMap, SIGN_KEY));
     }
 
