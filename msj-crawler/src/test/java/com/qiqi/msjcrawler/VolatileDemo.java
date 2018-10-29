@@ -15,6 +15,8 @@ public class VolatileDemo {
 
 class ThreadVolatile extends Thread{
 
+    //如果没有volatile（保证可见性的关键字），主线程修改flag后，没有刷新到线程的本地私有内存中
+    //导致while循环中的flag还为true
     public volatile boolean flag = true;
 
     @Override
