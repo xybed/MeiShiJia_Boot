@@ -1,4 +1,4 @@
-package com.qiqi.commonlib.lib.utils;
+package com.qiqi.commonlib.utils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

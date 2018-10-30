@@ -1,8 +1,7 @@
 package com.qiqi.commonlib.interceptor;
 
 import com.alibaba.fastjson.JSON;
-import com.qiqi.commonlib.lib.utils.MD5Util;
-import com.qiqi.commonlib.lib.utils.StringUtil;
+import com.qiqi.commonlib.utils.MD5Util;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import org.slf4j.Logger;
