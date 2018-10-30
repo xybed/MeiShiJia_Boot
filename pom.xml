@@ -23,7 +23,6 @@
 
     <modules>
         <module>common-lib</module>
-        <module>common-redis</module>
         <module>msj-api</module>
         <module>msj-back</module>
         <module>msj-crawler</module>
@@ -46,11 +45,6 @@
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>common-lib</artifactId>
-                <version>${msj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.qiqi</groupId>
-                <artifactId>common-redis</artifactId>
                 <version>${msj.version}</version>
             </dependency>
             <dependency>
