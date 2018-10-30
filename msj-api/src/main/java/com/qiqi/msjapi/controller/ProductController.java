@@ -31,6 +31,9 @@ public class ProductController {
         if(StringUtils.isEmpty(categoryId)){
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }
+//        jedis = JedisUtil.getInstance().getJedis(ip, 6379);
+//        System.out.println(jedis.get("token15606954708"));
+//        JedisUtil.getInstance().closeJedis(jedis, ip, 6379);
         if(pageIndex == null)
             pageIndex = Constants.PAGE_INDEX;
         if(pageSize == null)

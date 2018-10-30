@@ -1,7 +1,8 @@
 package com.qiqi.msjapi.service.impl;
 
 import com.qiqi.commonlib.common.Constants;
-import com.qiqi.commonlib.lib.utils.DateUtil;
+import com.qiqi.commonlib.utils.DateUtil;
+import com.qiqi.commonredis.utils.JedisUtil;
 import com.qiqi.msjapi.utils.JWTUtil;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ServiceException;
@@ -80,6 +81,11 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(ResultEnum.LOGIN_ERROR);
 
         String token = JWTUtil.createNewToken(username);
+        //把token缓存到redis中
+        String key = "token" + username;
+        JedisUtil.getInstance().set(key, token);
+        JedisUtil.getInstance().expire(key, 24 * 60 * 60);
+
         UserToken userToken = new UserToken();
         userToken.setUsername(username);
         userToken.setToken(token);

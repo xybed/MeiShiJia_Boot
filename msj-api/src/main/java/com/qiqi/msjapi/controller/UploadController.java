@@ -1,9 +1,9 @@
 package com.qiqi.msjapi.controller;
 
 import com.qiqi.commonlib.common.Constants;
-import com.qiqi.commonlib.lib.utils.ClassPathUtil;
-import com.qiqi.commonlib.lib.utils.FileUtil;
-import com.qiqi.commonlib.lib.utils.MD5Util;
+import com.qiqi.commonlib.utils.ClassPathUtil;
+import com.qiqi.commonlib.utils.FileUtil;
+import com.qiqi.commonlib.utils.MD5Util;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ResultGenerator;

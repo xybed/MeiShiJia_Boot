@@ -1,11 +1,8 @@
 spring:
   profiles:
-    active: dev,mapper
+    active: dev,redis,mapper
   mvc:
     throw-exception-if-no-handler-found: true
-  redis:
-    host: 127.0.0.1
-    database: 0
   servlet:
     multipart:
       max-file-size: 10MB

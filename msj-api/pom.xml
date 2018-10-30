@@ -27,6 +27,10 @@
         </dependency>
         <dependency>
             <groupId>com.qiqi</groupId>
+            <artifactId>common-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qiqi</groupId>
             <artifactId>msj-mapper</artifactId>
         </dependency>
         <dependency>
@@ -38,17 +42,6 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
-        </dependency>
-        <!--添加缓存支持-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <!--jedis-->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
         </dependency>
         <!--RabbitMQ-->
         <dependency>

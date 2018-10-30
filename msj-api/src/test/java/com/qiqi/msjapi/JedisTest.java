@@ -1,6 +1,5 @@
 package com.qiqi.msjapi;
 
-import com.qiqi.msjapi.utils.JedisUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
