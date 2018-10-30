@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.utils;
+package com.qiqi.commonlib.utils;
 
 import io.jsonwebtoken.*;
 

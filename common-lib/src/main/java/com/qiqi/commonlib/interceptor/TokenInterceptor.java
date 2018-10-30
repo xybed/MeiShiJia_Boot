@@ -1,18 +1,16 @@
-package com.qiqi.msjapi.interceptor;
+package com.qiqi.commonlib.interceptor;
 
 import com.alibaba.fastjson.JSON;
-import com.qiqi.msjapi.utils.JWTUtil;
 import com.qiqi.commonlib.annotation.NeedLogin;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.msjapi.service.UserTokenService;
+import com.qiqi.commonlib.utils.JWTUtil;
+import com.qiqi.commonlib.utils.JedisUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -41,10 +39,11 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
                         responseResult(response);
                         return false;
                     }
-                    WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
-                    UserTokenService userTokenService = applicationContext.getBean("userTokenService", UserTokenService.class);
-                    String tokenDB = userTokenService.queryToken(username);
-                    if(!token.equals(tokenDB)){
+//                    WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+//                    UserTokenService userTokenService = applicationContext.getBean("userTokenService", UserTokenService.class);
+//                    String tokenDB = userTokenService.queryToken(username);
+                    String tokenCache = JedisUtil.getInstance().get("token"+username);
+                    if(!token.equals(tokenCache)){
                         responseResult(response);
                         return false;
                     }else {
@@ -58,7 +57,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             }
         }catch (ClassCastException e){
             logger.info("ClassCastException:" + request.getRequestURL().toString());
-        }catch (ExpiredJwtException|SignatureException e){
+        }catch (ExpiredJwtException|SignatureException|IllegalArgumentException e){
             responseResult(response);
             return false;
         }
