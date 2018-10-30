@@ -1,5 +1,6 @@
 package com.qiqi.msjapi;
 
+import com.qiqi.commonlib.utils.JedisTempUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,12 +17,12 @@ public class JedisTest {
 
     @BeforeClass
     public static void init(){
-        jedis = JedisUtil.getInstance().getJedis(IP, PORT);
+        jedis = JedisTempUtil.getInstance().getJedis(IP, PORT);
     }
 
     @AfterClass
     public static void close(){
-        JedisUtil.getInstance().closeJedis(jedis, IP, PORT);
+        JedisTempUtil.getInstance().closeJedis(jedis, IP, PORT);
     }
 
     @Test

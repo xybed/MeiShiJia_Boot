@@ -2,8 +2,8 @@ package com.qiqi.msjapi.service.impl;
 
 import com.qiqi.commonlib.common.Constants;
 import com.qiqi.commonlib.utils.DateUtil;
-import com.qiqi.commonredis.utils.JedisUtil;
-import com.qiqi.msjapi.utils.JWTUtil;
+import com.qiqi.commonlib.utils.JedisUtil;
+import com.qiqi.commonlib.utils.JWTUtil;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ServiceException;
 import com.qiqi.msjmapper.enums.Sex;
@@ -13,6 +13,7 @@ import com.qiqi.msjmapper.mapper.UserTokenCustomMapper;
 import com.qiqi.msjmapper.entity.User;
 import com.qiqi.msjmapper.entity.UserToken;
 import com.qiqi.msjapi.service.UserService;
+import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,7 +103,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(String token) {
-        userTokenCustomMapper.logout(token);
+        Claims claims = JWTUtil.getClaims(token);
+        String username = claims.getSubject();
+        JedisUtil.getInstance().del("token"+username);
+//        userTokenCustomMapper.logout(token);
     }
 
     @Override
