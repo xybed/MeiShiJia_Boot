@@ -18,11 +18,11 @@ public class CodeFactory {
     }
 
     public static void main(String[] args){
-        ICode javaCode = CodeFactory.getCodeSkill("java");
-        javaCode.coding();
-        ICode phpCode = CodeFactory.getCodeSkill("php");
-        phpCode.coding();
-        ICode pythonCode = CodeFactory.getCodeSkill("python");
-        pythonCode.coding();
+        ICode code = CodeFactory.getCodeSkill("java");
+        code.coding();
+        code = CodeFactory.getCodeSkill("php");
+        code.coding();
+        code = CodeFactory.getCodeSkill("python");
+        code.coding();
     }
 }
