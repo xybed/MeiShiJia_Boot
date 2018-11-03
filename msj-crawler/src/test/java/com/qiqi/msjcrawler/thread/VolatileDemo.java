@@ -1,4 +1,4 @@
-package com.qiqi.msjcrawler;
+package com.qiqi.msjcrawler.thread;
 
 public class VolatileDemo {
     public static void main(String[] args) throws InterruptedException {

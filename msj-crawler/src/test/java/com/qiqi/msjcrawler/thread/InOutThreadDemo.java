@@ -1,4 +1,4 @@
-package com.qiqi.msjcrawler;
+package com.qiqi.msjcrawler.thread;
 
 /**
  * 线程之间的通讯wait()、notify()、notifyAll()
