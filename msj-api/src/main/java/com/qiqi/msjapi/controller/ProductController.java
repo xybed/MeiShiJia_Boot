@@ -1,10 +1,10 @@
 package com.qiqi.msjapi.controller;
 
 import com.qiqi.commonlib.annotation.NeedLogin;
+import com.qiqi.commonlib.common.Constants;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ResultGenerator;
-import com.qiqi.msjapi.common.Constants;
 import com.qiqi.msjapi.service.ProductService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

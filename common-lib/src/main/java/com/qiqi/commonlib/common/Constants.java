@@ -8,4 +8,8 @@ public class Constants {
     public static final String IMG_SUFFIX = ".png";
     public static final String SLASH = "/";
     public static final String DEFAULT_AVATAR = IMAGE_BUCKET_AVATAR + "icon_default_avatar.png";
+
+    //默认的页码和页数
+    public static final int PAGE_INDEX = 1;
+    public static final int PAGE_SIZE = 10;
 }
