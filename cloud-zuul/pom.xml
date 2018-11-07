@@ -18,10 +18,6 @@
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-        </dependency>
         <!--zuul依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
