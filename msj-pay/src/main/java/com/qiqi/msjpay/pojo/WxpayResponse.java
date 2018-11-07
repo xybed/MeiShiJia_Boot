@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.pojo;
+package com.qiqi.msjpay.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

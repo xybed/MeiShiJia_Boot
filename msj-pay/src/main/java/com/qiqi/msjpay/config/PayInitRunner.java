@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.config;
+package com.qiqi.msjpay.config;
 
 import com.jpay.alipay.AliPayApiConfig;
 import com.jpay.alipay.AliPayApiConfigKit;

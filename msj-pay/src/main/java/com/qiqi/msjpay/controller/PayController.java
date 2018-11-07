@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.controller;
+package com.qiqi.msjpay.controller;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -9,7 +9,7 @@ import com.jpay.weixin.api.WxPayApiConfigKit;
 import com.qiqi.commonconfig.common.Result;
 import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.msjmapper.entity.Order;
-import com.qiqi.msjapi.service.PayService;
+import com.qiqi.msjpay.service.PayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

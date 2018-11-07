@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.service.impl;
+package com.qiqi.msjpay.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
@@ -12,12 +12,12 @@ import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ServiceException;
 import com.qiqi.commonlib.utils.ClassPathUtil;
 import com.qiqi.commonlib.utils.IPUtil;
-import com.qiqi.msjapi.common.Constants;
-import com.qiqi.msjapi.pojo.AlipayNotify;
-import com.qiqi.msjapi.pojo.AlipayPreCreateBase;
-import com.qiqi.msjapi.pojo.AlipayRefundBase;
-import com.qiqi.msjapi.pojo.WxpayResponse;
-import com.qiqi.msjapi.service.PayService;
+import com.qiqi.msjpay.common.Constants;
+import com.qiqi.msjpay.pojo.AlipayNotify;
+import com.qiqi.msjpay.pojo.AlipayPreCreateBase;
+import com.qiqi.msjpay.pojo.AlipayRefundBase;
+import com.qiqi.msjpay.pojo.WxpayResponse;
+import com.qiqi.msjpay.service.PayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

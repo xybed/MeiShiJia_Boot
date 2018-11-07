@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.common;
+package com.qiqi.msjpay.common;
 
 public class Constants {
 

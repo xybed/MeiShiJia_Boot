@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.service;
+package com.qiqi.msjpay.service;
 
 import java.util.Map;
 

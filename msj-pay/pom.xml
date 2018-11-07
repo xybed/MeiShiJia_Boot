@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>msj-pay</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>msj-pay</name>
+    <description>支付服务模块</description>
+
+    <parent>
+        <groupId>com.qiqi</groupId>
+        <artifactId>meishijia</artifactId>
+        <version>1.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.qiqi.common</groupId>
+            <artifactId>lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qiqi.common</groupId>
+            <artifactId>config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qiqi</groupId>
+            <artifactId>msj-mapper</artifactId>
+        </dependency>
+        <!--consul健康检查依赖于此包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--Spring Cloud Consul 的支持-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+        <!--支付宝-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.3.4.ALL</version>
+        </dependency>
+        <!--google生成二维码-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+        <!--微信支付-->
+        <!--<dependency>-->
+        <!--<groupId>com.github.wxpay</groupId>-->
+        <!--<artifactId>wxpay-sdk</artifactId>-->
+        <!--<version>0.0.3</version>-->
+        <!--</dependency>-->
+        <!--IJPay封装支付宝、微信-->
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay</artifactId>
+            <version>1.1.6</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
