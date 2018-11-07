@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.service;
+package com.qiqi.msjfootball.service;
 
 import com.qiqi.msjmapper.pojo.FootballPlayerCustom;
 import com.qiqi.msjmapper.pojo.FootballRankingCustom;

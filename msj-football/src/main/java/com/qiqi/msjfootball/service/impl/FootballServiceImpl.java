@@ -1,11 +1,11 @@
-package com.qiqi.msjapi.service.impl;
+package com.qiqi.msjfootball.service.impl;
 
 import com.qiqi.commonconfig.common.Constants;
+import com.qiqi.msjfootball.service.FootballService;
 import com.qiqi.msjmapper.mapper.FootballPlayerCustomMapper;
 import com.qiqi.msjmapper.mapper.FootballRankingCustomMapper;
 import com.qiqi.msjmapper.pojo.FootballPlayerCustom;
 import com.qiqi.msjmapper.pojo.FootballRankingCustom;
-import com.qiqi.msjapi.service.FootballService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

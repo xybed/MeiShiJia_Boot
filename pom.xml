@@ -26,6 +26,7 @@
         <module>msj-api</module>
         <module>msj-back</module>
         <module>msj-crawler</module>
+        <module>msj-football</module>
         <module>msj-mapper</module>
         <module>msj-order</module>
         <module>msj-product</module>
@@ -73,6 +74,11 @@
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-crawler</artifactId>
+                <version>${msj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qiqi</groupId>
+                <artifactId>msj-football</artifactId>
                 <version>${msj.version}</version>
             </dependency>
             <!--MyBatis-->

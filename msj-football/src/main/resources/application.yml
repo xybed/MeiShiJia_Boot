@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: msj-football
+  profiles:
+    active: dev,mapper,redis
+server:
+  port: 9102
+
+---
+spring:
+  profiles: dev
+
+---
+spring:
+  profiles: prod
