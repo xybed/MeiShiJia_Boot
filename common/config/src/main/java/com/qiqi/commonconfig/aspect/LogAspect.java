@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.aspect;
+package com.qiqi.commonconfig.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.qiqi.commonconfig.common.Result;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class LogAspect {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(public * com.qiqi.msjapi.controller.*.*(..))")
+    @Pointcut("execution(public * com.qiqi.*.controller.*.*(..))")
     public void requestLog(){}
 
     @Before("requestLog()")
