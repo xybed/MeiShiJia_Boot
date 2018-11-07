@@ -3,33 +3,15 @@
 <mapper namespace="com.qiqi.msjmapper.mapper.ShoppingCartCustomMapper">
   <resultMap id="BaseResultMap" type="com.qiqi.msjmapper.entity.ShoppingCart">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
-    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
-    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
     <result column="num" jdbcType="INTEGER" property="num" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
-  <resultMap id="ShoppingCartMap" type="com.qiqi.msjmapper.dto.ShoppingCartDto">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="product_id" jdbcType="INTEGER" property="productId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
-    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
-    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
-    <result column="num" jdbcType="INTEGER" property="num" />
-  </resultMap>
   <sql id="Base_Column_List">
-    id, product_id, name, image, price, original_price, discount_price, num, status, 
-    gmt_create, gmt_modified
+    id, user_id, product_id, num, status, gmt_create, gmt_modified
   </sql>
 
-  <select id="queryShoppingCart" resultMap="ShoppingCartMap">
-
-  </select>
 </mapper>
