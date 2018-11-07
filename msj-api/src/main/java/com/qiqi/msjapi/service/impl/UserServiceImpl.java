@@ -1,11 +1,11 @@
 package com.qiqi.msjapi.service.impl;
 
-import com.qiqi.commonlib.common.Constants;
+import com.qiqi.commonconfig.common.Constants;
+import com.qiqi.commonconfig.common.ResultEnum;
+import com.qiqi.commonconfig.common.ServiceException;
+import com.qiqi.commonconfig.utils.JWTUtil;
 import com.qiqi.commonlib.utils.DateUtil;
-import com.qiqi.commonlib.utils.JedisUtil;
-import com.qiqi.commonlib.utils.JWTUtil;
-import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.commonlib.common.ServiceException;
+import com.qiqi.commonredis.utils.JedisUtil;
 import com.qiqi.msjmapper.enums.Sex;
 import com.qiqi.msjmapper.mapper.UserCustomMapper;
 import com.qiqi.msjmapper.mapper.UserMapper;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.security.SignatureException;
 
 
 /**
@@ -103,9 +104,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(String token) {
-        Claims claims = JWTUtil.getClaims(token);
-        String username = claims.getSubject();
-        JedisUtil.getInstance().del("token"+username);
+        Claims claims = null;
+        try {
+            claims = JWTUtil.getClaims(token);
+            String username = claims.getSubject();
+            JedisUtil.getInstance().del("token"+username);
+        } catch (SignatureException e) {
+            e.printStackTrace();
+        }
 //        userTokenCustomMapper.logout(token);
     }
 

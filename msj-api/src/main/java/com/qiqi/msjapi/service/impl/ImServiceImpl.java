@@ -1,6 +1,6 @@
 package com.qiqi.msjapi.service.impl;
 
-import com.qiqi.commonlib.common.Constants;
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.msjmapper.mapper.RelationChainMapper;
 import com.qiqi.msjmapper.entity.RelationChain;
 import com.qiqi.msjmapper.pojo.Contacts;

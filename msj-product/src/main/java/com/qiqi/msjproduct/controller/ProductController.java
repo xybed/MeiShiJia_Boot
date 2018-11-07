@@ -1,10 +1,9 @@
 package com.qiqi.msjproduct.controller;
 
-import com.qiqi.commonlib.annotation.NeedLogin;
-import com.qiqi.commonlib.common.Constants;
-import com.qiqi.commonlib.common.Result;
-import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.commonlib.common.ResultGenerator;
+import com.qiqi.commonconfig.common.Constants;
+import com.qiqi.commonconfig.common.Result;
+import com.qiqi.commonconfig.common.ResultEnum;
+import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.msjproduct.service.ProductService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

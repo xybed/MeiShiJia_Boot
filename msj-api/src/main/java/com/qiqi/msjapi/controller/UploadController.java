@@ -1,12 +1,12 @@
 package com.qiqi.msjapi.controller;
 
-import com.qiqi.commonlib.common.Constants;
+import com.qiqi.commonconfig.common.Constants;
+import com.qiqi.commonconfig.common.Result;
+import com.qiqi.commonconfig.common.ResultEnum;
+import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.commonlib.utils.ClassPathUtil;
 import com.qiqi.commonlib.utils.FileUtil;
 import com.qiqi.commonlib.utils.MD5Util;
-import com.qiqi.commonlib.common.Result;
-import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.commonlib.common.ResultGenerator;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;

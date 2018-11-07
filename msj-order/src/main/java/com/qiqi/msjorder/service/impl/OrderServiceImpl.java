@@ -1,7 +1,7 @@
 package com.qiqi.msjorder.service.impl;
 
-import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.commonlib.common.ServiceException;
+import com.qiqi.commonconfig.common.ResultEnum;
+import com.qiqi.commonconfig.common.ServiceException;
 import com.qiqi.msjmapper.dto.ReceivingAddressDto;
 import com.qiqi.msjmapper.entity.ReceivingAddress;
 import com.qiqi.msjmapper.enums.ReceivingAddressStatus;

@@ -1,8 +1,8 @@
 package com.qiqi.msjapi.controller;
 
-import com.qiqi.commonlib.common.Result;
-import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.commonlib.common.ResultGenerator;
+import com.qiqi.commonconfig.common.Result;
+import com.qiqi.commonconfig.common.ResultEnum;
+import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.msjapi.service.FootballService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,9 @@
 package com.qiqi.msjorder.controller;
 
-import com.qiqi.commonlib.annotation.NeedLogin;
-import com.qiqi.commonlib.common.Result;
-import com.qiqi.commonlib.common.ResultEnum;
-import com.qiqi.commonlib.common.ResultGenerator;
+import com.qiqi.commonconfig.annotation.NeedLogin;
+import com.qiqi.commonconfig.common.Result;
+import com.qiqi.commonconfig.common.ResultEnum;
+import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.msjmapper.entity.ReceivingAddress;
 import com.qiqi.msjorder.service.OrderService;
 import org.springframework.util.StringUtils;

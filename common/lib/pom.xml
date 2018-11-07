@@ -11,7 +11,7 @@
     <description>所有模块都可以用到的模块，原则没有依赖</description>
 
     <parent>
-        <groupId>com.qiqi</groupId>
+        <groupId>com.qiqi.common</groupId>
         <artifactId>common</artifactId>
         <version>1.0</version>
         <relativePath/> <!-- lookup parent from repository -->

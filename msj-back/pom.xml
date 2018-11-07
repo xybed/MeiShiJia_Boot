@@ -18,8 +18,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.qiqi</groupId>
-            <artifactId>common-lib</artifactId>
+            <groupId>com.qiqi.common</groupId>
+            <artifactId>lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qiqi.common</groupId>
+            <artifactId>config</artifactId>
         </dependency>
         <dependency>
             <groupId>com.qiqi</groupId>

@@ -4,7 +4,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.qiqi.commonlib.common.Constants;
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.commonlib.utils.ClassPathUtil;
 import com.qiqi.commonlib.utils.FileUtil;
 import com.qiqi.commonlib.utils.NumberUtil;

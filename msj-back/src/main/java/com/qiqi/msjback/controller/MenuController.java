@@ -1,7 +1,7 @@
 package com.qiqi.msjback.controller;
 
-import com.qiqi.commonlib.common.Result;
-import com.qiqi.commonlib.common.ResultGenerator;
+import com.qiqi.commonconfig.common.Result;
+import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.msjback.service.MenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

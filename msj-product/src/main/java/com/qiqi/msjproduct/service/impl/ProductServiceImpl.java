@@ -1,7 +1,7 @@
 package com.qiqi.msjproduct.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.qiqi.commonlib.common.Constants;
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.msjmapper.entity.PCategory;
 import com.qiqi.msjmapper.entity.Product;
 import com.qiqi.msjmapper.enums.PCategoryLevel;

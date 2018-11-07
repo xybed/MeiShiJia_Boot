@@ -2,7 +2,7 @@ spring:
   application:
     name: msj-order
   profiles:
-    active: dev,mapper
+    active: dev,mapper,redis
   cloud:
     consul:
       host: localhost

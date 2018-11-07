@@ -1,6 +1,6 @@
 package com.qiqi.msjapi;
 
-import com.qiqi.commonlib.utils.JedisTempUtil;
+import com.qiqi.commonredis.utils.JedisTempUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

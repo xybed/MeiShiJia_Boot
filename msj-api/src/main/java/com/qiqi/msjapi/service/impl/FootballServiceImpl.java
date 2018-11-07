@@ -1,6 +1,6 @@
 package com.qiqi.msjapi.service.impl;
 
-import com.qiqi.commonlib.common.Constants;
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.msjmapper.mapper.FootballPlayerCustomMapper;
 import com.qiqi.msjmapper.mapper.FootballRankingCustomMapper;
 import com.qiqi.msjmapper.pojo.FootballPlayerCustom;

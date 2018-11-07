@@ -19,8 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.qiqi</groupId>
-            <artifactId>common-lib</artifactId>
+            <groupId>com.qiqi.common</groupId>
+            <artifactId>config</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.qiqi</groupId>
