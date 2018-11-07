@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: msj-product
+  profiles:
+    active: dev,mapper
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: msj-product
+server:
+  port: 9103
+feign:
+  hystrix:
+    #使断路器起作用
+    enabled: true
+
+---
+spring:
+  profiles: dev
+
+---
+spring:
+  profiles: prod

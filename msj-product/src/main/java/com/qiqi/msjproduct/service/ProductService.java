@@ -1,4 +1,4 @@
-package com.qiqi.msjapi.service;
+package com.qiqi.msjproduct.service;
 
 import com.qiqi.msjmapper.entity.PCategory;
 import com.qiqi.msjmapper.entity.Product;

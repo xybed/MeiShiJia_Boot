@@ -1,8 +1,7 @@
-package com.qiqi.msjapi.service.impl;
+package com.qiqi.msjproduct.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.qiqi.commonlib.common.Constants;
-import com.qiqi.msjapi.service.ProductService;
 import com.qiqi.msjmapper.entity.PCategory;
 import com.qiqi.msjmapper.entity.Product;
 import com.qiqi.msjmapper.enums.PCategoryLevel;
@@ -10,6 +9,7 @@ import com.qiqi.msjmapper.enums.ProductStatus;
 import com.qiqi.msjmapper.mapper.PCategoryCustomMapper;
 import com.qiqi.msjmapper.mapper.ProductCustomMapper;
 import com.qiqi.msjmapper.pojo.ProductDetail;
+import com.qiqi.msjproduct.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

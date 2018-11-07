@@ -1,11 +1,11 @@
-package com.qiqi.msjapi.controller;
+package com.qiqi.msjproduct.controller;
 
 import com.qiqi.commonlib.annotation.NeedLogin;
 import com.qiqi.commonlib.common.Constants;
 import com.qiqi.commonlib.common.Result;
 import com.qiqi.commonlib.common.ResultEnum;
 import com.qiqi.commonlib.common.ResultGenerator;
-import com.qiqi.msjapi.service.ProductService;
+import com.qiqi.msjproduct.service.ProductService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +25,6 @@ public class ProductController {
         return ResultGenerator.genSuccessResult(productService.getPCategory(fid));
     }
 
-    @NeedLogin
     @RequestMapping(method = RequestMethod.GET)
     public Result getProductList(@RequestParam("category_id") Integer categoryId,
                      @RequestParam(name = "page_index", required = false) Integer pageIndex,

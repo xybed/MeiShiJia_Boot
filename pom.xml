@@ -28,6 +28,7 @@
         <module>msj-crawler</module>
         <module>msj-mapper</module>
         <module>msj-order</module>
+        <module>msj-product</module>
         <module>cloud-zuul</module>
     </modules>
 
@@ -74,6 +75,11 @@
             <dependency>
                 <groupId>com.qiqi</groupId>
                 <artifactId>msj-order</artifactId>
+                <version>${msj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qiqi</groupId>
+                <artifactId>msj-product</artifactId>
                 <version>${msj.version}</version>
             </dependency>
             <!--网关路由-->
