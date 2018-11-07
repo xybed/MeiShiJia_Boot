@@ -26,6 +26,10 @@
             <groupId>com.qiqi</groupId>
             <artifactId>msj-mapper</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
         <!--consul健康检查依赖于此包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
