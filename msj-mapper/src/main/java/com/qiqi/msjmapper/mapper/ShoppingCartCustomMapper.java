@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ShoppingCartCustomMapper {
-    List<ShoppingCartDto> queryShoppingCart(@Param("user_id") Integer userId, @Param("status") Integer status);
+//    List<ShoppingCartDto> queryShoppingCart(@Param("user_id") Integer userId, @Param("status") Integer status);
 }
