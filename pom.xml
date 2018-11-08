@@ -23,7 +23,7 @@
 
     <modules>
         <module>common</module>
-        <module>msj-api</module>
+        <module>msj-user</module>
         <module>msj-back</module>
         <module>msj-crawler</module>
         <module>msj-football</module>
@@ -62,7 +62,7 @@
             </dependency>
             <dependency>
                 <groupId>com.qiqi</groupId>
-                <artifactId>msj-api</artifactId>
+                <artifactId>msj-user</artifactId>
                 <version>${msj.version}</version>
             </dependency>
             <!--后台管理模块-->
