@@ -143,4 +143,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByType" parameterType="java.lang.Integer" resultMap="ReceivingAddressMap">
+    SELECT id,name,phone,province,city,address,type
+    FROM user_receiving_address
+    WHERE user_id=#{userId} AND type=#{type} AND status=#{status}
+  </select>
 </mapper>

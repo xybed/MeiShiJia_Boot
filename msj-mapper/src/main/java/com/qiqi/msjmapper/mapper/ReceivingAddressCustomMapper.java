@@ -12,4 +12,6 @@ public interface ReceivingAddressCustomMapper {
     int insertSelective(ReceivingAddress record);
 
     int updateByPrimaryKeySelective(ReceivingAddress record);
+
+    ReceivingAddressDto queryByType(@Param("userId") Integer userId, @Param("type") Integer type, @Param("status") Integer status);
 }
