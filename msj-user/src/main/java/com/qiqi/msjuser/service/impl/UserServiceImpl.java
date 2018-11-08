@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserService {
 
         String token = JWTUtil.createNewToken(username);
         //把token缓存到redis中
-        String key = "token" + username;
-        JedisUtil.getInstance().set(key, token);
-        JedisUtil.getInstance().expire(key, 24 * 60 * 60);
+//        String key = "token" + username;
+//        JedisUtil.getInstance().set(key, token);
+//        JedisUtil.getInstance().expire(key, 24 * 60 * 60);
 
         UserToken userToken = new UserToken();
         userToken.setUsername(username);
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
         try {
             claims = JWTUtil.getClaims(token);
             String username = claims.getSubject();
-            JedisUtil.getInstance().del("token"+username);
+//            JedisUtil.getInstance().del("token"+username);
         } catch (SignatureException e) {
             e.printStackTrace();
         }
