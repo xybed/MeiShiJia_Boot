@@ -128,7 +128,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         if ("dev,mapper".equals(env)) { //开发环境忽略签名认证
             registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**", "/pay/**");
         }
-        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**", "/pay/**");
+//        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**", "/pay/**");
     }
 
     //配置静态访问资源
