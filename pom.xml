@@ -42,6 +42,7 @@
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
     </properties>
 
+    <!-- 版本锁定，当子工程中有需要并且自行添加了具体依赖后才有效 -->
     <dependencyManagement>
         <dependencies>
             <!--公共类模块-->
