@@ -36,7 +36,16 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
-  <resultMap id="ProductDetailMap" type="com.qiqi.msjmapper.pojo.ProductDetail">
+  <resultMap id="ProductDtoMap" type="com.qiqi.msjmapper.dto.ProductDto">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+  </resultMap>
+  <resultMap id="ProductDetailMap" type="com.qiqi.msjmapper.dto.ProductDetail">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -182,7 +191,7 @@
     FROM product
     WHERE id=#{id}
   </select>
-  <select id="queryProductByCategoryId" resultMap="BaseResultMap">
+  <select id="queryProductByCategoryId" resultMap="ProductDtoMap">
     SELECT p.id,p.image,p.name,p.description,p.price,p.discount_price,p.original_price
     FROM product p
     LEFT JOIN product_category prc ON p.id=prc.product_id
@@ -204,7 +213,7 @@
     LEFT JOIN p_category pca ON pc.fid=pca.id
     WHERE pca.fid=#{categoryId} AND p.status=#{status}
   </select>
-  <select id="searchProduct" resultMap="BaseResultMap">
+  <select id="searchProduct" resultMap="ProductDtoMap">
     SELECT p.id,p.image,p.name,p.description,p.price,p.discount_price,p.original_price
     FROM product p
     WHERE status=#{status} AND (name like concat('%',#{keyword},'%') or brand like concat('%',#{keyword},'%'))

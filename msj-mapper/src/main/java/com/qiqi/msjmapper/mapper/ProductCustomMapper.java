@@ -1,8 +1,9 @@
 package com.qiqi.msjmapper.mapper;
 
+import com.qiqi.msjmapper.dto.ProductDto;
 import com.qiqi.msjmapper.entity.Product;
 import com.qiqi.msjmapper.pojo.ProductCustom;
-import com.qiqi.msjmapper.pojo.ProductDetail;
+import com.qiqi.msjmapper.dto.ProductDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,9 +17,9 @@ public interface ProductCustomMapper {
 
     Product queryProductById(Integer id);
 
-    List<Product> queryProductByCategoryId(@Param("categoryId") Integer categoryId, @Param("status") Integer status);
+    List<ProductDto> queryProductByCategoryId(@Param("categoryId") Integer categoryId, @Param("status") Integer status);
     
-    List<Product> searchProduct(@Param("keyword") String keyword, @Param("status") Integer status);
+    List<ProductDto> searchProduct(@Param("keyword") String keyword, @Param("status") Integer status);
 
     ProductDetail queryProductDetail(@Param("id") Integer id);
 }

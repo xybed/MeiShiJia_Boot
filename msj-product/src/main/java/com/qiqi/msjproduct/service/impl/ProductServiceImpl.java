@@ -2,13 +2,14 @@ package com.qiqi.msjproduct.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.qiqi.commonconfig.common.Constants;
+import com.qiqi.msjmapper.dto.ProductDto;
 import com.qiqi.msjmapper.entity.PCategory;
 import com.qiqi.msjmapper.entity.Product;
 import com.qiqi.msjmapper.enums.PCategoryLevel;
 import com.qiqi.msjmapper.enums.ProductStatus;
 import com.qiqi.msjmapper.mapper.PCategoryCustomMapper;
 import com.qiqi.msjmapper.mapper.ProductCustomMapper;
-import com.qiqi.msjmapper.pojo.ProductDetail;
+import com.qiqi.msjmapper.dto.ProductDetail;
 import com.qiqi.msjproduct.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -34,20 +35,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductList(Integer categoryId, Integer pageIndex, Integer pageSize) {
+    public List<ProductDto> getProductList(Integer categoryId, Integer pageIndex, Integer pageSize) {
         PageHelper.startPage(pageIndex, pageSize);
-        List<Product> productList = productCustomMapper.queryProductByCategoryId(categoryId, ProductStatus.SHELF.getCode());
-        for(Product product : productList){
+        List<ProductDto> productList = productCustomMapper.queryProductByCategoryId(categoryId, ProductStatus.SHELF.getCode());
+        for(ProductDto product : productList){
             product.setImage(Constants.URL_PREFIX + product.getImage());
         }
         return productList;
     }
 
     @Override
-    public List<Product> searchProductList(String keyword, Integer pageIndex, Integer pageSize) {
+    public List<ProductDto> searchProductList(String keyword, Integer pageIndex, Integer pageSize) {
         PageHelper.startPage(pageIndex, pageSize);
-        List<Product> productList = productCustomMapper.searchProduct(keyword, ProductStatus.SHELF.getCode());
-        for(Product product : productList){
+        List<ProductDto> productList = productCustomMapper.searchProduct(keyword, ProductStatus.SHELF.getCode());
+        for(ProductDto product : productList){
             product.setImage(Constants.URL_PREFIX + product.getImage());
         }
         return productList;

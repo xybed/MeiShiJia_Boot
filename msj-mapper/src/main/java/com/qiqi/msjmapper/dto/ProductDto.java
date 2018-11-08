@@ -1,18 +1,17 @@
-package com.qiqi.msjmapper.pojo;
+package com.qiqi.msjmapper.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-public class ProductDetail {
+public class ProductDto {
     private Integer id;
 
     private String name;
 
     private String description;
 
-    private List<String> images;
+    private String image;
 
     private BigDecimal price;
 
@@ -21,12 +20,6 @@ public class ProductDetail {
 
     @JSONField(name = "discount_price")
     private BigDecimal discountPrice;
-
-    private Integer stock;
-
-    private String brand;
-
-    private String remark;
 
     public Integer getId() {
         return id;
@@ -52,12 +45,12 @@ public class ProductDetail {
         this.description = description;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(List<String> images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public BigDecimal getPrice() {
@@ -82,29 +75,5 @@ public class ProductDetail {
 
     public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 }
