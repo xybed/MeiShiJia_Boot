@@ -30,6 +30,16 @@
             <groupId>com.qiqi</groupId>
             <artifactId>msj-mapper</artifactId>
         </dependency>
+        <!--consul健康检查依赖于此包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--Spring Cloud Consul 的支持-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
