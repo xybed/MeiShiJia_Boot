@@ -26,6 +26,8 @@ public enum ResultEnum {
     //订单相关
     ALIPAY_ORDER_ERROR(3001, "支付宝下单异常"),
     ALIPAY_REFUND_ERROR(3002, "支付宝退款异常"),
+    //收货地址相关
+    ADDRESS_COUNT_ERROR(3101, "收货地址最多10条"),
     ;
 
     private int code;
