@@ -62,6 +62,9 @@ public class ProductServiceImpl implements ProductService {
             image = Constants.URL_PREFIX + image;
             images.add(image);
         }
+        if(images.size() > 0){
+            productDetail.setImage(images.get(0));
+        }
         productDetail.setImages(images);
         return productDetail;
     }

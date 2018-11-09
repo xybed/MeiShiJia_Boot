@@ -12,6 +12,8 @@ public class ProductDetail {
 
     private String description;
 
+    private String image;
+
     private List<String> images;
 
     private BigDecimal price;
@@ -50,6 +52,14 @@ public class ProductDetail {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<String> getImages() {
