@@ -8,7 +8,10 @@ import com.qiqi.msjmapper.enums.ReceivingAddressStatus;
 import com.qiqi.msjmapper.enums.ReceivingAddressType;
 import com.qiqi.msjmapper.mapper.ReceivingAddressCustomMapper;
 import com.qiqi.msjorder.service.ReceivingAddressService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -16,6 +19,8 @@ import java.util.List;
 
 @Service
 public class ReceivingAddressServiceImpl implements ReceivingAddressService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Resource
     private ReceivingAddressCustomMapper receivingAddressCustomMapper;
 
@@ -24,10 +29,26 @@ public class ReceivingAddressServiceImpl implements ReceivingAddressService {
         return receivingAddressCustomMapper.queryReceivingAddress(userId, ReceivingAddressStatus.EFFECTIVE.getCode());
     }
 
+    /**
+     * 1.设置地址状态为有效，创建时间为当前时间
+     * 2.查询数据中是否有10条数据，满了则不插入，没满到3
+     * 3.如果是添加默认地址，把之前的默认地址修改掉
+     * 4.插入一条新数据
+     * @param receivingAddress 地址数据
+     */
+    @Transactional
     @Override
     public void addReceivingAddress(ReceivingAddress receivingAddress) {
+        int count = receivingAddressCustomMapper.queryReceivingAddressCount(receivingAddress.getUserId(), ReceivingAddressStatus.EFFECTIVE.getCode());
+        if(count >= 10){
+            throw new ServiceException(ResultEnum.ADDRESS_COUNT_ERROR);
+        }
         receivingAddress.setStatus(ReceivingAddressStatus.EFFECTIVE.getCode());
         receivingAddress.setGmtCreate(new Date());
+        if(ReceivingAddressType.DEFAULT.getCode().intValue() == receivingAddress.getType().intValue()){
+            receivingAddressCustomMapper.updateType2Common(receivingAddress.getUserId(),
+                    ReceivingAddressType.COMMON.getCode(), ReceivingAddressType.DEFAULT.getCode());
+        }
         int result = receivingAddressCustomMapper.insertSelective(receivingAddress);
         if(result != 1)
             throw new ServiceException(ResultEnum.OPERATE_ERROR);

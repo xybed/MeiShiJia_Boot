@@ -149,4 +149,14 @@
     FROM user_receiving_address
     WHERE user_id=#{userId} AND type=#{type} AND status=#{status}
   </select>
+
+  <select id="queryReceivingAddressCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM user_receiving_address
+    WHERE user_id=#{userId} AND status=#{status}
+  </select>
+  
+  <update id="updateType2Common" parameterType="java.lang.Integer">
+    UPDATE user_receiving_address SET type=#{typeCommon} WHERE user_id=#{userId} AND type=#{typeDefault}
+  </update>
 </mapper>

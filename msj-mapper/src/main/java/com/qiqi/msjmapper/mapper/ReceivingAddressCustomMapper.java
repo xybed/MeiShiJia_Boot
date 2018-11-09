@@ -7,11 +7,21 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ReceivingAddressCustomMapper {
+    //查询所有地址列表
     List<ReceivingAddressDto> queryReceivingAddress(@Param("userId") Integer userId, @Param("status") Integer status);
 
+    int queryReceivingAddressCount(@Param("userId") Integer userId, @Param("status") Integer status);
+
+    //把默认地址改为普通
+    int updateType2Common(@Param("userId") Integer userId, @Param("typeCommon") Integer typeCommon, @Param("typeDefault") Integer typeDefault);
+
+    //插入一条地址数据
     int insertSelective(ReceivingAddress record);
 
+    //更新地址数据
     int updateByPrimaryKeySelective(ReceivingAddress record);
 
+    //查询默认的地址
     ReceivingAddressDto queryByType(@Param("userId") Integer userId, @Param("type") Integer type, @Param("status") Integer status);
+
 }
