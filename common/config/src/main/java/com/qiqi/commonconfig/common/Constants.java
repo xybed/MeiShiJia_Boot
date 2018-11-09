@@ -1,7 +1,7 @@
 package com.qiqi.commonconfig.common;
 
 public class Constants {
-    public static final String URL_PREFIX = "http://192.168.1.14:9101/";
+    public static final String URL_PREFIX = "http://192.168.1.14:9003/msj-user/";
     public static final String IMAGE_BUCKET_AVATAR = "images/avatar/";
     public static final String IMAGE_BUCKET_PLAYER = "images/player/";
     public static final String IMAGE_BUCKET_PRODUCT = "images/product/";
