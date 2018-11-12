@@ -30,7 +30,8 @@ public class ReceivingAddressController {
     @NeedLogin
     @RequestMapping(value = "/address", method = RequestMethod.POST)
     public Result addReceivingAddress(@RequestBody ReceivingAddress receivingAddress){
-        if(StringUtils.isEmpty(receivingAddress.getName()) ||
+        if(StringUtils.isEmpty(receivingAddress.getUserId()) ||
+                StringUtils.isEmpty(receivingAddress.getName()) ||
                 StringUtils.isEmpty(receivingAddress.getPhone()) ||
                 StringUtils.isEmpty(receivingAddress.getProvince()) ||
                 StringUtils.isEmpty(receivingAddress.getCity()) ||
@@ -44,7 +45,13 @@ public class ReceivingAddressController {
     @NeedLogin
     @RequestMapping(value = "/address", method = RequestMethod.PUT)
     public Result updateReceivingAddress(@RequestBody ReceivingAddress receivingAddress){
-        if(StringUtils.isEmpty(receivingAddress.getId())){
+        if(StringUtils.isEmpty(receivingAddress.getId()) ||
+                StringUtils.isEmpty(receivingAddress.getUserId()) ||
+                StringUtils.isEmpty(receivingAddress.getName()) ||
+                StringUtils.isEmpty(receivingAddress.getPhone()) ||
+                StringUtils.isEmpty(receivingAddress.getProvince()) ||
+                StringUtils.isEmpty(receivingAddress.getCity()) ||
+                StringUtils.isEmpty(receivingAddress.getAddress())){
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }
         receivingAddressService.updateReceivingAddress(receivingAddress);

@@ -107,6 +107,10 @@
     </trim>
   </insert>
 
+  <update id="updateStatus">
+    UPDATE user_receiving_address SET status=#{status},gmt_modified=#{gmtModified} WHERE id=#{id}
+  </update>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.qiqi.msjmapper.entity.ReceivingAddress">
     update user_receiving_address
     <set>

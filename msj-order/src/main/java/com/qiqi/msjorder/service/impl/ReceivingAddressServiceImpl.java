@@ -54,10 +54,27 @@ public class ReceivingAddressServiceImpl implements ReceivingAddressService {
             throw new ServiceException(ResultEnum.OPERATE_ERROR);
     }
 
+    /**
+     * 1.如果是改为默认地址，把之前的默认地址修改掉
+     * 2.设置地址状态为无效，设置修改时间
+     * 3.更新数据
+     * 4.插入一条新数据
+     * @param receivingAddress 地址数据
+     */
+    @Transactional
     @Override
     public void updateReceivingAddress(ReceivingAddress receivingAddress) {
-        receivingAddress.setGmtModified(new Date());
-        int result = receivingAddressCustomMapper.updateByPrimaryKeySelective(receivingAddress);
+        if(ReceivingAddressType.DEFAULT.getCode().intValue() == receivingAddress.getType().intValue()){
+            receivingAddressCustomMapper.updateType2Common(receivingAddress.getUserId(),
+                    ReceivingAddressType.COMMON.getCode(), ReceivingAddressType.DEFAULT.getCode());
+        }
+        int result = receivingAddressCustomMapper.updateStatus(receivingAddress.getId(), ReceivingAddressStatus.INEFFECTIVE.getCode(), new Date());
+        if(result != 1)
+            throw new ServiceException(ResultEnum.OPERATE_ERROR);
+        receivingAddress.setStatus(ReceivingAddressStatus.EFFECTIVE.getCode());
+        receivingAddress.setGmtCreate(new Date());
+        receivingAddress.setId(null);
+        result = receivingAddressCustomMapper.insertSelective(receivingAddress);
         if(result != 1)
             throw new ServiceException(ResultEnum.OPERATE_ERROR);
     }
