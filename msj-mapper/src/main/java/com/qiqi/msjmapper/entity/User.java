@@ -22,13 +22,12 @@ public class User {
     /**
      * 注册的验证码
      */
-    @JSONField(name = "verify_code")
     private String verifyCode;
 
     /**
      * 注册的时间
      */
-    @JSONField(name = "register_date", format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String registerDate;
 
@@ -37,7 +36,6 @@ public class User {
     /**
      * 真实姓名
      */
-    @JSONField(name = "real_name")
     private String realName;
 
     /**
@@ -48,7 +46,6 @@ public class User {
     /**
      * 用户绑定的手机号，或者为手机注册时的手机号
      */
-    @JSONField(name = "mobile_phone")
     private String mobilePhone;
 
     /**
@@ -86,7 +83,6 @@ public class User {
     /**
      * 消息主体id
      */
-    @JSONField(name = "principal_id")
     private Integer principalId;
 
     private String token;

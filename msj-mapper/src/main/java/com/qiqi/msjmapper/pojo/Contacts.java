@@ -1,19 +1,14 @@
 package com.qiqi.msjmapper.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 public class Contacts {
-    @JSONField(name = "friend_id")
     private int friendId;
 
     private String avatar;
 
     private String remark;//对好友的备注
 
-    @JSONField(name = "sort_letter")
     private String sortLetter;//字母排序
 
-    @JSONField(name = "principal_id")
     private int principalId;
 
     public int getFriendId() {

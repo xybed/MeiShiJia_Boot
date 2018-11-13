@@ -1,12 +1,10 @@
 package com.qiqi.msjmapper.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.qiqi.msjmapper.entity.FootballRanking;
 
 import java.io.Serializable;
 
 public class FootballRankingCustom extends FootballRanking implements Serializable {
-    @JSONField(name = "league_id")
     private Integer leagueId;
     private String logo;
     private String name;

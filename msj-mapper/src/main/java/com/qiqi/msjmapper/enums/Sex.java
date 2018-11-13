@@ -1,5 +1,8 @@
 package com.qiqi.msjmapper.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Sex {
 
     UNKNOW(0, "未知"),

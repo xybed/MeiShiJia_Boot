@@ -1,6 +1,5 @@
 package com.qiqi.msjmapper.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.qiqi.msjmapper.enums.Sex;
 
 /**
@@ -11,14 +10,12 @@ public class ContactsDetail {
     private String avatar;
     private String remark;
     private Integer sex;
-    @JSONField(name = "sex_type")
     private Sex sexType;
     private String username;
     private String nickname;
     private String province;
     private String city;
     private String signature;
-    @JSONField(name = "principal_id")
     private Integer principalId;
 
     public String getAvatar() {

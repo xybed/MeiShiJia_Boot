@@ -1,8 +1,5 @@
 package com.qiqi.msjmapper.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class ProductDto {
@@ -16,10 +13,8 @@ public class ProductDto {
 
     private BigDecimal price;
 
-    @JSONField(name = "original_price")
     private BigDecimal originalPrice;
 
-    @JSONField(name = "discount_price")
     private BigDecimal discountPrice;
 
     private Integer status;

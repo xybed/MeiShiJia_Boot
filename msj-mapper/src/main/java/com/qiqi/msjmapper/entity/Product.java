@@ -1,7 +1,5 @@
 package com.qiqi.msjmapper.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,7 +8,6 @@ public class Product {
 
     private String url;
 
-    @JSONField(name = "back_user_id")
     private Integer backUserId;
 
     private String name;
@@ -21,10 +18,8 @@ public class Product {
 
     private BigDecimal price;
 
-    @JSONField(name = "original_price")
     private BigDecimal originalPrice;
 
-    @JSONField(name = "discount_price")
     private BigDecimal discountPrice;
 
     private Integer stock;
@@ -33,10 +28,8 @@ public class Product {
 
     private Integer status;
 
-    @JSONField(name = "gmt_create")
     private Date gmtCreate;
 
-    @JSONField(name = "gmt_modified")
     private Date gmtModified;
 
     private String remark;

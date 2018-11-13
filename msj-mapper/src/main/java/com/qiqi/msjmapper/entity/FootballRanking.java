@@ -1,13 +1,10 @@
 package com.qiqi.msjmapper.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.io.Serializable;
 
 public class FootballRanking implements Serializable {
     private Integer id;
 
-    @JSONField(name = "team_id")
     private Integer teamId;
 
     private Integer ranking;
@@ -26,7 +23,6 @@ public class FootballRanking implements Serializable {
 
     private Integer conceded;
 
-    @JSONField(name = "goal_difference")
     private Integer goalDifference;
 
     public Integer getId() {
