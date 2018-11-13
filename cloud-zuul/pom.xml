@@ -19,10 +19,10 @@
 
     <dependencies>
         <!--zuul依赖-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zuul</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-zuul</artifactId>-->
+        <!--</dependency>-->
         <!--SpringBoot2.0以上需要导入，才有注解EnableZuulProxy-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
