@@ -1,8 +1,6 @@
 package com.qiqi.msjback.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.qiqi.commonlib.common.Result;
-import com.qiqi.commonlib.common.ResultGenerator;
 import com.qiqi.msjback.service.ProductService;
 import com.qiqi.msjmapper.entity.Product;
 import com.qiqi.msjmapper.pojo.Pagination;
