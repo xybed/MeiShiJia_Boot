@@ -22,4 +22,8 @@ public interface ProductCustomMapper {
     List<ProductDto> searchProduct(@Param("keyword") String keyword, @Param("status") Integer status);
 
     ProductDetail queryProductDetail(@Param("id") Integer id);
+
+    List<ProductDto> queryProductShoppingCart(@Param("idList") List<Integer> idList);
+
+    Integer queryProductStock(Integer id);
 }

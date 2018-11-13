@@ -11,6 +11,8 @@ import com.qiqi.msjmapper.mapper.PCategoryCustomMapper;
 import com.qiqi.msjmapper.mapper.ProductCustomMapper;
 import com.qiqi.msjmapper.dto.ProductDetail;
 import com.qiqi.msjproduct.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -67,5 +69,19 @@ public class ProductServiceImpl implements ProductService {
         }
         productDetail.setImages(images);
         return productDetail;
+    }
+
+    @Override
+    public List<ProductDto> getProductShoppingCart(List<Integer> idList) {
+        List<ProductDto> productList = productCustomMapper.queryProductShoppingCart(idList);
+        productList.forEach(product -> {
+            product.setImage(Constants.URL_PREFIX + product.getImage());
+        });
+        return productList;
+    }
+
+    @Override
+    public Integer getProductStock(Integer id) {
+        return productCustomMapper.queryProductStock(id);
     }
 }

@@ -1,14 +1,18 @@
 package com.qiqi.msjproduct.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.commonconfig.common.Result;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ResultGenerator;
+import com.qiqi.msjmapper.dto.ProductDetail;
+import com.qiqi.msjmapper.dto.ProductDto;
 import com.qiqi.msjproduct.service.ProductService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -57,5 +61,22 @@ public class ProductController {
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }
         return ResultGenerator.genSuccessResult(productService.getProductDetail(id));
+    }
+
+    @RequestMapping(value = "/shopping/cart", method = RequestMethod.GET)
+    public List<ProductDto> getProductShoppingCart(@RequestParam("ids") String ids){
+        if(StringUtils.isEmpty(ids)){
+            return null;
+        }
+        List<Integer> idList = JSONArray.parseArray(ids, Integer.class);
+        return productService.getProductShoppingCart(idList);
+    }
+
+    @RequestMapping(value = "/stock", method = RequestMethod.GET)
+    public Integer getProductStock(@RequestParam Integer id){
+        if(StringUtils.isEmpty(id)){
+            return 0;
+        }
+        return productService.getProductStock(id);
     }
 }

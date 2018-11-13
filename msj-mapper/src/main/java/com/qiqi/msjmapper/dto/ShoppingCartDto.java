@@ -1,10 +1,13 @@
 package com.qiqi.msjmapper.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.math.BigDecimal;
 
 public class ShoppingCartDto {
     private Integer id;
 
+    @JSONField(name = "product_id")
     private Integer productId;
 
     private String name;
@@ -13,11 +16,15 @@ public class ShoppingCartDto {
 
     private BigDecimal price;
 
+    @JSONField(name = "original_price")
     private BigDecimal originalPrice;
 
+    @JSONField(name = "discount_price")
     private BigDecimal discountPrice;
 
     private Integer num;
+
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -81,5 +88,13 @@ public class ShoppingCartDto {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -44,6 +44,7 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
     <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <resultMap id="ProductDetailMap" type="com.qiqi.msjmapper.dto.ProductDetail">
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -223,5 +224,18 @@
     FROM product p
     LEFT JOIN product_image pi ON p.id=pi.product_id
     WHERE p.id=#{id}
+  </select>
+  <select id="queryProductShoppingCart" resultMap="ProductDtoMap">
+    SELECT id,name,description,image,price,original_price,discount_price,status
+    FROM product
+    WHERE id in
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+  <select id="queryProductStock" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT stock
+    FROM product
+    WHERE id=#{id}
   </select>
 </mapper>

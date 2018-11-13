@@ -15,4 +15,8 @@ public interface ProductService {
     List<ProductDto> searchProductList(String keyword, Integer pageIndex, Integer pageSize);
 
     ProductDetail getProductDetail(Integer id);
+
+    List<ProductDto> getProductShoppingCart(List<Integer> idList);
+
+    Integer getProductStock(Integer id);
 }

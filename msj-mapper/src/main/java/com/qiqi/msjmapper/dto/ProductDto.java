@@ -2,6 +2,7 @@ package com.qiqi.msjmapper.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class ProductDto {
@@ -20,6 +21,8 @@ public class ProductDto {
 
     @JSONField(name = "discount_price")
     private BigDecimal discountPrice;
+
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -75,5 +78,13 @@ public class ProductDto {
 
     public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
