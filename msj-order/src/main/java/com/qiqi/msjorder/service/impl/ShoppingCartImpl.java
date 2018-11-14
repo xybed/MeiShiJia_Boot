@@ -55,12 +55,9 @@ public class ShoppingCartImpl implements ShoppingCartService {
                             shoppingCart.setName(product.getName());
                             shoppingCart.setImage(product.getImage());
                             shoppingCart.setPrice(product.getPrice());
-                            if(product.getOriginalPrice() == null)
-                                logger.info("原价为空");
-                            if(product.getDiscountPrice() == null)
-                                logger.info("折价为空");
                             shoppingCart.setOriginalPrice(product.getOriginalPrice());
                             shoppingCart.setDiscountPrice(product.getDiscountPrice());
+                            shoppingCart.setStatus(product.getStatus());
                             break;
                         }
                     }
