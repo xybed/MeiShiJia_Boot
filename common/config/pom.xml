@@ -22,10 +22,10 @@
             <groupId>com.qiqi.common</groupId>
             <artifactId>lib</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.qiqi.common</groupId>
-            <artifactId>redis</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.qiqi.common</groupId>-->
+            <!--<artifactId>redis</artifactId>-->
+        <!--</dependency>-->
         <!--jwt服务认证-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

@@ -5,7 +5,6 @@ import com.qiqi.commonconfig.annotation.NeedLogin;
 import com.qiqi.commonconfig.common.Result;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.utils.JWTUtil;
-import com.qiqi.commonredis.utils.JedisUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -42,7 +41,8 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 //                    WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
 //                    UserTokenService userTokenService = applicationContext.getBean("userTokenService", UserTokenService.class);
 //                    String tokenDB = userTokenService.queryToken(username);
-                    String tokenCache = JedisUtil.getInstance().get("token"+username);
+//                    String tokenCache = JedisUtil.getInstance().get("token"+username);
+                    String tokenCache = "";
                     if(!token.equals(tokenCache)){
                         responseResult(response);
                         return false;

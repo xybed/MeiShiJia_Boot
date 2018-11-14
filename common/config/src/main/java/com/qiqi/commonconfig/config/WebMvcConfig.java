@@ -1,20 +1,13 @@
 package com.qiqi.commonconfig.config;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.qiqi.commonconfig.common.Result;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ServiceException;
-import com.qiqi.commonconfig.interceptor.SignInterceptor;
-import com.qiqi.commonconfig.interceptor.TokenInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -29,8 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.util.List;
 
 /**
  * Spring MVC 配置
@@ -45,39 +37,39 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     private String env;//当前激活的配置文件
 
     //使用阿里 FastJson 作为JSON MessageConverter
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        List<MediaType> supportedMediaTypes = new ArrayList<>();
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
-        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
-        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
-        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_XML);
-        supportedMediaTypes.add(MediaType.IMAGE_GIF);
-        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
-        supportedMediaTypes.add(MediaType.IMAGE_PNG);
-        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
-        supportedMediaTypes.add(MediaType.TEXT_HTML);
-        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
-        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
-        supportedMediaTypes.add(MediaType.TEXT_XML);
-        converter.setSupportedMediaTypes(supportedMediaTypes);
-        FastJsonConfig config = new FastJsonConfig();
-        SerializeConfig serializeConfig = new SerializeConfig();
-//        serializeConfig.configEnumAsJavaBean(Sex.class);
-        config.setSerializeConfig(serializeConfig);
-        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
-                SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
-                SerializerFeature.WriteNullNumberAsZero);//Number null -> 0
-        converter.setFastJsonConfig(config);
-        converter.setDefaultCharset(Charset.forName("UTF-8"));
-        converters.add(converter);
-    }
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+//        List<MediaType> supportedMediaTypes = new ArrayList<>();
+//        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+//        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+//        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
+//        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
+//        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
+//        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
+//        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
+//        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
+//        supportedMediaTypes.add(MediaType.APPLICATION_XML);
+//        supportedMediaTypes.add(MediaType.IMAGE_GIF);
+//        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
+//        supportedMediaTypes.add(MediaType.IMAGE_PNG);
+//        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
+//        supportedMediaTypes.add(MediaType.TEXT_HTML);
+//        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
+//        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
+//        supportedMediaTypes.add(MediaType.TEXT_XML);
+//        converter.setSupportedMediaTypes(supportedMediaTypes);
+//        FastJsonConfig config = new FastJsonConfig();
+//        SerializeConfig serializeConfig = new SerializeConfig();
+////        serializeConfig.configEnumAsJavaBean(Sex.class);
+//        config.setSerializeConfig(serializeConfig);
+//        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
+//                SerializerFeature.WriteNullStringAsEmpty,//String null -> ""
+//                SerializerFeature.WriteNullNumberAsZero);//Number null -> 0
+//        converter.setFastJsonConfig(config);
+//        converter.setDefaultCharset(Charset.forName("UTF-8"));
+//        converters.add(converter);
+//    }
 
 
     //统一异常处理
@@ -126,7 +118,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
         if ("dev,mapper".equals(env)) { //开发环境忽略签名认证
-            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**", "/pay/**");
+//            registry.addInterceptor(new SignInterceptor()).excludePathPatterns("/images/**", "/view/**", "/error", "/favicon.ico", "/upload/**", "/pay/**");
         }
 //        registry.addInterceptor(new TokenInterceptor()).excludePathPatterns("/images/**", "/view/**", "/favicon.ico", "/upload/**", "/pay/**");
     }
