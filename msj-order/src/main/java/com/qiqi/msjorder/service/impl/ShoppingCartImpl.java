@@ -86,4 +86,9 @@ public class ShoppingCartImpl implements ShoppingCartService {
         if(result != 1)
             throw new ServiceException(ResultEnum.OPERATE_ERROR);
     }
+
+    @Override
+    public void deleteShoppingCart(List<Integer> idList) {
+        shoppingCartCustomMapper.updateShoppingCartStatus(idList, ShoppingCartStatus.INEFFECTIVE.getCode(), new Date());
+    }
 }

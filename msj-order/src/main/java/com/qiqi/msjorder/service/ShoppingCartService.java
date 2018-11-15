@@ -9,4 +9,6 @@ public interface ShoppingCartService {
     List<ShoppingCartDto> getShoppingCarts(Integer userId);
 
     void addShoppingCart(ShoppingCart shoppingCart);
+
+    void deleteShoppingCart(List<Integer> idList);
 }

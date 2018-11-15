@@ -80,4 +80,13 @@
       </if>
     </trim>
   </insert>
+
+  <update id="updateShoppingCartStatus">
+    UPDATE shopping_cart
+    SET status=#{status}, gmt_modified=#{gmtModified}
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </update>
 </mapper>
