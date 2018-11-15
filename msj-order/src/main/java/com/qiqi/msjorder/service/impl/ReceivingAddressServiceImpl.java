@@ -1,5 +1,6 @@
 package com.qiqi.msjorder.service.impl;
 
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ServiceException;
 import com.qiqi.msjmapper.dto.ReceivingAddressDto;
@@ -40,7 +41,7 @@ public class ReceivingAddressServiceImpl implements ReceivingAddressService {
     @Override
     public void addReceivingAddress(ReceivingAddress receivingAddress) {
         int count = receivingAddressCustomMapper.queryReceivingAddressCount(receivingAddress.getUserId(), ReceivingAddressStatus.EFFECTIVE.getCode());
-        if(count >= 10){
+        if(count >= Constants.RECEIVING_ADDRESS_COUNT){
             throw new ServiceException(ResultEnum.ADDRESS_COUNT_ERROR);
         }
         receivingAddress.setStatus(ReceivingAddressStatus.EFFECTIVE.getCode());

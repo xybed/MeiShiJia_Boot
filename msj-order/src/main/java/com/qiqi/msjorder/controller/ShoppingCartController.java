@@ -1,6 +1,5 @@
 package com.qiqi.msjorder.controller;
 
-import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.commonconfig.common.Result;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ResultGenerator;
@@ -18,17 +17,11 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @RequestMapping(value = "/shopping/carts", method = RequestMethod.GET)
-    public Result getShoppingCarts(@RequestParam("user_id") Integer userId,
-                                   @RequestParam(name = "page_index", required = false) Integer pageIndex,
-                                   @RequestParam(name = "page_size", required = false) Integer pageSize){
+    public Result getShoppingCarts(@RequestParam("user_id") Integer userId){
         if(StringUtils.isEmpty(userId)){
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }
-        if(pageIndex == null)
-            pageIndex = Constants.PAGE_INDEX;
-        if(pageSize == null)
-            pageSize = Constants.PAGE_SIZE;
-        return ResultGenerator.genSuccessResult(shoppingCartService.getShoppingCarts(userId, pageIndex, pageSize));
+        return ResultGenerator.genSuccessResult(shoppingCartService.getShoppingCarts(userId));
     }
 
     @RequestMapping(value = "/shopping/cart", method = RequestMethod.POST)

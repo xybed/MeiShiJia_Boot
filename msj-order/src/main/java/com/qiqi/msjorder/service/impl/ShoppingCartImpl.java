@@ -2,6 +2,7 @@ package com.qiqi.msjorder.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ServiceException;
 import com.qiqi.msjmapper.dto.ProductDto;
@@ -34,13 +35,10 @@ public class ShoppingCartImpl implements ShoppingCartService {
      * 2.如果不为空，去商品服务下查询对应商品信息
      * 3.如果商品信息列表不为空（断路或服务异常会为空），赋值给对应购物车
      * @param userId 用户id
-     * @param pageIndex 页码
-     * @param pageSize 一页数
      * @return 购物车列表
      */
     @Override
-    public List<ShoppingCartDto> getShoppingCarts(Integer userId, Integer pageIndex, Integer pageSize) {
-        PageHelper.startPage(pageIndex, pageSize);
+    public List<ShoppingCartDto> getShoppingCarts(Integer userId) {
         List<ShoppingCartDto> shoppingCartList = shoppingCartCustomMapper.queryShoppingCart(userId, ShoppingCartStatus.EFFECTIVE.getCode());
         List<Integer> idList = new ArrayList<>();
         shoppingCartList.forEach(shoppingCart -> {
@@ -75,6 +73,10 @@ public class ShoppingCartImpl implements ShoppingCartService {
      */
     @Override
     public void addShoppingCart(ShoppingCart shoppingCart) {
+        int count = shoppingCartCustomMapper.queryShoppingCartCount(shoppingCart.getUserId(), ShoppingCartStatus.EFFECTIVE.getCode());
+        if(count >= Constants.SHOPPING_CART_COUNT){
+            throw new ServiceException(ResultEnum.SHOPPING_CART_COUNT_ERROR);
+        }
         Integer stock = productRemote.getProductStock(shoppingCart.getProductId());
         if(stock < shoppingCart.getNum())
             throw new ServiceException(ResultEnum.PRODUCT_STOCK_NOT_ENOUGH);

@@ -9,5 +9,7 @@ import java.util.List;
 public interface ShoppingCartCustomMapper {
     List<ShoppingCartDto> queryShoppingCart(@Param("userId") Integer userId, @Param("status") Integer status);
 
+    int queryShoppingCartCount(@Param("userId") Integer userId, @Param("status") Integer status);
+
     int insertSelective(ShoppingCart record);
 }

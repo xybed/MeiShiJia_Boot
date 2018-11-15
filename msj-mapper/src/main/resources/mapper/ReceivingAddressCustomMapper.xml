@@ -155,7 +155,7 @@
   </select>
 
   <select id="queryReceivingAddressCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    SELECT COUNT(*)
+    SELECT COUNT(id)
     FROM user_receiving_address
     WHERE user_id=#{userId} AND status=#{status}
   </select>

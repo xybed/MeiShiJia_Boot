@@ -25,8 +25,9 @@ public enum ResultEnum {
     APPLICATION_PATH_ERROR(2003, "项目路径获取失败"),
     //商品相关
     PRODUCT_STOCK_NOT_ENOUGH(3001, "库存不足"),
-    //订单、收货地址相关
-    ADDRESS_COUNT_ERROR(4101, "收货地址最多10条"),
+    //订单、购物车、收货地址相关
+    SHOPPING_CART_COUNT_ERROR(4101, "购物车最多50件商品"),
+    ADDRESS_COUNT_ERROR(4201, "收货地址最多10条"),
     //支付相关
     ALIPAY_ORDER_ERROR(5001, "支付宝下单异常"),
     ALIPAY_REFUND_ERROR(5002, "支付宝退款异常"),

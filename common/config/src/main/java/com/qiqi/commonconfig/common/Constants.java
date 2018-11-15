@@ -12,4 +12,9 @@ public class Constants {
     //默认的页码和页数
     public static final int PAGE_INDEX = 1;
     public static final int PAGE_SIZE = 10;
+
+    //最大地址数
+    public static final int RECEIVING_ADDRESS_COUNT = 10;
+    //最大购物车数
+    public static final int SHOPPING_CART_COUNT = 50;
 }
