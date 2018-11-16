@@ -1,13 +1,13 @@
-package com.qiqi.msjmapper.dto;
-
-import com.alibaba.fastjson.annotation.JSONField;
+package com.qiqi.msjmapper.entity;
 
 import java.math.BigDecimal;
 
-public class ShoppingCartDto {
+public class OrderShoppingCart {
     private Integer id;
 
-    private Integer productId;
+    private Integer orderId;
+
+    private Integer shoppingCartId;
 
     private String name;
 
@@ -19,16 +19,6 @@ public class ShoppingCartDto {
 
     private BigDecimal discountPrice;
 
-    private Integer num;
-
-    private Integer status;
-
-    private Integer stock;
-
-    @JSONField(serialize = false)
-    private Integer shoppingCartStatus;
-
-    @JSONField(serialize = false)
     private String remark;
 
     public Integer getId() {
@@ -39,12 +29,20 @@ public class ShoppingCartDto {
         this.id = id;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getShoppingCartId() {
+        return shoppingCartId;
+    }
+
+    public void setShoppingCartId(Integer shoppingCartId) {
+        this.shoppingCartId = shoppingCartId;
     }
 
     public String getName() {
@@ -85,38 +83,6 @@ public class ShoppingCartDto {
 
     public void setDiscountPrice(BigDecimal discountPrice) {
         this.discountPrice = discountPrice;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public Integer getShoppingCartStatus() {
-        return shoppingCartStatus;
-    }
-
-    public void setShoppingCartStatus(Integer shoppingCartStatus) {
-        this.shoppingCartStatus = shoppingCartStatus;
     }
 
     public String getRemark() {

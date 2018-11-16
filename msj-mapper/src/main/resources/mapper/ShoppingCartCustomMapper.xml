@@ -14,6 +14,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="status" javaType="INTEGER" property="shoppingCartStatus" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_id, product_id, num, status, gmt_create, gmt_modified
@@ -146,7 +147,7 @@
   </update>
 
   <select id="queryShoppingCartByIdList" resultMap="ShoppingCartDtoMap">
-    SELECT id,product_id
+    SELECT id,product_id,num,status
     FROM shopping_cart
     WHERE id IN
     <foreach collection="idList" item="id" open="(" close=")" separator=",">
