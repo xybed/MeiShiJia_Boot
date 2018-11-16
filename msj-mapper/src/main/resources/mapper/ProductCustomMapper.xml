@@ -45,6 +45,7 @@
     <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
     <result column="discount_price" jdbcType="DECIMAL" property="discountPrice" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
   </resultMap>
   <resultMap id="ProductDetailMap" type="com.qiqi.msjmapper.dto.ProductDetail">
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -226,7 +227,7 @@
     WHERE p.id=#{id}
   </select>
   <select id="queryProductShoppingCart" resultMap="ProductDtoMap">
-    SELECT id,name,description,image,price,original_price,discount_price,status
+    SELECT id,name,description,image,price,original_price,discount_price,status,stock
     FROM product
     WHERE id in
     <foreach collection="idList" item="id" open="(" close=")" separator=",">

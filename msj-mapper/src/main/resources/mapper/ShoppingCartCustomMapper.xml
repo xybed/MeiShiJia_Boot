@@ -144,4 +144,13 @@
       #{id}
     </foreach>
   </update>
+
+  <select id="queryShoppingCartByIdList" resultMap="ShoppingCartDtoMap">
+    SELECT id,product_id
+    FROM shopping_cart
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
 </mapper>

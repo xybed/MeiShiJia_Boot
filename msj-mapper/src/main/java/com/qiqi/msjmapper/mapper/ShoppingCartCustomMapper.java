@@ -23,4 +23,7 @@ public interface ShoppingCartCustomMapper {
     int updateBatch(@Param("shoppingCartList") List<ShoppingCart> shoppingCartList);
 
     int updateShoppingCartStatus(@Param("idList") List<Integer> idList, @Param("status") Integer status, @Param("gmtModified") Date gmtModified);
+
+    //根据id查购物车列表
+    List<ShoppingCartDto> queryShoppingCartByIdList(@Param("idList") List<Integer> idList);
 }

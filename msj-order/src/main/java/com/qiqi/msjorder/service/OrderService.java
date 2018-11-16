@@ -1,5 +1,7 @@
 package com.qiqi.msjorder.service;
 
-public interface OrderService {
+import java.util.List;
 
+public interface OrderService {
+    void order(List<Integer> idList, Integer receivingAddressId);
 }
