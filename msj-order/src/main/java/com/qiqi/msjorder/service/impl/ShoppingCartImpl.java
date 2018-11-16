@@ -8,6 +8,7 @@ import com.qiqi.commonconfig.common.ServiceException;
 import com.qiqi.msjmapper.dto.ProductDto;
 import com.qiqi.msjmapper.dto.ShoppingCartDto;
 import com.qiqi.msjmapper.entity.ShoppingCart;
+import com.qiqi.msjmapper.enums.ProductStatus;
 import com.qiqi.msjmapper.enums.ShoppingCartStatus;
 import com.qiqi.msjmapper.mapper.ShoppingCartCustomMapper;
 import com.qiqi.msjorder.remote.ProductRemote;
@@ -67,12 +68,22 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     /**
      * 添加购物车
-     * 1.查询此条商品库存是否充足
-     * 2.若充足，则插入一条数据
+     * 1.查看购物车中是否存在相同商品，存在则增加数量，不存在到2
+     * 2.查看购物车总量，达到50条，则不插入新数据
+     * 3.查询此条商品库存是否充足
+     * 4.若充足，则插入一条数据
      * @param shoppingCart 商品数据
      */
     @Override
     public void addShoppingCart(ShoppingCart shoppingCart) {
+        ShoppingCartDto temp = shoppingCartCustomMapper.queryShoppingCartByProductId(shoppingCart.getUserId(), shoppingCart.getProductId(), ShoppingCartStatus.EFFECTIVE.getCode());
+        if(temp != null && temp.getId() != null){
+            shoppingCart.setId(temp.getId());
+            shoppingCart.setNum(shoppingCart.getNum() + temp.getNum());
+            shoppingCart.setGmtModified(new Date());
+            shoppingCartCustomMapper.updateByPrimaryKeySelective(shoppingCart);
+            return;
+        }
         int count = shoppingCartCustomMapper.queryShoppingCartCount(shoppingCart.getUserId(), ShoppingCartStatus.EFFECTIVE.getCode());
         if(count >= Constants.SHOPPING_CART_COUNT){
             throw new ServiceException(ResultEnum.SHOPPING_CART_COUNT_ERROR);
@@ -80,7 +91,6 @@ public class ShoppingCartImpl implements ShoppingCartService {
         Integer stock = productRemote.getProductStock(shoppingCart.getProductId());
         if(stock < shoppingCart.getNum())
             throw new ServiceException(ResultEnum.PRODUCT_STOCK_NOT_ENOUGH);
-        shoppingCart.setStatus(ShoppingCartStatus.EFFECTIVE.getCode());
         shoppingCart.setGmtCreate(new Date());
         int result = shoppingCartCustomMapper.insertSelective(shoppingCart);
         if(result != 1)
@@ -90,5 +100,26 @@ public class ShoppingCartImpl implements ShoppingCartService {
     @Override
     public void deleteShoppingCart(List<Integer> idList) {
         shoppingCartCustomMapper.updateShoppingCartStatus(idList, ShoppingCartStatus.INEFFECTIVE.getCode(), new Date());
+    }
+
+    /**
+     * 清除购物车中无效的商品
+     * 1.查询出用户下所有的购物车
+     * 2.根据商品id，到商品服务中请求到所有商品的状态
+     * 3.根据返回失效商品列表，改变购物车中的状态
+     * @param userId 用户id
+     */
+    @Override
+    public void clearInvalidShoppingCart(Integer userId) {
+        //1、2步骤可以直接调用查询购物车的接口
+        List<ShoppingCartDto> shoppingCartList = getShoppingCarts(userId);
+        //3步骤，可以调用删除购物车的接口
+        List<Integer> idList = new ArrayList<>();
+        shoppingCartList.forEach(shoppingCart -> {
+            if(shoppingCart.getStatus().intValue() == ProductStatus.LOWER.getCode()){
+                idList.add(shoppingCart.getId());
+            }
+        });
+        deleteShoppingCart(idList);
     }
 }

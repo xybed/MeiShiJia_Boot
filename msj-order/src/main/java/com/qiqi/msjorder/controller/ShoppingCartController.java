@@ -57,4 +57,13 @@ public class ShoppingCartController {
         shoppingCartService.deleteShoppingCart(idList);
         return ResultGenerator.genSuccessResult("删除成功");
     }
+
+    @RequestMapping(value = "/shopping/cart/invalid", method = RequestMethod.PUT)
+    public Result clearInvalidShoppingCart(@RequestBody ShoppingCart shoppingCart){
+        if(StringUtils.isEmpty(shoppingCart.getUserId())){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        shoppingCartService.clearInvalidShoppingCart(shoppingCart.getUserId());
+        return ResultGenerator.genSuccessResult("清除成功");
+    }
 }

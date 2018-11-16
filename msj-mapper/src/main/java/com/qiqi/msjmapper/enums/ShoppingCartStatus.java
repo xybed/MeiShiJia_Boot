@@ -2,7 +2,8 @@ package com.qiqi.msjmapper.enums;
 
 public enum ShoppingCartStatus {
     INEFFECTIVE(0, "无效"),
-    EFFECTIVE(1, "有效");
+    EFFECTIVE(1, "有效"),
+    ORDER(2, "下单");
 
     private Integer code;
 

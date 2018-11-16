@@ -24,7 +24,38 @@
     FROM shopping_cart
     WHERE user_id=#{userId} AND status=#{status}
   </select>
-  
+
+  <select id="queryShoppingCartByProductId" parameterType="java.lang.Integer" resultType="com.qiqi.msjmapper.dto.ShoppingCartDto">
+    SELECT id,num
+    FROM shopping_cart
+    WHERE user_id=#{userId} AND product_id=#{productId} AND status=#{status}
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiqi.msjmapper.entity.ShoppingCart">
+    update shopping_cart
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
   <select id="queryShoppingCartCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT COUNT(id)
     FROM shopping_cart

@@ -10,6 +10,10 @@ import java.util.List;
 public interface ShoppingCartCustomMapper {
     List<ShoppingCartDto> queryShoppingCart(@Param("userId") Integer userId, @Param("status") Integer status);
 
+    ShoppingCartDto queryShoppingCartByProductId(@Param("userId") Integer userId, @Param("productId") Integer productId, @Param("status") Integer status);
+
+    int updateByPrimaryKeySelective(ShoppingCart record);
+
     int queryShoppingCartCount(@Param("userId") Integer userId, @Param("status") Integer status);
 
     int insertSelective(ShoppingCart record);
