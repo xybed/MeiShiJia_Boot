@@ -112,6 +112,30 @@
     </trim>
   </insert>
 
+  <update id="updateBatch" parameterType="java.util.List">
+    UPDATE shopping_cart
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="num= case id" suffix="end,">
+        <foreach collection="shoppingCartList" item="item" separator=" ">
+          <if test="item.id != null">
+            WHEN #{item.id} THEN #{item.num}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="gmt_modified= case id" suffix="end,">
+        <foreach collection="shoppingCartList" item="item" index="index">
+          <if test="item.id != null">
+            WHEN #{item.id} THEN #{item.gmtModified}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    WHERE id IN
+    <foreach collection="shoppingCartList" item="item" open="(" close=")" separator=",">
+      #{item.id}
+    </foreach>
+  </update>
+
   <update id="updateShoppingCartStatus">
     UPDATE shopping_cart
     SET status=#{status}, gmt_modified=#{gmtModified}

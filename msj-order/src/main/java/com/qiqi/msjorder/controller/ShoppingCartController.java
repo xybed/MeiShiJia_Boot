@@ -5,6 +5,7 @@ import com.qiqi.commonconfig.common.Result;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.msjmapper.entity.ShoppingCart;
+import com.qiqi.msjmapper.pojo.ShoppingCartCustom;
 import com.qiqi.msjorder.service.ShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,16 @@ public class ShoppingCartController {
         }
         shoppingCartService.addShoppingCart(shoppingCart);
         return ResultGenerator.genSuccessResult("添加成功");
+    }
+
+    @RequestMapping(value = "/shopping/cart", method = RequestMethod.PUT)
+    public Result updateShoppingCart(@RequestBody ShoppingCartCustom custom){
+        List<ShoppingCart> shoppingCartList = JSONArray.parseArray(custom.getJson(), ShoppingCart.class);
+        if(StringUtils.isEmpty(shoppingCartList) || shoppingCartList.size() <= 0){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        shoppingCartService.updateShoppingCart(shoppingCartList);
+        return ResultGenerator.genSuccessResult("编辑成功");
     }
 
     @RequestMapping(value = "/shopping/cart", method = RequestMethod.DELETE)

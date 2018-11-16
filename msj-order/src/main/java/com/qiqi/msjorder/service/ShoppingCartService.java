@@ -10,6 +10,8 @@ public interface ShoppingCartService {
 
     void addShoppingCart(ShoppingCart shoppingCart);
 
+    void updateShoppingCart(List<ShoppingCart> shoppingCartList);
+
     void deleteShoppingCart(List<Integer> idList);
 
     void clearInvalidShoppingCart(Integer userId);

@@ -16,6 +16,7 @@ import com.qiqi.msjorder.service.ShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -95,6 +96,15 @@ public class ShoppingCartImpl implements ShoppingCartService {
         int result = shoppingCartCustomMapper.insertSelective(shoppingCart);
         if(result != 1)
             throw new ServiceException(ResultEnum.OPERATE_ERROR);
+    }
+
+    @Transactional
+    @Override
+    public void updateShoppingCart(List<ShoppingCart> shoppingCartList) {
+        shoppingCartList.forEach(shoppingCart -> {
+            shoppingCart.setGmtModified(new Date());
+        });
+        shoppingCartCustomMapper.updateBatch(shoppingCartList);
     }
 
     @Override
