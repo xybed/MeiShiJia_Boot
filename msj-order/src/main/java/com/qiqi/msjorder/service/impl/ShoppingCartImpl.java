@@ -58,6 +58,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                             shoppingCart.setOriginalPrice(product.getOriginalPrice());
                             shoppingCart.setDiscountPrice(product.getDiscountPrice());
                             shoppingCart.setStatus(product.getStatus());
+                            shoppingCart.setStock(product.getStock());
                             break;
                         }
                     }

@@ -21,6 +21,8 @@ public class ShoppingCartDto {
 
     private Integer status;
 
+    private Integer stock;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class ShoppingCartDto {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }
