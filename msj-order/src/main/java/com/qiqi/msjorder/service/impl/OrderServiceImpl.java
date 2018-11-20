@@ -1,15 +1,17 @@
 package com.qiqi.msjorder.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.qiqi.commonconfig.common.Constants;
 import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ServiceException;
 import com.qiqi.commonlib.utils.NumberUtil;
 import com.qiqi.commonlib.utils.OrderNumberUtil;
+import com.qiqi.msjmapper.dto.OrderDto;
 import com.qiqi.msjmapper.dto.ProductDto;
 import com.qiqi.msjmapper.dto.ShoppingCartDto;
 import com.qiqi.msjmapper.entity.Order;
 import com.qiqi.msjmapper.entity.OrderShoppingCart;
-import com.qiqi.msjmapper.entity.ShoppingCart;
 import com.qiqi.msjmapper.enums.OrderStatus;
 import com.qiqi.msjmapper.enums.ProductStatus;
 import com.qiqi.msjmapper.enums.ShoppingCartStatus;
@@ -51,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Transactional
     @Override
-    public void order(List<ShoppingCartDto> dtoList, Integer receivingAddressId) {
+    public int placeOrder(List<ShoppingCartDto> dtoList, Integer receivingAddressId) {
         List<Integer> idList = new ArrayList<>();
         dtoList.forEach(dto -> {
             idList.add(dto.getId());
@@ -96,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
         for(ShoppingCartDto shoppingCartDto : shoppingCartDtoList){
             totalAmount = NumberUtil.add(totalAmount, NumberUtil.multiply(shoppingCartDto.getPrice().doubleValue(), shoppingCartDto.getNum()));
         }
-        order.setPayAmount(new BigDecimal(totalAmount));
+        order.setPayAmount(new BigDecimal(totalAmount).setScale(2, BigDecimal.ROUND_HALF_EVEN));
         order.setStatus(OrderStatus.WAIT_PAY.getCode());
         order.setGmtCreate(new Date());
         orderCustomMapper.insertSelective(order);
@@ -107,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
             orderShoppingCart.setOrderId(order.getId());
             orderShoppingCart.setShoppingCartId(shoppingCartDto.getId());
             orderShoppingCart.setName(shoppingCartDto.getName());
-            orderShoppingCart.setImage(shoppingCartDto.getImage());
+            orderShoppingCart.setImage(shoppingCartDto.getImage().substring(Constants.URL_PREFIX.length()));
             orderShoppingCart.setPrice(shoppingCartDto.getPrice());
             orderShoppingCart.setOriginalPrice(shoppingCartDto.getOriginalPrice());
             orderShoppingCart.setDiscountPrice(shoppingCartDto.getDiscountPrice());
@@ -123,5 +125,12 @@ public class OrderServiceImpl implements OrderService {
             orderShoppingCartList.add(orderShoppingCart);
         });
         orderShoppingCartCustomMapper.insertBatch(orderShoppingCartList);
+        return order.getId();
+    }
+
+    @Override
+    public List<OrderDto> getOrderList(Integer userId, Integer type, Integer pageIndex, Integer pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        return orderCustomMapper.queryOrderByStatus(userId, type);
     }
 }

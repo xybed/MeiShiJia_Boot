@@ -1,9 +1,12 @@
 package com.qiqi.msjorder.service;
 
+import com.qiqi.msjmapper.dto.OrderDto;
 import com.qiqi.msjmapper.dto.ShoppingCartDto;
 
 import java.util.List;
 
 public interface OrderService {
-    void order(List<ShoppingCartDto> idList, Integer receivingAddressId);
+    int placeOrder(List<ShoppingCartDto> idList, Integer receivingAddressId);
+
+    List<OrderDto> getOrderList(Integer userId, Integer type, Integer pageIndex, Integer pageSize);
 }

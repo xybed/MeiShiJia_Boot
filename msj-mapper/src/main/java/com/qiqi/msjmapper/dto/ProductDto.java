@@ -21,6 +21,10 @@ public class ProductDto {
 
     private Integer stock;
 
+    private Integer num;
+
+    private String remark;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +95,21 @@ public class ProductDto {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
