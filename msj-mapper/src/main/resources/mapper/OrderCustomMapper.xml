@@ -93,10 +93,8 @@
   <select id="queryOrderByStatus" parameterType="java.lang.Integer" resultMap="OrderDtoMap">
     SELECT o.id,o.order_number,ura.name rname,ura.phone phone,ura.province,ura.city,ura.address,o.pay_amount,o.status,o.gmt_create
     FROM `order` o
-    LEFT JOIN order_shopping_cart osc ON o.id=osc.order_id
     LEFT JOIN user_receiving_address ura ON o.receiving_address_id=ura.id
-    LEFT JOIN shopping_cart sc ON sc.id=osc.shopping_cart_id
-    WHERE sc.user_id=#{userId}
+    WHERE ura.user_id=#{userId}
     <if test="status!=null">
       and o.status =#{status}
     </if>
