@@ -168,4 +168,45 @@
     LEFT JOIN shopping_cart sc ON sc.id=osc.shopping_cart_id
     WHERE o.id=#{id}
   </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select order_number,status
+    from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiqi.msjmapper.entity.Order">
+    update `order`
+    <set>
+        <if test="orderNumber != null">
+            order_number = #{orderNumber,jdbcType=VARCHAR},
+        </if>
+        <if test="receivingAddressId != null">
+            receiving_address_id = #{receivingAddressId,jdbcType=INTEGER},
+        </if>
+        <if test="payAmount != null">
+            pay_amount = #{payAmount,jdbcType=DECIMAL},
+        </if>
+        <if test="status != null">
+            status = #{status,jdbcType=INTEGER},
+        </if>
+        <if test="payTime != null">
+            pay_time = #{payTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deliveryTime != null">
+            delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dealTime != null">
+            deal_time = #{dealTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="gmtCreate != null">
+            gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="gmtModified != null">
+            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
 </mapper>

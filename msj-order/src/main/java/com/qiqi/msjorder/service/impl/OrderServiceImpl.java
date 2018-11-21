@@ -11,11 +11,13 @@ import com.qiqi.msjmapper.dto.OrderDto;
 import com.qiqi.msjmapper.dto.ProductDto;
 import com.qiqi.msjmapper.dto.ShoppingCartDto;
 import com.qiqi.msjmapper.entity.Order;
+import com.qiqi.msjmapper.entity.OrderLog;
 import com.qiqi.msjmapper.entity.OrderShoppingCart;
 import com.qiqi.msjmapper.enums.OrderStatus;
 import com.qiqi.msjmapper.enums.ProductStatus;
 import com.qiqi.msjmapper.enums.ShoppingCartStatus;
 import com.qiqi.msjmapper.mapper.OrderCustomMapper;
+import com.qiqi.msjmapper.mapper.OrderLogCustomMapper;
 import com.qiqi.msjmapper.mapper.OrderShoppingCartCustomMapper;
 import com.qiqi.msjmapper.mapper.ShoppingCartCustomMapper;
 import com.qiqi.msjorder.remote.ProductRemote;
@@ -41,6 +43,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderCustomMapper orderCustomMapper;
     @Resource
     private OrderShoppingCartCustomMapper orderShoppingCartCustomMapper;
+    @Resource
+    private OrderLogCustomMapper orderLogCustomMapper;
 
     /**
      * 下单
@@ -147,5 +151,61 @@ public class OrderServiceImpl implements OrderService {
             product.setImage(Constants.URL_PREFIX + product.getImage());
         });
         return order;
+    }
+
+    /**
+     * 1.查看要改成的订单状态是什么
+     * ---付款操作，待付款->待发货，0->1，付款时间更新（以后是支付宝微信的回调）
+     * ---取消订单，待付款->交易失败，0->6
+     * ---确认收货，待收货->待评价，2->3，成交时间更新
+     * ---退款操作，（待发货、待收货）->退款，（1、2）->4（以后是支付宝微信的回调）
+     * ---评价操作，待评价->交易成功，3->5
+     * ---删除订单，（待评价、退款、交易成功、交易失败）->删除，（3、4、5、6）->7
+     * 2.根据id查order_number和status
+     * 3.status符合修改条件则修改
+     * 3.插入一条订单流水记录
+     * @param id 订单id
+     * @param status 要改成的订单状态
+     */
+    @Transactional
+    @Override
+    public void updateOrderStatus(Integer id, Integer status) {
+        Order order = orderCustomMapper.selectByPrimaryKey(id);
+        Integer beforeStatus = order.getStatus();
+        order.setId(id);
+        order.setStatus(status);
+        order.setGmtModified(new Date());
+        if(status.intValue() == OrderStatus.WAIT_SEND.getCode() && beforeStatus.intValue() == OrderStatus.WAIT_PAY.getCode()){
+            order.setPayTime(new Date());
+            orderCustomMapper.updateByPrimaryKeySelective(order);
+            insertOrderLog(order.getOrderNumber(), beforeStatus, status);
+        }else if(status.intValue() == OrderStatus.FAIL.getCode() && beforeStatus.intValue() == OrderStatus.WAIT_PAY.getCode()){
+            orderCustomMapper.updateByPrimaryKeySelective(order);
+            insertOrderLog(order.getOrderNumber(), beforeStatus, status);
+        }else if(status.intValue() == OrderStatus.WAIT_COMMENT.getCode() && beforeStatus.intValue() == OrderStatus.WAIT_DELIVERY.getCode()){
+            order.setDealTime(new Date());
+            orderCustomMapper.updateByPrimaryKeySelective(order);
+            insertOrderLog(order.getOrderNumber(), beforeStatus, status);
+        }else if(status.intValue() == OrderStatus.REFUND.getCode() &&
+                (beforeStatus.intValue() == OrderStatus.WAIT_SEND.getCode() || beforeStatus.intValue() == OrderStatus.WAIT_DELIVERY.getCode())){
+            orderCustomMapper.updateByPrimaryKeySelective(order);
+            insertOrderLog(order.getOrderNumber(), beforeStatus, status);
+        }else if(status.intValue() == OrderStatus.SUCCESS.getCode() && beforeStatus.intValue() == OrderStatus.SUCCESS.getCode()){
+            orderCustomMapper.updateByPrimaryKeySelective(order);
+            insertOrderLog(order.getOrderNumber(), beforeStatus, status);
+        }else if(status.intValue() == OrderStatus.DELETE.getCode() &&
+                (beforeStatus >= OrderStatus.WAIT_COMMENT.getCode() && beforeStatus <= OrderStatus.FAIL.getCode())){
+            orderCustomMapper.updateByPrimaryKeySelective(order);
+            insertOrderLog(order.getOrderNumber(), beforeStatus, status);
+        }
+    }
+
+    private void insertOrderLog(String orderNumber, Integer beforeStatus, Integer afterStatus){
+        OrderLog orderLog = new OrderLog();
+        orderLog.setOrderNumber(orderNumber);
+        orderLog.setBeforeStatus(beforeStatus);
+        orderLog.setAfterStatus(afterStatus);
+        orderLog.setGmtCreate(new Date());
+        orderLogCustomMapper.insertSelective(orderLog);
     }
 }

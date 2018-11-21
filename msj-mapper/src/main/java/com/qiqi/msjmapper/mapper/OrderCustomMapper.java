@@ -12,4 +12,9 @@ public interface OrderCustomMapper {
     List<OrderDto> queryOrderByStatus(@Param("userId") Integer userId, @Param("status") Integer status);
 
     OrderDto queryOrderDetail(Integer id);
+
+    Order selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(Order record);
+
 }

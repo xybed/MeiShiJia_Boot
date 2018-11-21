@@ -7,6 +7,7 @@ import com.qiqi.commonconfig.common.ResultEnum;
 import com.qiqi.commonconfig.common.ResultGenerator;
 import com.qiqi.commonlib.utils.StringUtil;
 import com.qiqi.msjmapper.dto.ShoppingCartDto;
+import com.qiqi.msjmapper.entity.Order;
 import com.qiqi.msjmapper.entity.ShoppingCart;
 import com.qiqi.msjmapper.pojo.OrderCustom;
 import com.qiqi.msjmapper.pojo.ShoppingCartCustom;
@@ -53,5 +54,16 @@ public class OrderController {
             return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
         }
         return ResultGenerator.genSuccessResult(orderService.getOrderDetail(id));
+    }
+
+    @RequestMapping(value = "/order", method = RequestMethod.PUT)
+    public Result updateOrderStatus(@RequestBody Order order){
+        if(StringUtils.isEmpty(order) ||
+                StringUtils.isEmpty(order.getId()) ||
+                StringUtils.isEmpty(order.getStatus())){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        orderService.updateOrderStatus(order.getId(), order.getStatus());
+        return ResultGenerator.genSuccessResult("成功");
     }
 }
