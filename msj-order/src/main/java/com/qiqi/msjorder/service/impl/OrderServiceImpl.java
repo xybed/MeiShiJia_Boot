@@ -131,6 +131,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getOrderList(Integer userId, Integer type, Integer pageIndex, Integer pageSize) {
         PageHelper.startPage(pageIndex, pageSize);
-        return orderCustomMapper.queryOrderByStatus(userId, type);
+        List<OrderDto> orderList = orderCustomMapper.queryOrderByStatus(userId, type);
+        orderList.forEach(order -> {
+            order.getProducts().forEach(product -> {
+                product.setImage(Constants.URL_PREFIX + product.getImage());
+            });
+        });
+        return orderList;
     }
 }

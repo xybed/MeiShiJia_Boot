@@ -7,32 +7,38 @@
     <result column="receiving_address_id" jdbcType="INTEGER" property="receivingAddressId" />
     <result column="pay_amount" jdbcType="DECIMAL" property="payAmount" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="deal_time" jdbcType="TIMESTAMP" property="dealTime" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_number, receiving_address_id, pay_amount, status, gmt_create, gmt_modified
+    id, order_number, receiving_address_id, pay_amount, status, pay_time, delivery_time, 
+    deal_time, gmt_create, gmt_modified
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from `order`
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.qiqi.msjmapper.entity.Order">
-    insert into order (id, order_number, receiving_address_id, 
-      pay_amount, status, gmt_create, 
+    insert into `order` (id, order_number, receiving_address_id,
+      pay_amount, status, pay_time, 
+      delivery_time, deal_time, gmt_create, 
       gmt_modified)
     values (#{id,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{receivingAddressId,jdbcType=INTEGER}, 
-      #{payAmount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{payAmount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{deliveryTime,jdbcType=TIMESTAMP}, #{dealTime,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.qiqi.msjmapper.entity.Order">
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -48,6 +54,15 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
+      <if test="dealTime != null">
+        deal_time,
       </if>
       <if test="gmtCreate != null">
         gmt_create,
@@ -72,6 +87,15 @@
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealTime != null">
+        #{dealTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
@@ -81,7 +105,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.qiqi.msjmapper.entity.Order">
-    update order
+    update `order`
     <set>
       <if test="orderNumber != null">
         order_number = #{orderNumber,jdbcType=VARCHAR},
@@ -95,6 +119,15 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealTime != null">
+        deal_time = #{dealTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
@@ -105,11 +138,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.qiqi.msjmapper.entity.Order">
-    update order
+    update `order`
     set order_number = #{orderNumber,jdbcType=VARCHAR},
       receiving_address_id = #{receivingAddressId,jdbcType=INTEGER},
       pay_amount = #{payAmount,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      deal_time = #{dealTime,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

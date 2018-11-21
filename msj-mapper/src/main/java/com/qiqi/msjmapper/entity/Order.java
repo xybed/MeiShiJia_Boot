@@ -14,6 +14,12 @@ public class Order {
 
     private Integer status;
 
+    private Date payTime;
+
+    private Date deliveryTime;
+
+    private Date dealTime;
+
     private Date gmtCreate;
 
     private Date gmtModified;
@@ -56,6 +62,30 @@ public class Order {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
+
+    public Date getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(Date deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    public Date getDealTime() {
+        return dealTime;
+    }
+
+    public void setDealTime(Date dealTime) {
+        this.dealTime = dealTime;
     }
 
     public Date getGmtCreate() {
