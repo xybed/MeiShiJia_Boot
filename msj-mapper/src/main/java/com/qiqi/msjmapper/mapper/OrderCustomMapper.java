@@ -10,4 +10,6 @@ public interface OrderCustomMapper {
     int insertSelective(Order record);
 
     List<OrderDto> queryOrderByStatus(@Param("userId") Integer userId, @Param("status") Integer status);
+
+    OrderDto queryOrderDetail(Integer id);
 }

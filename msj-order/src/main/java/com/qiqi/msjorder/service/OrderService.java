@@ -9,4 +9,6 @@ public interface OrderService {
     int placeOrder(List<ShoppingCartDto> idList, Integer receivingAddressId);
 
     List<OrderDto> getOrderList(Integer userId, Integer type, Integer pageIndex, Integer pageSize);
+
+    OrderDto getOrderDetail(Integer id);
 }

@@ -139,4 +139,13 @@ public class OrderServiceImpl implements OrderService {
         });
         return orderList;
     }
+
+    @Override
+    public OrderDto getOrderDetail(Integer id) {
+        OrderDto order = orderCustomMapper.queryOrderDetail(id);
+        order.getProducts().forEach(product -> {
+            product.setImage(Constants.URL_PREFIX + product.getImage());
+        });
+        return order;
+    }
 }

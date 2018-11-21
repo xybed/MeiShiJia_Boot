@@ -46,4 +46,12 @@ public class OrderController {
             pageSize = Constants.PAGE_SIZE;
         return ResultGenerator.genSuccessResult(orderService.getOrderList(userId, type, pageIndex, pageSize));
     }
+
+    @RequestMapping(value = "/orders/{id}", method = RequestMethod.GET)
+    public Result getOrderDetail(@PathVariable Integer id){
+        if(StringUtils.isEmpty(id)){
+            return ResultGenerator.genFailResult(ResultEnum.PARAM_ERROR);
+        }
+        return ResultGenerator.genSuccessResult(orderService.getOrderDetail(id));
+    }
 }
